@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 const MainPanel = preload("res://addons/DVTools/main_panel.tscn")
-
+const ManifestClass = preload("res://addons/DVTools/resource_handling/ModManifestClass.gd")
 var main_panel_instance
 
 
@@ -31,7 +31,6 @@ func make_visible(visible):
 
 # If your plugin doesn't handle any node types, you can remove this method.
 func handles(obj):
-	breakpoint
 	return obj is preload("res://addons/DVTools/handled_by_main_screen.gd")
 
 
