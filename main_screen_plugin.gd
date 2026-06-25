@@ -36,9 +36,11 @@ func handles(obj):
 
 
 func get_plugin_name():
-	return "Main Screen Plugin"
+	return "ΔV Tools"
 
 
 func get_plugin_icon():
+#	var th :Theme= get_editor_interface().get_base_control().theme
+#	ResourceSaver.save("user://theme.tres",th)
 	# Must return some kind of Texture for the icon.
 	return get_editor_interface().get_base_control().get_icon("Node", "EditorIcons")
