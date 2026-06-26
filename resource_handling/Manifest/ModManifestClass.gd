@@ -1,6 +1,6 @@
 tool
 extends Resource
-class_name ManifestResource
+class_name ManifestResource , "res://addons/DVTools/resource_handling/Manifest/ManifestIcon.tres"
 
 var manifest : Dictionary = {} setget set_manifest
 
@@ -33,13 +33,13 @@ var MD_changelog_path:String = ""
 var MD_modlet_priority:int = 0
 
 # tags
-var TG_tags:Array = []
+var TG_tags:Dictionary = {}
 
 # links
-var LK_links:Array = []
+var LK_links:Dictionary = {}
 
 # languages
-var LG_languages:Array = []
+var LG_languages:Dictionary = {}
 
 # configs
 var CFG_configs:Dictionary = {}
@@ -223,8 +223,8 @@ func _get_property_list():
 	# Library properties
 	properties.append({
 		name = "LK_links",
-		type = TYPE_ARRAY,
-		hint_string = "%s/%s:ManifestTagTypeResource" % [TYPE_OBJECT,TYPE_OBJECT],
+		type = TYPE_DICTIONARY,
+		hint_string = "%s/%s:ManifestTagTypeResource" % [TYPE_OBJECT,PROPERTY_HINT_METHOD_OF_BASE_TYPE],
 		hint_tooltip = "Links available from the mod manifest. ",
 	})
 	

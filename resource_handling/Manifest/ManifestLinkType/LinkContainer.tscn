@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/DVTools/resource_handling/SpinBoxNoScroll.gd" type="Script" id=1]
+
+[node name="LinkContainer" type="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="ENTRY" type="MarginContainer" parent="."]
+margin_right = 74.0
+margin_bottom = 24.0
+
+[node name="COUNT" type="SpinBox" parent="ENTRY"]
+margin_right = 74.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+align = 2
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="ENTRY"]
+margin_top = 5.0
+margin_right = 74.0
+margin_bottom = 19.0
+text = "Entries:"
+
+[node name="PAGE" type="MarginContainer" parent="."]
+margin_top = 28.0
+margin_right = 74.0
+margin_bottom = 52.0
+
+[node name="COUNT" type="SpinBox" parent="PAGE"]
+margin_right = 74.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+align = 2
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="PAGE"]
+margin_top = 5.0
+margin_right = 74.0
+margin_bottom = 19.0
+text = "Page:"
+
+[node name="LIST" type="VBoxContainer" parent="."]
+margin_top = 56.0
+margin_right = 74.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+
+[node name="ADD" type="Button" parent="."]
+margin_top = 60.0
+margin_right = 74.0
+margin_bottom = 80.0
