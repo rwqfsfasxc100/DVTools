@@ -25,17 +25,20 @@ func _get_property_list():
 		type = TYPE_STRING,
 		hint = PROPERTY_HINT_PLACEHOLDER_TEXT,
 		hint_string = "https://example.com",
+		hint_tooltip = "URL for the link. Only required portion of the property."
 	})
 	properties.append({
 		name = "ICON",
 		type = TYPE_STRING,
 		hint = PROPERTY_HINT_FILE,
-		hint_string = "*.stex;*.png",
+		hint_string = "*.stex,*.png ; Image Files",
+		hint_tooltip = "Filepath to a .stex or .png file to use as the icon."
 	})
 	properties.append({
 		name = "TOOLTIP",
 		type = TYPE_STRING,
 		hint = PROPERTY_HINT_PLACEHOLDER_TEXT,
 		hint_string = "<nick>name.modname",
+		hint_tooltip = "Tooltip for the button.\nCan be a translation string."
 	})
 	return properties
