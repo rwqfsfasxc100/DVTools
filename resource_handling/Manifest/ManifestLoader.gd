@@ -1,7 +1,8 @@
+tool
 class_name ModManifestLoader
 extends ResourceFormatLoader
 
-const ManifestClass = preload("res://addons/DVTools/resource_handling/ModManifestClass.gd")
+const ManifestClass = preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd")
 
 func get_recognized_extensions() -> PoolStringArray:
 	return PoolStringArray(["manifest"])
