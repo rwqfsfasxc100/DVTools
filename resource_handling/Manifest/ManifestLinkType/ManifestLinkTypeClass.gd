@@ -38,7 +38,7 @@ func _get_property_list():
 		name = "TOOLTIP",
 		type = TYPE_STRING,
 		hint = PROPERTY_HINT_PLACEHOLDER_TEXT,
-		hint_string = "<nick>name.modname",
+		hint_string = "EXAMPLE_TOOLTIP",
 		hint_tooltip = "Tooltip for the button.\nCan be a translation string."
 	})
 	return properties
