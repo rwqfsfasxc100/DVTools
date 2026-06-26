@@ -4,7 +4,7 @@ extends EditorPlugin
 
 const MainPanel = preload("res://addons/DVTools/main_panel.tscn")
 const ManifestClass = preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd")
-const ManifestTagTypeClass = preload("res://addons/DVTools/resource_handling/ManifestTagType/ManifestTagTypeClass.gd")
+const ManifestTagTypeClass = preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/ManifestTagTypeClass.gd")
 
 var main_panel_instance
 
@@ -37,11 +37,6 @@ func make_visible(visible):
 		main_panel_instance.visible = visible
 
 
-# If your plugin doesn't handle any node types, you can remove this method.
-func handles(obj):
-	return obj is preload("res://addons/DVTools/handled_by_main_screen.gd")
-
-
 func get_plugin_name():
 	return "ΔV Tools"
 
@@ -61,16 +56,24 @@ func _on_node_added(node: Node):
 			# Tooltip for hints and properties
 			var inspector = get_editor_interface().get_inspector()
 			var obj = inspector.get_edited_object()
-			if obj.has_method("_get_property_list"):
+			var hp = obj.has_method("_get_property_list")
+#			print("Observing object %s, has prop: %s" % [str(obj),str(hp)])
+			if hp:
 				var properties = obj._get_property_list()
-				var np = node.get_parent()
+				var np = node.get_parent() if not "hint_tooltip" in node else node
 				var pname = np.hint_tooltip
+				print(str(pname))
 				for p in properties:
-					if p.name == pname and "hint_tooltip" in p:
-						var tt = p.hint_tooltip
-						np.hint_tooltip = pname + "\n" + tt
-						np.update()
-						inspector.refresh()
+					var prname = p.name
+#					print(prname, " is: %s" % str(prname == pname))
+					if prname == pname:
+#						print("Found property")
+						if "hint_tooltip" in p:
+#							print("Object has tooltip: %s" % str(node.get_path()))
+							var tt = p.hint_tooltip
+							np.hint_tooltip = pname + "\n" + tt
+							np.update()
+							inspector.refresh()
 
 
 
