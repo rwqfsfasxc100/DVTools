@@ -14,9 +14,10 @@ func _enter_tree():
 	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
 	make_visible(false)
 	
-	
 	# Setting up for tooltips
 	get_tree().connect("node_added", self, "_on_node_added", [], CONNECT_DEFERRED)
+	
+	
 	
 
 
@@ -59,22 +60,17 @@ func _on_node_added(node: Node):
 		elif cls == "EditorHelpBit":
 			# Tooltip for hints and properties
 			var inspector = get_editor_interface().get_inspector()
-			var properties = inspector.get_edited_object()._get_property_list()
-			var np = node.get_parent()
-			var pname = np.hint_tooltip
-			for p in properties:
-				if p.name == pname and "hint_tooltip" in p:
-					var tt = p.hint_tooltip
-					np.hint_tooltip = pname + "\n" + tt
-					np.update()
-					inspector.refresh()
-			
-			
-			
-
-
-
-
+			var obj = inspector.get_edited_object()
+			if obj.has_method("_get_property_list"):
+				var properties = obj._get_property_list()
+				var np = node.get_parent()
+				var pname = np.hint_tooltip
+				for p in properties:
+					if p.name == pname and "hint_tooltip" in p:
+						var tt = p.hint_tooltip
+						np.hint_tooltip = pname + "\n" + tt
+						np.update()
+						inspector.refresh()
 
 
 
