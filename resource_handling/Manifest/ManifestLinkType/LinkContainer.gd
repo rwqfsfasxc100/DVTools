@@ -35,7 +35,6 @@ func set_data(STATE):
 		add(i,sd.get("URL",""),sd.get("ICON",""),sd.get("TOOLTIP",""))
 
 func has_changed():
-	print("Changed")
 	emit_signal("changed")
 
 func _on_add_open():

@@ -8,8 +8,10 @@ const ManifestTagTypeClass = preload("res://addons/DVTools/resource_handling/Man
 
 var main_panel_instance
 
-var tag_inspectorplugin
 
+# Inspector plugins
+var tag_inspectorplugin
+var manifest_version_lock_inspectorplugin
 
 
 func _enter_tree():
@@ -22,7 +24,8 @@ func _enter_tree():
 	get_tree().connect("node_added", self, "_on_node_added", [], CONNECT_DEFERRED)
 	tag_inspectorplugin = preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/LinkHandler.gd").new()
 	add_inspector_plugin(tag_inspectorplugin)
-	
+	manifest_version_lock_inspectorplugin = preload("res://addons/DVTools/resource_handling/Manifest/ManifestVersionLock/MVLockHandler.gd").new()
+	add_inspector_plugin(manifest_version_lock_inspectorplugin)
 
 
 func _exit_tree():
@@ -31,6 +34,7 @@ func _exit_tree():
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
 	remove_inspector_plugin(tag_inspectorplugin)
+	remove_inspector_plugin(manifest_version_lock_inspectorplugin)
 	
 	
 	

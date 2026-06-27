@@ -2,7 +2,7 @@ tool
 extends Resource
 class_name ManifestResource , "res://addons/DVTools/resource_handling/Manifest/ManifestIcon.tres"
 
-var manifest : Dictionary = {} setget set_manifest
+var manifest : Dictionary = {} setget set_manifest , get_manifest
 
 # mod_information
 var MI_name:String = ""
@@ -45,9 +45,6 @@ var LG_languages:Dictionary = {}
 var CFG_configs:Dictionary = {}
 
 
-func set_manifest(value:Dictionary) -> void:
-	manifest = value
-	emit_changed()
 
 func _get_property_list():
 	var properties = []
@@ -172,7 +169,7 @@ func _get_property_list():
 		usage = PROPERTY_USAGE_GROUP | PROPERTY_USAGE_SCRIPT_VARIABLE
 	})
 	
-	# Library properties
+	# Manifest definitions properties
 	properties.append({
 		name = "MD_manifest_version",
 		type = TYPE_REAL,
@@ -212,7 +209,7 @@ func _get_property_list():
 	})
 	
 	
-	# Manifest definitions group
+	# Links group
 	properties.append({
 		name = "links",
 		type = TYPE_NIL,
@@ -220,18 +217,216 @@ func _get_property_list():
 		usage = PROPERTY_USAGE_GROUP | PROPERTY_USAGE_SCRIPT_VARIABLE
 	})
 	
-	# Library properties
+	# Links properties
 	properties.append({
 		name = "LK_links",
 		type = TYPE_DICTIONARY,
-		hint_string = "%s/%s:ManifestTagTypeResource" % [TYPE_OBJECT,PROPERTY_HINT_METHOD_OF_BASE_TYPE],
-		hint_tooltip = "Links available from the mod manifest. ",
+		hint_tooltip = "Links available from the mod manifest.",
 	})
 	
+	# Tags group
+	properties.append({
+		name = "tags",
+		type = TYPE_NIL,
+		hint_string = "TG_",
+		usage = PROPERTY_USAGE_GROUP | PROPERTY_USAGE_SCRIPT_VARIABLE
+	})
 	
+	# Tags properties
+	properties.append({
+		name = "TG_tags",
+		type = TYPE_DICTIONARY,
+		hint_tooltip = "Tags available from the manifest.",
+	})
 	
+	# Languages group
+	properties.append({
+		name = "languages",
+		type = TYPE_NIL,
+		hint_string = "LG_",
+		usage = PROPERTY_USAGE_GROUP | PROPERTY_USAGE_SCRIPT_VARIABLE
+	})
 	
+	# Languages properties
+	properties.append({
+		name = "LG_languages",
+		type = TYPE_DICTIONARY,
+		hint_tooltip = "Language percentages displayed if the mod doesn't have a compatible translation driver.",
+	})
 	
+	# Configs group
+	properties.append({
+		name = "configs",
+		type = TYPE_NIL,
+		hint_string = "CFG_",
+		usage = PROPERTY_USAGE_GROUP | PROPERTY_USAGE_SCRIPT_VARIABLE
+	})
 	
+	# Configs properties
+	properties.append({
+		name = "CFG_configs",
+		type = TYPE_DICTIONARY,
+		hint_tooltip = "Configs provided by the manifest and displayed in the mod menu's settings menu",
+	})
 	
 	return properties
+
+const default_version : float = 2.2
+
+const manifest_template = {
+	"mod_information":{
+		"name":"",
+		"id":"",
+		"description":"",
+		"brief":"",
+		"author":"",
+		"credits":PoolStringArray([])
+	},
+	"version":{
+		"version_major":1,
+		"version_minor":0,
+		"version_bugfix":0,
+		"version_metadata":"",
+		"version_string":"1.0.0"
+	},
+	"tags":{
+		
+	},
+	"links":{
+		
+	},
+	"configs":{
+		
+	},
+	"languages":{
+		
+	},
+	"library":{
+		"is_library":false,
+		"always_display":false,
+	},
+	"manifest_definitions":{
+		"manifest_version":default_version,
+		"dependancy_mod_ids":PoolStringArray([]),
+		"conflicting_mod_ids":PoolStringArray([]),
+		"complementary_mod_ids":PoolStringArray([]),
+		"manifest_url":"", # EXAMPLE: https://raw.githubusercontent.com/rwqfsfasxc100/HevLib/main/Mod.manifest
+		"changelog_path":"", # This is relative to the ModMain.gd file. EXAMPLE: for a file at 'res://Example Mod/data/folder/changelogs.txt', you would put 'data/folder/changelogs.txt'
+		"modlet_priority":0, # SPECIFIC TO MODLETS! The order at which the modlet would be loaded. Most modlets load before other mods, but this will affect load order within the list of installed modlets
+	}
+}
+
+const always_save = {"mod_information":{"name":"Example Mod","id":"example.mod"},"version":{"version_major":1,"version_minor":0,"version_bugfix":0,},"manifest_definitions":{"manifest_version":default_version,},}
+
+func set_manifest(value:Dictionary) -> void:
+	manifest = value
+	emit_changed()
+
+func get_manifest() -> Dictionary:
+	var initDict = {
+		"mod_information":{
+			"name":MI_name,
+			"id":MI_id,
+			"description":MI_description,
+			"brief":MI_brief,
+			"author":MI_author,
+			"credits":MI_credits
+		},
+		"version":{
+			"version_major":version_major,
+			"version_minor":version_minor,
+			"version_bugfix":version_bugfix,
+			"version_metadata":version_metadata,
+			"version_string":version_string
+		},
+		"tags":TG_tags,
+		"links":LK_links,
+		"configs":CFG_configs,
+		"languages":LG_languages,
+		"library":{
+			"is_library":library_is_library,
+			"always_display":library_always_display,
+		},
+		"manifest_definitions":{
+			"manifest_version":default_version,
+			"dependancy_mod_ids":MD_dependancy_mod_ids,
+			"conflicting_mod_ids":MD_conflicting_mod_ids,
+			"complementary_mod_ids":MD_complementary_mod_ids,
+			"manifest_url":MD_manifest_url,
+			"changelog_path":MD_changelog_path,
+			"modlet_priority":MD_modlet_priority,
+		},
+	}
+	var out = format(initDict)
+	return out
+
+static func format(manifest_data : Dictionary) -> Dictionary:
+	var dict_template = manifest_template.duplicate(true)
+	var manifest_version = manifest_data.get("manifest_definitions",{}).get("manifest_version",default_version)
+	if "mod_information" in manifest_data:
+		dict_template["mod_information"]["id"] = String(manifest_data["mod_information"].get("id",""))
+		dict_template["mod_information"]["name"] = String(manifest_data["mod_information"].get("name",""))
+		dict_template["mod_information"]["description"] = String(manifest_data["mod_information"].get("description","HEVLIB_DESCRIPTION_PLACEHOLDER"))
+		dict_template["mod_information"]["brief"] = String(manifest_data["mod_information"].get("brief",""))
+		dict_template["mod_information"]["author"] = String(manifest_data["mod_information"].get("author","Unknown"))
+		dict_template["mod_information"]["credits"] = PoolStringArray(manifest_data["mod_information"].get("credits",[]))
+	
+	if "version" in manifest_data:
+		dict_template["version"]["version_major"] = int(manifest_data["version"].get("version_major",1))
+		dict_template["version"]["version_minor"] = int(manifest_data["version"].get("version_minor",0))
+		dict_template["version"]["version_bugfix"] = int(manifest_data["version"].get("version_bugfix",0))
+		dict_template["version"]["version_metadata"] = String(manifest_data["version"].get("version_metadata",""))
+	
+	if "manifest_definitions" in manifest_data:
+		dict_template["manifest_definitions"]["manifest_version"] = float(manifest_data["manifest_definitions"].get("manifest_version",manifest_version))
+		dict_template["manifest_definitions"]["dependancy_mod_ids"] = PoolStringArray(manifest_data["manifest_definitions"].get("dependancy_mod_ids",[]))
+		dict_template["manifest_definitions"]["conflicting_mod_ids"] = PoolStringArray(manifest_data["manifest_definitions"].get("conflicting_mod_ids",[]))
+		dict_template["manifest_definitions"]["complementary_mod_ids"] = PoolStringArray(manifest_data["manifest_definitions"].get("complementary_mod_ids",[]))
+		dict_template["manifest_definitions"]["manifest_url"] = String(manifest_data["manifest_definitions"].get("manifest_url",""))
+		dict_template["manifest_definitions"]["changelog_path"] = String(manifest_data["manifest_definitions"].get("changelog_path",""))
+		dict_template["manifest_definitions"]["modlet_priority"] = int(manifest_data["manifest_definitions"].get("modlet_priority",0))
+	
+	if "links" in manifest_data:
+		var links = manifest_data["links"]
+		for link in links:
+			var d = links[link]
+			if d.get("URL",""):
+				dict_template["links"].merge({link:d})
+	if "tags" in manifest_data:
+		var tags = manifest_data["tags"]
+		for tag in tags:
+			dict_template["tags"].merge({tag:tags.get(tag)})
+	if "languages" in manifest_data:
+		var languages = manifest_data["languages"]
+		for language in languages:
+			dict_template["languages"].merge({language:languages.get(language)})
+	else:
+		dict_template["languages"].merge({"en":"100%"})
+	if "library" in manifest_data:
+		dict_template["library"]["is_library"] = manifest_data["library"].get("is_library",false)
+		dict_template["library"]["always_display"] = manifest_data["library"].get("always_display",false)
+		
+	if "configs" in manifest_data:
+		var configs = manifest_data["configs"]
+		for cfg in configs:
+			dict_template["configs"][cfg] = configs[cfg]
+	
+	var out = {}
+	
+	for section in dict_template:
+		var always = always_save.get(section,{})
+		for key in dict_template[section]:
+			var value = dict_template[section].get(key)
+			if (value != null):
+				if (not key in manifest_template[section]) or (hash(value) != hash(manifest_template[section][key])):
+					if not section in out:
+						out[section] = {}
+					out[section][key] = value
+				elif key in always:
+					if not section in out:
+						out[section] = {}
+					out[section][key] = always[key]
+	
+	return out
+
+

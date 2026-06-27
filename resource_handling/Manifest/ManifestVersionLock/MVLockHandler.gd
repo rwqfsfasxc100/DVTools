@@ -1,7 +1,7 @@
 extends EditorInspectorPlugin
 
-const tagprop = preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/LinkProperty.gd")
 const manifestclass = preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd")
+const mvprop = preload("res://addons/DVTools/resource_handling/Manifest/ManifestVersionLock/MVLockProperty.gd")
 
 func can_handle(object):
 	if object as manifestclass:
@@ -9,9 +9,8 @@ func can_handle(object):
 	return false
 
 func parse_property(object, type, path, hint, hint_text, usage):
-	if path == "LK_links":
-		add_property_editor(path,tagprop.new())
+	if path == "MD_manifest_version":
+		add_property_editor(path,mvprop.new())
 		
 		return true
 	return false
-
