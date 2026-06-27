@@ -40,11 +40,21 @@ func _ready():
 	if "URL" in initial_state:
 		URL.text = initial_state["URL"]
 	if "ICON" in initial_state:
-		URL.text = initial_state["ICON"]
+		ICON.text = initial_state["ICON"]
 	if "TOOLTIP" in initial_state:
-		URL.text = initial_state["TOOLTIP"]
+		TOOLTIP.text = initial_state["TOOLTIP"]
 	RENAME.connect("pressed",self,"_on_rename")
 	RENAMEBOX.connect("confirmed",self,"RENAME_CONFIRMED")
+	URL.connect("text_changed",self,"changed")
+	ICON.connect("text_changed",self,"changed")
+	TOOLTIP.connect("text_changed",self,"changed")
+
+func changed(how = null):
+	if CONTAINER:
+		CONTAINER.has_changed()
+
+
+
 
 func _open_dir():
 	DIRMENU.popup_centered()
@@ -53,7 +63,8 @@ func _icon_file_selected(how):
 	ICON.text = how
 
 func get_data():
-	return {"URL":URL.text,"ICON":ICON.text,"TOOLTIP":TOOLTIP.text}
+	return {"URL":$BOX/CONTENT/URL/LineEdit.text,"ICON":$BOX/CONTENT/ICON/LineEdit.text,"TOOLTIP":$BOX/CONTENT/TOOLTIP/LineEdit.text}
+#	return {"URL":URL.text,"ICON":ICON.text,"TOOLTIP":TOOLTIP.text}
 
 func _toggle_pressed():
 	toggled = !toggled

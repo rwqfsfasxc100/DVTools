@@ -159,7 +159,7 @@ margin_right = 154.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 clear_button_enabled = true
-placeholder_text = "https://example.com"
+placeholder_text = "LINK_EXAMPLE_TEXT"
 caret_blink = true
 caret_blink_speed = 0.5
 

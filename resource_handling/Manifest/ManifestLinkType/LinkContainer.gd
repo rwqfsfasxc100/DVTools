@@ -21,6 +21,23 @@ func _ready():
 
 var dataStore = {}
 
+func get_data():
+	var out = {}
+	for i in dataStore:
+		out[i] = dataStore[i].get_data()
+	return out
+
+func set_data(STATE):
+	for i in dataStore:
+		delete(i)
+	for i in STATE:
+		var sd = STATE[i]
+		add(i,sd.get("URL",""),sd.get("ICON",""),sd.get("TOOLTIP",""))
+
+func has_changed():
+	print("Changed")
+	emit_signal("changed")
+
 func _on_add_open():
 	CONFIRMNAME.text = ""
 	CONFIRMERR.visible = false
@@ -48,6 +65,7 @@ func add(item_name,url="",icon="",tooltip=""):
 	dataStore[item_name] = box
 	box.CONTAINER = self
 	CONFIRM.hide()
+	has_changed()
 	resort()
 
 func delete(which):
@@ -55,6 +73,7 @@ func delete(which):
 		var box = dataStore[which]
 		box.queue_free()
 		dataStore.erase(which)
+		has_changed()
 		resort()
 
 func rename(old,new):
@@ -63,6 +82,7 @@ func rename(old,new):
 		ov.boxname = new
 		dataStore.erase(old)
 		dataStore[new] = ov
+		has_changed()
 		resort()
 
 func resort():
