@@ -151,12 +151,12 @@ func _get_property_list():
 	# Library properties
 	properties.append({
 		name = "library_is_library",
-		type = TYPE_INT,
+		type = TYPE_BOOL,
 		hint_tooltip = "Whether the mod should be treated as a library. Should be used only on mods distributing code and/or tools for other mods.",
 	})
 	properties.append({
 		name = "library_always_display",
-		type = TYPE_INT,
+		type = TYPE_BOOL,
 		hint_tooltip = "If the mod is to be treated as a library, whether it should be shown in mod lists as a regular mod.",
 	})
 	
@@ -193,14 +193,14 @@ func _get_property_list():
 	properties.append({
 		name = "MD_manifest_url",
 		type = TYPE_STRING,
-		hint_tooltip = "The URL to a raw text copy of the manifest used for update handling. e.g.: 'https://raw.githubusercontent.com/rwqfsfasxc100/HevLib/main/Mod.manifest'",
+		hint_tooltip = "The URL to a raw text copy of the manifest used for update handling. \nFor example, 'https://raw.githubusercontent.com/rwqfsfasxc100/HevLib/main/Mod.manifest'",
 	})
 	properties.append({
 		name = "MD_changelog_path",
 		type = TYPE_STRING,
 		hint = PROPERTY_HINT_PLACEHOLDER_TEXT,
 		hint_string = "e.g. changelog.txt",
-		hint_tooltip = "Path to the changelog file, relative to the manifest's directory. e.g.: 'changelog.txt' equates to a filepath at 'res://Example Mod/changelog.txt', if the manifest was at 'res://Example Mod/mod.manifest'",
+		hint_tooltip = "Path to the changelog file, relative to the manifest's directory. \nFor example, 'changelog.txt' equates to a filepath at 'res://Example Mod/changelog.txt', if the manifest was at 'res://Example Mod/mod.manifest'",
 	})
 	properties.append({
 		name = "MD_modlet_priority",
