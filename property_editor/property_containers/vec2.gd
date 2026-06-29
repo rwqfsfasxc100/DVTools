@@ -45,4 +45,5 @@ func _Y_lost_focus():
 	_Y_text_changed(txt)
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")

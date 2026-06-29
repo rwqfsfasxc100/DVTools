@@ -19,4 +19,5 @@ func _ready():
 	$TextEdit.connect("text_changed",self,"_on_changed")
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")

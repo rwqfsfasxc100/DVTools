@@ -60,18 +60,22 @@ func initialize(how):
 	init_variable = how
 	set_property_value(init_variable)
 
+var has_changed = false
+
 func _enter_tree():
-	$box_alignment/EDIT.visible = can_edit_type
-	$box_alignment/EDIT.connect("pressed",self,"_open_property_selector")
-	$TypeSelect.connect("confirmed",self,"_change_property_to")
-	var lowType = []
-	for i in supported_property_types:
-		lowType.append(i.to_lower())
-	property_type = supported_property_types[lowType.find(property_type.to_lower())]
-	_change_property_to(supported_property_types.find(property_type))
-	if init_variable != null:
-		set_property_value(init_variable)
-	$box_alignment/RESET.connect("pressed",self,"reset")
+	if not has_changed:
+		$box_alignment/EDIT.visible = can_edit_type
+		$box_alignment/EDIT.connect("pressed",self,"_open_property_selector")
+		$TypeSelect.connect("confirmed",self,"_change_property_to")
+		var lowType = []
+		for i in supported_property_types:
+			lowType.append(i.to_lower())
+		property_type = supported_property_types[lowType.find(property_type.to_lower())]
+		_change_property_to(supported_property_types.find(property_type))
+		if init_variable != null:
+			set_property_value(init_variable)
+		$box_alignment/RESET.connect("pressed",self,"reset")
+		has_changed = true
 
 func _open_property_selector():
 	$TypeSelect/PanelContainer/OptionButton.clear()
@@ -101,7 +105,8 @@ func _change_property_to(idx : int = -1):
 	_on_changed()
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")
 
 func match_property_to_typestring(property) -> String:
 	var to = typeof(property)

@@ -28,4 +28,5 @@ func _lost_focus():
 	_LE_text_changed(txt)
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")

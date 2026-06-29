@@ -376,14 +376,15 @@ func set_manifest(value:Dictionary) -> void:
 		LK_links = manifest["links"]
 	if "configs" in manifest:
 		CFG_configs = manifest["configs"]
-	
-	
-	
-	
-	
 	emit_changed()
 
+signal about_to_save()
+
 func get_manifest() -> Dictionary:
+	emit_signal("about_to_save")
+	
+	
+	
 	var initDict = {
 		"mod_information":{
 			"name":MI_name,

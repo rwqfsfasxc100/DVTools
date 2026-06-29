@@ -47,7 +47,6 @@ func set_data(STATE):
 		delete(i)
 	for i in STATE:
 		var sd = STATE[i].get("value",null)
-		print("Adding with data: %s" % str(sd))
 		add(i,sd)
 
 func has_changed():

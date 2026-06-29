@@ -61,4 +61,5 @@ func _Z_lost_focus():
 	_Z_text_changed(txt)
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")

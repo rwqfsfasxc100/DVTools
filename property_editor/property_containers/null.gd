@@ -7,4 +7,5 @@ func get_property_value():
 	return [null,"null"]
 
 func set_property_value(property):
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")

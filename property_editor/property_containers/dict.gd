@@ -44,7 +44,8 @@ func _ready():
 	recalculate()
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")
 
 func _toggle_collapsed(how:bool):
 	var stream = StreamTexture.new()

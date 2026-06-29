@@ -13,6 +13,12 @@ func _init():
 	set_bottom_editor(TagContainer)
 	refresh_control_text()
 	TagContainer.connect("changed",self,"_on_update")
+	
+
+func _ready():
+	var obj = get_edited_object()
+	obj.connect("about_to_save",self,"_on_update")
+
 
 func _on_update():
 	if updating:
@@ -37,5 +43,4 @@ func update_property():
 	
 
 func refresh_control_text():
-	print("setting property %s" % str(current_value))
 	TagContainer.set_data(current_value)

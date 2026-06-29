@@ -28,7 +28,8 @@ func _enter_tree():
 		v.property_type = initialize_type
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")
 
 func _ready():
 	$DELETE.connect("pressed",self,"_on_delete")

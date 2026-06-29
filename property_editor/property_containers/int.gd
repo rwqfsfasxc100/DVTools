@@ -27,4 +27,5 @@ func recheck(how):
 	_on_changed()
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")

@@ -77,4 +77,5 @@ func _H_lost_focus():
 	_H_text_changed(txt)
 
 func _on_changed():
-	emit_signal("changed")
+	pass
+#	emit_signal("changed")
