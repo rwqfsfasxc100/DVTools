@@ -1,6 +1,8 @@
 tool
 extends HBoxContainer
 
+signal changed()
+
 func get_property_value():
 	return $value.get_property_value()
 
@@ -11,12 +13,12 @@ var parent_container = null
 
 var initialize_type = ""
 
-var ManifestConsts
+
 
 func _enter_tree():
-	ManifestConsts = load("res://addons/DVTools/parts/ManifestConsts.gd")
-	if initialize_type and (initialize_type in ManifestConsts.supported_property_types) or (initialize_type == "byte"):
+	if initialize_type and (initialize_type in supported_property_types) or (initialize_type == "byte"):
 		var v = $value
+		v.connect("changed",self,"_on_changed")
 		var byte_init = false
 		if initialize_type == "byte":
 			initialize_type = "int"
@@ -24,6 +26,9 @@ func _enter_tree():
 		v.can_edit_type = false
 		v.byte_init = byte_init
 		v.property_type = initialize_type
+
+func _on_changed():
+	emit_signal("changed")
 
 func _ready():
 	$DELETE.connect("pressed",self,"_on_delete")
@@ -36,3 +41,25 @@ func _do_delete():
 	queue_free()
 	if parent_container:
 		parent_container.recalculate()
+
+const supported_property_types = [
+	"null",
+	"bool",
+	"int",
+	"float",
+	"string",
+	"Vector2",
+	"Rect2",
+	"Vector3",
+	"Transform2D",
+	"Color",
+	"Dictionary",
+	"Array",
+	"PoolByteArray",
+	"PoolIntArray",
+	"PoolRealArray",
+	"PoolStringArray",
+	"PoolVector2Array",
+	"PoolVector3Array",
+	"PoolColorArray",
+]

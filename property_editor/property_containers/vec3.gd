@@ -1,6 +1,8 @@
 tool
 extends HBoxContainer
 
+signal changed()
+
 var Xvalue:float = 0.0
 var Yvalue:float = 0.0
 var Zvalue:float = 0.0
@@ -32,6 +34,7 @@ func _X_text_changed(text:String):
 	var ft = float(text)
 	$XBOX/X.text = str(ft)
 	Xvalue = ft
+	_on_changed()
 
 func _X_lost_focus():
 	var txt = $XBOX/X.text
@@ -41,6 +44,7 @@ func _Y_text_changed(text:String):
 	var ft = float(text)
 	$YBOX/X.text = str(ft)
 	Yvalue = ft
+	_on_changed()
 
 func _Y_lost_focus():
 	var txt = $YBOX/X.text
@@ -50,7 +54,11 @@ func _Z_text_changed(text:String):
 	var ft = float(text)
 	$ZBOX/X.text = str(ft)
 	Zvalue = ft
+	_on_changed()
 
 func _Z_lost_focus():
 	var txt = $ZBOX/X.text
 	_Z_text_changed(txt)
+
+func _on_changed():
+	emit_signal("changed")

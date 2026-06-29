@@ -1,6 +1,8 @@
 tool
 extends MarginContainer
 
+signal changed()
+
 var bytes = false
 
 func get_property_value():
@@ -22,3 +24,7 @@ func recheck(how):
 	var sb = $SpinBox
 	sb.allow_greater = not bytes
 	sb.allow_lesser = not bytes
+	_on_changed()
+
+func _on_changed():
+	emit_signal("changed")

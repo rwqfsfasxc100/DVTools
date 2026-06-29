@@ -1,6 +1,8 @@
 tool
 extends VBoxContainer
 
+signal changed()
+
 func get_property_value():
 	var X = $X/vec2.get_property_value()
 	var Y = $Y/vec2.get_property_value()
@@ -13,3 +15,11 @@ func set_property_value(property):
 		$X/vec2.set_property_value(property.x)
 		$Y/vec2.set_property_value(property.y)
 		$ORIGIN/vec2.set_property_value(property.origin)
+
+func _ready():
+	$ORIGIN/vec2.connect("changed",self,"_on_changed")
+	$X/vec2.connect("changed",self,"_on_changed")
+	$Y/vec2.connect("changed",self,"_on_changed")
+
+func _on_changed():
+	emit_signal("changed")

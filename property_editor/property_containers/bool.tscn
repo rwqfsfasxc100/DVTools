@@ -5,10 +5,9 @@
 [node name="bool" type="MarginContainer"]
 margin_right = 58.0
 margin_bottom = 24.0
-rect_min_size = Vector2( 0, 42 )
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 
 [node name="CheckButton" type="CheckButton" parent="."]
-margin_right = 86.0
-margin_bottom = 42.0
+margin_right = 76.0
+margin_bottom = 40.0

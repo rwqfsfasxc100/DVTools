@@ -1,6 +1,8 @@
 tool
 extends MarginContainer
 
+signal changed()
+
 func get_property_value():
 	var value = $TextEdit.text
 	return [value,str(value)]
@@ -14,3 +16,7 @@ func _draw():
 
 func _ready():
 	$TextEdit.connect("text_changed",self,"update")
+	$TextEdit.connect("text_changed",self,"_on_changed")
+
+func _on_changed():
+	emit_signal("changed")

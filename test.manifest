@@ -9,6 +9,13 @@ version_major=1
 version_minor=0
 version_bugfix=0
 
+[tags]
+
+TAG_VISUAL={
+"type": "bool",
+"value": false
+}
+
 [manifest_definitions]
 
 manifest_version=2.2

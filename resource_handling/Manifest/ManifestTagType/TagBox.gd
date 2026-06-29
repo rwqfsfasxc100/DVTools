@@ -6,11 +6,6 @@ onready var RENAME = $BOX/BUTTONS/RENAME
 onready var DELETE = $BOX/BUTTONS/DELETE
 onready var DELETEMENU = $DoDelete
 onready var CONTENT = $BOX/CONTENT
-onready var URL = $BOX/CONTENT/URL/LineEdit
-onready var ICON = $BOX/CONTENT/ICON/LineEdit
-onready var DIROPEN = $BOX/CONTENT/ICON/DIR
-onready var DIRMENU = EditorFileDialog.new()
-onready var TOOLTIP = $BOX/CONTENT/TOOLTIP/LineEdit
 onready var RENAMEBOX = $RenameTo
 onready var RENAMEEDIT = $RenameTo/LineEdit
 
@@ -22,49 +17,32 @@ var deleteformat = ""
 
 var CONTAINER
 
-var initial_state = {}
+var initial_type = null
+
+func _enter_tree():
+	if initial_type != null:
+		$BOX/CONTENT.initialize(initial_type)
 
 func _ready():
 	deleteformat = DELETEMENU.dialog_text
-	add_child(DIRMENU)
-	DIRMENU.mode = EditorFileDialog.MODE_OPEN_FILE
-	DIRMENU.add_filter("*.stex, *.png ; Supported icon image files")
-	DIRMENU.show_hidden_files = true
-	DIRMENU.rect_min_size = get_viewport().size - Vector2(200,200)
 	TOGGLE.connect("pressed",self,"_toggle_pressed")
-	DIROPEN.connect("pressed",self,"_open_dir")
-	DIRMENU.connect("file_selected",self,"_icon_file_selected")
 	DELETE.connect("pressed",self,"_on_delete")
 	DELETEMENU.connect("confirmed",self,"DELETE")
 	TOGGLE.text = boxname
-	if "URL" in initial_state:
-		URL.text = initial_state["URL"]
-	if "ICON" in initial_state:
-		ICON.text = initial_state["ICON"]
-	if "TOOLTIP" in initial_state:
-		TOOLTIP.text = initial_state["TOOLTIP"]
 	RENAME.connect("pressed",self,"_on_rename")
 	RENAMEBOX.connect("confirmed",self,"RENAME_CONFIRMED")
-	URL.connect("text_changed",self,"changed")
-	ICON.connect("text_changed",self,"changed")
-	TOOLTIP.connect("text_changed",self,"changed")
 
 func changed(how = null):
 	if CONTAINER:
 		CONTAINER.has_changed()
 
-
-
-
-func _open_dir():
-	DIRMENU.popup_centered()
-
-func _icon_file_selected(how):
-	ICON.text = how
-
 func get_data():
-	return {"URL":$BOX/CONTENT/URL/LineEdit.text,"ICON":$BOX/CONTENT/ICON/LineEdit.text,"TOOLTIP":$BOX/CONTENT/TOOLTIP/LineEdit.text}
-#	return {"URL":URL.text,"ICON":ICON.text,"TOOLTIP":TOOLTIP.text}
+	var value = $BOX/CONTENT.get_property_value()[0]
+	var out = {
+		"value":value,
+		"type":property_assignment[typeof(value)].to_lower()
+	}
+	return out
 
 func _toggle_pressed():
 	toggled = !toggled
@@ -96,3 +74,25 @@ func _draw():
 	if CONTENT:
 		CONTENT.visible = toggled
 		TOGGLE.text = boxname
+
+const property_assignment = {
+	TYPE_NIL:"null",
+	TYPE_BOOL:"bool",
+	TYPE_INT:"int",
+	TYPE_REAL:"float",
+	TYPE_STRING:"string",
+	TYPE_VECTOR2:"Vector2",
+	TYPE_RECT2:"Rect2",
+	TYPE_VECTOR3:"Vector3",
+	TYPE_TRANSFORM2D:"Transform2D",
+	TYPE_COLOR:"Color",
+	TYPE_DICTIONARY:"Dictionary",
+	TYPE_ARRAY:"Array",
+	TYPE_RAW_ARRAY:"PoolByteArray",
+	TYPE_INT_ARRAY:"PoolIntArray",
+	TYPE_REAL_ARRAY:"PoolRealArray",
+	TYPE_STRING_ARRAY:"PoolStringArray",
+	TYPE_VECTOR2_ARRAY:"PoolVector2Array",
+	TYPE_VECTOR3_ARRAY:"PoolVector3Array",
+	TYPE_COLOR_ARRAY:"PoolColorArray",
+}

@@ -22,12 +22,12 @@ static func change_item_appearance(tree_item: TreeItem) -> void:
 
 		# A few examples for what to change and how. Not a style guide, make yours prettier
 		if file_path:
-			if file_path.ends_with("res://"):
-				tree_item.set_icon(0, preload("res://icon.png"))
-				# Make sure the icon doesn't become oversized
-				tree_item.set_icon_max_width(0, 24)
-				# Folder icons have a blue tint, reset that
-				tree_item.set_icon_modulate(0, Color.white)
+#			if file_path.ends_with("res://"):
+#				tree_item.set_icon(0, preload("res://icon.png"))
+#				# Make sure the icon doesn't become oversized
+#				tree_item.set_icon_max_width(0, 24)
+#				# Folder icons have a blue tint, reset that
+#				tree_item.set_icon_modulate(0, Color.white)
 			var fn = file_path.get_file().to_lower()
 			if fn.begins_with("modmain") and fn.ends_with(".gd"):
 				tree_item.set_custom_color(0,Color.lightgreen)

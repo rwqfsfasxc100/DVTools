@@ -35,6 +35,8 @@ export (Dictionary) var defaults_for_type = {
 	"PoolColorArray":PoolColorArray(),
 }
 
+signal changed()
+
 var init_variable = null
 var byte_init = false
 
@@ -56,16 +58,12 @@ func clear():
 
 func initialize(how):
 	init_variable = how
+	set_property_value(init_variable)
 
-onready var edit_button = $box_alignment/EDIT
-onready var type_select_popup = $TypeSelect
-onready var type_selector = $TypeSelect/PanelContainer/OptionButton
-onready var property_container = $box_alignment/property
-
-func _ready():
-	edit_button.visible = can_edit_type
-	edit_button.connect("pressed",self,"_open_property_selector")
-	type_select_popup.connect("confirmed",self,"_change_property_to")
+func _enter_tree():
+	$box_alignment/EDIT.visible = can_edit_type
+	$box_alignment/EDIT.connect("pressed",self,"_open_property_selector")
+	$TypeSelect.connect("confirmed",self,"_change_property_to")
 	var lowType = []
 	for i in supported_property_types:
 		lowType.append(i.to_lower())
@@ -76,21 +74,22 @@ func _ready():
 	$box_alignment/RESET.connect("pressed",self,"reset")
 
 func _open_property_selector():
-	type_selector.clear()
+	$TypeSelect/PanelContainer/OptionButton.clear()
 	for i in supported_property_types:
-		type_selector.add_item(i)
+		$TypeSelect/PanelContainer/OptionButton.add_item(i)
 	
 	
-	type_select_popup.popup_centered()
+	$TypeSelect.popup_centered()
 
 func _change_property_to(idx : int = -1):
 	if idx < 0:
-		idx = type_selector.selected
+		idx = $TypeSelect/PanelContainer/OptionButton.selected
 	if idx < 0:
 		idx = 0
 	var property = supported_property_types[idx]
 	if property in property_nodes:
 		var node = property_nodes[property].instance()
+		node.connect("changed",self,"_on_changed")
 		property_box = node
 		selected_property_type = property
 		if property == "int":
@@ -99,6 +98,10 @@ func _change_property_to(idx : int = -1):
 			i.queue_free()
 		node.set_property_value(defaults_for_type[property_type])
 		$box_alignment/property.add_child(node)
+	_on_changed()
+
+func _on_changed():
+	emit_signal("changed")
 
 func match_property_to_typestring(property) -> String:
 	var to = typeof(property)

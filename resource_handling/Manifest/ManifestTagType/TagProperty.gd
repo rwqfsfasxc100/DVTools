@@ -1,23 +1,24 @@
+tool
 extends EditorProperty
 
-var LinkContainer
+var TagContainer
 
 var current_value = {}
 var updating = false
 
 func _init():
-	LinkContainer = preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/TagContainer.tscn").instance()
-	add_child(LinkContainer)
-	add_focusable(LinkContainer)
-	set_bottom_editor(LinkContainer)
+	TagContainer = preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/TagContainer.tscn").instance()
+	add_child(TagContainer)
+	add_focusable(TagContainer)
+	set_bottom_editor(TagContainer)
 	refresh_control_text()
-	LinkContainer.connect("changed",self,"_on_update")
+	TagContainer.connect("changed",self,"_on_update")
 
 func _on_update():
 	if updating:
 		return
 	
-	current_value = LinkContainer.get_data()
+	current_value = TagContainer.get_data()
 #	refresh_control_text()
 	emit_changed(get_edited_property(), current_value)
 
@@ -36,4 +37,5 @@ func update_property():
 	
 
 func refresh_control_text():
-	LinkContainer.set_data(current_value)
+	print("setting property %s" % str(current_value))
+	TagContainer.set_data(current_value)

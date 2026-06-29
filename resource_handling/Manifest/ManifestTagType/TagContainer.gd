@@ -12,12 +12,27 @@ onready var ADD = $ADD
 onready var CONFIRM = $ConfirmationDialog
 onready var CONFIRMNAME = $ConfirmationDialog/VBoxContainer/LineEdit
 onready var CONFIRMERR = $ConfirmationDialog/VBoxContainer/Label
+onready var CONFIRMOPT = $ConfirmationDialog/VBoxContainer/OptionButton
 
 func _ready():
 	ADD.connect("pressed",self,"_on_add_open")
 	CONFIRM.connect("confirmed",self,"_add_confirmed")
 	ENTRY.connect("value_changed",self,"_size_value_changed")
 	PAGE.connect("value_changed",self,"_page_value_changed")
+	CONFIRMOPT.connect("item_selected",self,"_built_in_selected")
+	
+	CONFIRMOPT.clear()
+	var idx = 1
+	CONFIRMOPT.add_item("",0)
+	for tag in BUILTIN_TAGS:
+		CONFIRMOPT.add_item(tag,idx)
+		var tt = BUILTIN_TAGS[tag][2]
+		CONFIRMOPT.set_item_tooltip(idx,tt)
+		idx += 1
+	
+
+func _built_in_selected(idx:int):
+	CONFIRMNAME.text = CONFIRMOPT.get_item_text(idx)
 
 var dataStore = {}
 
@@ -31,8 +46,9 @@ func set_data(STATE):
 	for i in dataStore:
 		delete(i)
 	for i in STATE:
-		var sd = STATE[i]
-		add(i,sd.get("URL",""),sd.get("ICON",""),sd.get("TOOLTIP",""))
+		var sd = STATE[i].get("value",null)
+		print("Adding with data: %s" % str(sd))
+		add(i,sd)
 
 func has_changed():
 	emit_signal("changed")
@@ -46,25 +62,21 @@ func _on_add_open():
 func _add_confirmed():
 	var newname = CONFIRMNAME.text
 	if not newname in dataStore:
-		add(newname)
+		var init_type = null
+		if newname in BUILTIN_TAGS:
+			init_type = BUILTIN_TAGS[newname][1]
+		add(newname,init_type)
 	else:
 		CONFIRMERR.visible = true
 
-func add(item_name,url="",icon="",tooltip=""):
+func add(item_name,init_type = null):
 	var box = LinkBox.instance()
 	box.boxname = item_name
-	var init_state = {}
-	if url:
-		init_state["URL"] = url
-	if icon:
-		init_state["ICON"] = icon
-	if tooltip:
-		init_state["TOOLTIP"] = tooltip
-	box.initial_state = init_state
 	dataStore[item_name] = box
 	box.CONTAINER = self
+	if init_type != null:
+		box.initial_type = init_type
 	CONFIRM.hide()
-	has_changed()
 	resort()
 
 func delete(which):
@@ -72,7 +84,6 @@ func delete(which):
 		var box = dataStore[which]
 		box.queue_free()
 		dataStore.erase(which)
-		has_changed()
 		resort()
 
 func rename(old,new):
@@ -81,7 +92,6 @@ func rename(old,new):
 		ov.boxname = new
 		dataStore.erase(old)
 		dataStore[new] = ov
-		has_changed()
 		resort()
 
 func resort():
@@ -125,6 +135,7 @@ func recalculate():
 		PAGE.value = current_page
 	else:
 		current_page = 0
+	has_changed()
 
 func _size_value_changed(how:float):
 	how = int(how)
@@ -134,7 +145,7 @@ func _size_value_changed(how:float):
 		if how < sz and sz > 0:
 			objList[sz - 1].DELETE()
 		elif how > sz:
-			add("LINK_EXAMPLE")
+			add("TAG_EXAMPLE")
 	recalculate()
 
 func _page_value_changed(how:float):
@@ -150,3 +161,17 @@ func _page_value_changed(how:float):
 				current_page += 1
 	recalculate()
 
+const BUILTIN_TAGS = {
+	"TAG_ALLOW_ACHIEVEMENTS":["bool",false,"Whether the mod would permit achievements.\nNot currently functional in-game."],
+	"TAG_QOL":["bool",false,"Whether the mod adds QOL features."],
+	"TAG_OVERHAUL":["bool",false,"Whether the mod overhauls a part or parts of the game."],
+	"TAG_VISUAL":["bool",false,"Whether the mod makes visual adjustments."],
+	"TAG_FUN":["bool",false,"Whether the mod is more fun than serious."],
+	"TAG_UI":["bool",false,"Whether the mod adds UI elements."],
+	"TAG_ADDS_SHIPS":["Array",PoolStringArray(),"Names of ships that the mod adds.\nCan use translation strings."],
+	"TAG_ADDS_EQUIPMENT":["Array",PoolStringArray(),"Names of equipment that the mod adds.\nCan use translation strings."],
+	"TAG_ADDS_GAMEPLAY_MECHANICS":["Array",PoolStringArray(),"Names of gameplay mechanics that the mod adds.\nCan use translation strings."],
+	"TAG_ADDS_EVENTS":["Array",PoolStringArray(),"Names of events that the mod adds.\nCan use translation strings."],
+	"TAG_HANDLE_EXTRA_CREW":["int",24,"For ships with very large numbers of crew, prevents derelict dialogue\nbeing broken if the crew count exceeds what the dialogue can handle.\n\nHevLib automatically sets this to 24, so only does anything above that."],
+#	"TAG_USING_HEVLIB_RESEARCH":["array",[],""],
+}

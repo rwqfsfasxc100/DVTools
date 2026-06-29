@@ -1,3 +1,4 @@
+tool
 extends EditorInspectorPlugin
 
 const tagprop = preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/TagProperty.gd")
@@ -9,7 +10,7 @@ func can_handle(object):
 	return false
 
 func parse_property(object, type, path, hint, hint_text, usage):
-	if path == "LK_links":
+	if path == "TG_tags":
 		add_property_editor(path,tagprop.new())
 		
 		return true

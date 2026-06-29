@@ -320,6 +320,67 @@ const always_save = {"mod_information":{"name":"Example Mod","id":"example.mod"}
 
 func set_manifest(value:Dictionary) -> void:
 	manifest = value
+	if "mod_information" in manifest:
+		for prop in manifest["mod_information"]:
+			match prop:
+				"name":
+					MI_name = manifest["mod_information"][prop]
+				"id":
+					MI_id = manifest["mod_information"][prop]
+				"description":
+					MI_description = manifest["mod_information"][prop]
+				"brief":
+					MI_brief = manifest["mod_information"][prop]
+				"author":
+					MI_author = manifest["mod_information"][prop]
+				"credits":
+					MI_credits = manifest["mod_information"][prop]
+	if "version" in manifest:
+		for prop in manifest["version"]:
+			match prop:
+				"version_major":
+					version_major = manifest["version"][prop]
+				"version_minor":
+					version_minor = manifest["version"][prop]
+				"version_bugfix":
+					version_bugfix = manifest["version"][prop]
+				"version_metadata":
+					version_metadata = manifest["version"][prop]
+				"version_string":
+					version_string = manifest["version"][prop]
+	if "library" in manifest:
+		for prop in manifest["library"]:
+			match prop:
+				"is_library":
+					library_is_library = manifest["library"][prop]
+				"always_display":
+					library_always_display = manifest["library"][prop]
+	if "manifest_definitions" in manifest:
+		for prop in manifest["manifest_definitions"]:
+			match prop:
+				"dependancy_mod_ids":
+					MD_dependancy_mod_ids = manifest["manifest_definitions"][prop]
+				"conflicting_mod_ids":
+					MD_conflicting_mod_ids = manifest["manifest_definitions"][prop]
+				"complementary_mod_ids":
+					MD_complementary_mod_ids = manifest["manifest_definitions"][prop]
+				"manifest_url":
+					MD_manifest_url = manifest["manifest_definitions"][prop]
+				"changelog_path":
+					MD_changelog_path = manifest["manifest_definitions"][prop]
+				"modlet_priority":
+					MD_modlet_priority = manifest["manifest_definitions"][prop]
+	if "tags" in manifest:
+		TG_tags = manifest["tags"]
+	if "links" in manifest:
+		LK_links = manifest["links"]
+	if "configs" in manifest:
+		CFG_configs = manifest["configs"]
+	
+	
+	
+	
+	
 	emit_changed()
 
 func get_manifest() -> Dictionary:

@@ -1,6 +1,8 @@
 tool
 extends MarginContainer
 
+signal changed()
+
 var value:float = 0.0
 
 func get_property_value():
@@ -19,7 +21,11 @@ func _LE_text_changed(text:String):
 	var ft = float(text)
 	$LineEdit.text = str(ft)
 	value = ft
+	_on_changed()
 
 func _lost_focus():
 	var txt = $LineEdit.text
 	_LE_text_changed(txt)
+
+func _on_changed():
+	emit_signal("changed")

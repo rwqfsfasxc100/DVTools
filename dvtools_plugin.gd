@@ -4,8 +4,20 @@ extends EditorPlugin
 const counter_maximum : float = 0.25 # Time in seconds between refreshes of the FileSystem modification
 
 const MainPanel = preload("res://addons/DVTools/main_panel.tscn")
-const ManifestClass = preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd")
-const ManifestTagTypeClass = preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/ManifestLinkTypeClass.gd")
+const classes = [
+	preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd"),
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/ManifestLinkTypeClass.gd"),
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/ManifestTagTypeClass.gd"),
+	
+]
+
+const property_handler_plugins = [
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/LinkHandler.gd"),
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestVersionLock/MVLockHandler.gd"),
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/TagHandler.gd"),
+	
+]
+
 
 var main_panel_instance
 
@@ -13,6 +25,8 @@ var main_panel_instance
 # Inspector plugins
 var tag_inspectorplugin
 var manifest_version_lock_inspectorplugin
+
+var inspector_plugins = []
 
 var icon_handler:Node
 
@@ -24,10 +38,11 @@ func _enter_tree():
 	
 	# Setting up for tooltips
 	get_tree().connect("node_added", self, "_on_node_added", [], CONNECT_DEFERRED)
-	tag_inspectorplugin = preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/LinkHandler.gd").new()
-	add_inspector_plugin(tag_inspectorplugin)
-	manifest_version_lock_inspectorplugin = preload("res://addons/DVTools/resource_handling/Manifest/ManifestVersionLock/MVLockHandler.gd").new()
-	add_inspector_plugin(manifest_version_lock_inspectorplugin)
+	
+	for p in property_handler_plugins:
+		var plugin = p.new()
+		add_inspector_plugin(plugin)
+		inspector_plugins.append(plugin)
 	
 	add_icon_handler()
 	
@@ -39,8 +54,10 @@ func _exit_tree():
 		main_panel_instance.queue_free()
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
-	remove_inspector_plugin(tag_inspectorplugin)
-	remove_inspector_plugin(manifest_version_lock_inspectorplugin)
+	for plugin in inspector_plugins:
+		remove_inspector_plugin(plugin)
+	
+	inspector_plugins = []
 	
 	remove_icon_handler()
 	
@@ -119,14 +136,15 @@ func recheck_icon_handler(file_tree):
 		icon_handler = load("res://addons/DVTools/icon_handler.gd").new()
 		
 		icon_handler.change_tree_appearance(file_tree)
-		var file_system := get_editor_interface().get_resource_filesystem()
-		file_system.connect("filesystem_changed", icon_handler, "change_tree_appearance", [file_tree])
+#		var file_system := get_editor_interface().get_resource_filesystem()
+#		file_system.connect("filesystem_changed", icon_handler, "change_tree_appearance", [file_tree])
 	else:
 		icon_handler.change_tree_appearance(file_tree)
 	
 func remove_icon_handler():
 	var file_system := get_editor_interface().get_resource_filesystem()
-	file_system.disconnect("filesystem_changed", icon_handler, "change_tree_appearance")
+#	file_system.disconnect("filesystem_changed", icon_handler, "change_tree_appearance")
+	disconnect("redraw",self,"recheck_icon_handler")
 	file_system.scan()
 	icon_handler = null
 

@@ -1,6 +1,8 @@
 tool
 extends VBoxContainer
 
+signal changed()
+
 func get_property_value():
 	var value = {}
 	var string = ""
@@ -20,96 +22,88 @@ func get_property_value():
 
 func set_property_value(property):
 	if property is Dictionary:
-		for i in LIST:
+		for i in $Collapsable/List.get_children():
 			i._do_delete()
 		for i in property:
 			var val = property[i]
-			NEWKEY.set_property_value(i)
-			NEWVAL.set_property_value(val)
+			$Collapsable/NEW/VBoxContainer/Key/property_editor.set_property_value(i)
+			$Collapsable/NEW/VBoxContainer/Value/property_editor.set_property_value(val)
 			_add_entry()
 
 var toggle_text = "Dictionary (size %d)"
 
 const dict_container = preload("res://addons/DVTools/property_editor/parts/dict_container.tscn")
 
-onready var TOGGLE = $Toggle/Button
-onready var COLLAPSABLE = $Collapsable
-
-onready var LIST = $Collapsable/List
-
-onready var SIZEBOX = $Collapsable/Info/VBoxContainer/SIZE
-onready var PAGEBOX = $Collapsable/Info/VBoxContainer/PAGE
-
-onready var NEWKEY = $Collapsable/NEW/VBoxContainer/Key/property_editor
-onready var NEWVAL = $Collapsable/NEW/VBoxContainer/Value/property_editor
-onready var ADDNEW = $Collapsable/NEW/VBoxContainer/H/Add
-
 func _ready():
-	COLLAPSABLE.visible = false
-	TOGGLE.connect("toggled",self,"_toggle_collapsed")
-	TOGGLE.text = toggle_text % 0
-	ADDNEW.connect("pressed",self,"_add_entry")
-	SIZEBOX.connect("value_changed",self,"_size_value_changed")
-	PAGEBOX.connect("value_changed",self,"_page_value_changed")
+	$Collapsable.visible = false
+	$Toggle/Button.connect("toggled",self,"_toggle_collapsed")
+	$Toggle/Button.text = toggle_text % 0
+	$Collapsable/NEW/VBoxContainer/H/Add.connect("pressed",self,"_add_entry")
+	$Collapsable/Info/VBoxContainer/SIZE.connect("value_changed",self,"_size_value_changed")
+	$Collapsable/Info/VBoxContainer/PAGE.connect("value_changed",self,"_page_value_changed")
 	recalculate()
+
+func _on_changed():
+	emit_signal("changed")
 
 func _toggle_collapsed(how:bool):
 	var stream = StreamTexture.new()
 	if how:stream.load_path = "res://addons/DVTools/property_editor/icons/expanded.stex"
-	else:TOGGLE.icon = "res://addons/DVTools/property_editor/icons/collapsed.stex"
-	TOGGLE.icon = stream
-	COLLAPSABLE.visible = how
+	else:stream.load_path = "res://addons/DVTools/property_editor/icons/collapsed.stex"
+	$Toggle/Button.icon = stream
+	$Collapsable.visible = how
 	recalculate()
 
 func _add_entry():
-	var key = NEWKEY.get_property_value()[0]
+	var key = $Collapsable/NEW/VBoxContainer/Key/property_editor.get_property_value()[0]
 	var items = []
 	for i in get_list():
 		items.append(i.get_node("key").get_property_value()[0])
 	if key in items:
 		return
-	var val = NEWVAL.get_property_value()[0]
+	var val = $Collapsable/NEW/VBoxContainer/Value/property_editor.get_property_value()[0]
 	var cv = dict_container.instance()
 	cv.set_property_value(key,val)
 	cv.parent_container = self
-	LIST.add_child(cv)
-	NEWKEY.set_property_value(null)
-	NEWVAL.set_property_value(null)
+	$Collapsable/List.add_child(cv)
+	$Collapsable/NEW/VBoxContainer/Key/property_editor.set_property_value(null)
+	$Collapsable/NEW/VBoxContainer/Value/property_editor.set_property_value(null)
 
 const page_size = 20
 var current_page = 0
 
 func get_list():
 	var out = []
-	for i in LIST.get_children():
+	for i in $Collapsable/List.get_children():
 		if is_instance_valid(i) and not i.is_queued_for_deletion():
 			out.append(i)
 	return out
 
 var objList = []
 func recalculate():
-	if LIST.is_visible_in_tree():
+	if $Collapsable/List.is_visible_in_tree():
 		objList = get_list()
 		for i in objList:
 			i.visible = false
 		var size = objList.size()
-		TOGGLE.text = toggle_text % size
-		SIZEBOX.value = size
+		$Toggle/Button.text = toggle_text % size
+		$Collapsable/Info/VBoxContainer/SIZE.value = size
 		
 		var offset = (current_page * page_size)
 		var max_pages = int(ceil(float(size)/float(page_size))) - 1
 		if size > page_size:
 			for iv in range(clamp(size - offset,0,page_size)):
 				objList[iv + offset].visible = true
-			PAGEBOX.visible = true
+			$Collapsable/Info/VBoxContainer/PAGE.visible = true
 		else:
 			for iv in objList:
 				iv.visible = true
-			PAGEBOX.visible = false
+			$Collapsable/Info/VBoxContainer/PAGE.visible = false
 			current_page = 0
-		PAGEBOX.value = current_page
+		$Collapsable/Info/VBoxContainer/PAGE.value = current_page
 	else:
 		current_page = 0
+	_on_changed()
 
 func _size_value_changed(how:float):
 	how = int(how)
@@ -118,8 +112,8 @@ func _size_value_changed(how:float):
 		if how < sz and sz > 0:
 			objList[sz - 1]._on_delete()
 		elif how > sz:
-			NEWKEY.set_property_value(null)
-			NEWVAL.set_property_value(null)
+			$Collapsable/NEW/VBoxContainer/Key/property_editor.set_property_value(null)
+			$Collapsable/NEW/VBoxContainer/Value/property_editor.set_property_value(null)
 			_add_entry()
 	recalculate()
 

@@ -22,7 +22,7 @@ func load(path: String, original_path: String,no_subresource_cache:bool):
 		return ERR_CANT_OPEN
 	var dt:Dictionary = __config_parse(path)
 	var res := ManifestClass.new()
-	res.set_manifest(dt)
+	res.manifest = dt
 	return res
 
 func __config_parse(file_path: String) -> Dictionary:

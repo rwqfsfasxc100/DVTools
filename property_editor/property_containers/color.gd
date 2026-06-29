@@ -1,6 +1,8 @@
 tool
 extends HBoxContainer
 
+signal changed()
+
 var value:Color = Color.black
 
 func get_property_value():
@@ -26,3 +28,7 @@ func _show_picker():
 func _select_color():
 	value = $AcceptDialog/PanelContainer/ColorPicker.color
 	$PanelContainer/ColorRect.color = value
+	_on_changed()
+
+func _on_changed():
+	emit_signal("changed")
