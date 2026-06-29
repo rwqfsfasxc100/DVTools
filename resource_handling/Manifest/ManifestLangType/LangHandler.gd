@@ -1,0 +1,18 @@
+tool
+extends EditorInspectorPlugin
+
+const langprop = preload("res://addons/DVTools/resource_handling/Manifest/ManifestLangType/LangProperty.gd")
+const manifestclass = preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd")
+
+func can_handle(object):
+	if object as manifestclass:
+		return true
+	return false
+
+func parse_property(object, type, path, hint, hint_text, usage):
+	if path == "LG_languages":
+		add_property_editor(path,langprop.new())
+		
+		return true
+	return false
+

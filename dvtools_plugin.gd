@@ -8,6 +8,7 @@ const classes = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/ManifestLinkTypeClass.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/ManifestTagTypeClass.gd"),
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLangType/ManifestLangTypeClass.gd"),
 	
 ]
 
@@ -15,6 +16,7 @@ const property_handler_plugins = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/LinkHandler.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestVersionLock/MVLockHandler.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/TagHandler.gd"),
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLangType/LangHandler.gd"),
 	
 ]
 

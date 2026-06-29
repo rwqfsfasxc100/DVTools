@@ -251,7 +251,7 @@ func _get_property_list():
 	properties.append({
 		name = "LG_languages",
 		type = TYPE_DICTIONARY,
-		hint_tooltip = "Language percentages displayed if the mod doesn't have a compatible translation driver.",
+		hint_tooltip = "Language percentages displayed if the mod doesn't have a compatible translation driver.\nIf you use REPLACE_TRANSLATIONS.gd, you can ignore this as it's completely overwritten by that driver's data.",
 	})
 	
 	# Configs group
@@ -382,9 +382,6 @@ signal about_to_save()
 
 func get_manifest() -> Dictionary:
 	emit_signal("about_to_save")
-	
-	
-	
 	var initDict = {
 		"mod_information":{
 			"name":MI_name,
