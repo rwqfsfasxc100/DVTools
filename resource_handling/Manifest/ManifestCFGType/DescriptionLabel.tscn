@@ -5,7 +5,8 @@
 [node name="DescriptionLabel" type="Button"]
 margin_right = 12.0
 margin_bottom = 20.0
-size_flags_horizontal = 3
+rect_min_size = Vector2( 185, 0 )
+align = 0
 script = ExtResource( 1 )
 
 [connection signal="visibility_changed" from="." to="." method="_on_DescriptionLabel_visibility_changed"]

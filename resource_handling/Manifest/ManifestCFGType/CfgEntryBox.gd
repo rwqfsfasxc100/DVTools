@@ -58,6 +58,8 @@ func get_data():
 	for i in CONTENT.get_children():
 		if i.visible and i.has_method("get_data"):
 			data = i.get_data()
+	if current_box_type == "optionbutton" and not data.get("options",[]).size():
+		return {}
 	data["type"] = current_box_type
 	return data
 
@@ -101,6 +103,8 @@ func RENAME_CONFIRMED():
 			if newtype != current_box_type:
 				var state = get_data()
 				specify_box_type(newtype)
+				if newtype == "optionbutton":
+					state["options"] = PoolStringArray(["EXAMPLE_OPTION"])
 				set_data(state)
 			RENAMEBOX.hide()
 

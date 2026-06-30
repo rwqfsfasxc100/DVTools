@@ -28,7 +28,7 @@ func get_data() -> Dictionary:
 	var db = DISABLED.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
-	if df:out["default"] = df
+	out["default"] = df
 	if mn:out["min"] = mn
 	if mx:out["max"] = mx
 	if sp:out["step"] = sp

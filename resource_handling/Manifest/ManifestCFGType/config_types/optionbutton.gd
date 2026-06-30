@@ -24,9 +24,9 @@ func get_data() -> Dictionary:
 	var db = DISABLED.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
-	if df:out["default"] = df
-	if op:out["options"] = op
-	if sm:out["store_method"] = sm
+	out["options"] = op
+	out["store_method"] = sm
+	out["default"] = df
 	if rb:out["requires_bools"] = rb
 	if ibr:out["invert_bool_requirement"] = ibr
 	if rr:out["require_restart"] = rr
@@ -62,7 +62,11 @@ func _update_default():
 	var oldSelection = DEFAULT.selected
 	DEFAULT.clear()
 	defaults = []
-	for i in OPTIONS.get_property_value()[0]:
+	var opts = OPTIONS.get_property_value()[0]
+	if not opts.size():
+		opts = PoolStringArray(["EXAMPLE_OPTION"])
+		OPTIONS.set_property_value(opts)
+	for i in opts:
 		defaults.append(i)
 	for i in defaults:
 		DEFAULT.add_item(i)
@@ -84,13 +88,12 @@ func get_store_method():
 	return store_methods[STORE_METHOD.selected]
 
 func set_default(how):
-	match get_store_method():
-		"string":
-			if how in defaults:
-				how = defaults.find(how)
-			else:
-				how = 0
-	STORE_METHOD.select(how)
+	if typeof(how) == TYPE_STRING:
+		if how in defaults:
+			how = defaults.find(how)
+		else:
+			how = 0
+	DEFAULT.select(how)
 
 func set_store_method(how:String):
 	if how in store_methods:

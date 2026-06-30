@@ -28,7 +28,7 @@ func get_data() -> Dictionary:
 	var db = DISABLED.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
-	if df:out["default"] = df
+	out["default"] = df
 	if ph:out["placeholder"] = ph
 	if ml:out["max_length"] = ml
 	if sc:out["secret"] = sc

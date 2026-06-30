@@ -20,7 +20,7 @@ func get_data() -> Dictionary:
 	var db = DISABLED.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
-	if df:out["default"] = df
+	out["default"] = df
 	if rb:out["requires_bools"] = rb
 	if ibr:out["invert_bool_requirement"] = ibr
 	if rr:out["require_restart"] = rr
