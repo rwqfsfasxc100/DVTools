@@ -3,7 +3,6 @@ extends EditorPlugin
 
 const counter_maximum : float = 0.25 # Time in seconds between refreshes of the FileSystem modification
 
-const MainPanel = preload("res://addons/DVTools/main_panel.tscn")
 const classes = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLinkType/ManifestLinkTypeClass.gd"),
@@ -22,7 +21,6 @@ const property_handler_plugins = [
 ]
 
 
-var main_panel_instance
 
 
 # Inspector plugins
@@ -34,10 +32,7 @@ var inspector_plugins = []
 var icon_handler:Node
 
 func _enter_tree():
-	main_panel_instance = MainPanel.instance()
 	set_physics_process(true)
-	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
-	make_visible(false)
 	
 	# Setting up for tooltips
 	get_tree().connect("node_added", self, "_on_node_added", [], CONNECT_DEFERRED)
@@ -53,8 +48,6 @@ func _enter_tree():
 
 
 func _exit_tree():
-	if main_panel_instance:
-		main_panel_instance.queue_free()
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
 	for plugin in inspector_plugins:
@@ -65,13 +58,6 @@ func _exit_tree():
 	remove_icon_handler()
 	
 
-func has_main_screen():
-	return true
-
-
-func make_visible(visible):
-	if main_panel_instance:
-		main_panel_instance.visible = visible
 
 
 func get_plugin_name():
