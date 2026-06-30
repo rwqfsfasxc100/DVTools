@@ -5,9 +5,10 @@ onready var TOGGLE = $BOX/BUTTONS/TOGGLE
 onready var RENAME = $BOX/BUTTONS/RENAME
 onready var DELETE = $BOX/BUTTONS/DELETE
 onready var DELETEMENU = $DoDelete
-onready var CONTENT = $BOX/CONTENT
+onready var CONTENT = $BOX/CB/CONTENT
 onready var RENAMEBOX = $RenameTo
-onready var RENAMEEDIT = $RenameTo/LineEdit
+onready var RENAMEEDIT = $RenameTo/VBoxContainer/LineEdit
+onready var RENAMEOPTS = $RenameTo/VBoxContainer/OptionButton
 
 var toggled = false
 
@@ -19,6 +20,8 @@ var CONTAINER
 
 var initial_state = {}
 
+var current_box_type = "bool"
+
 func _ready():
 	deleteformat = DELETEMENU.dialog_text
 	TOGGLE.connect("pressed",self,"_toggle_pressed")
@@ -27,23 +30,41 @@ func _ready():
 	TOGGLE.text = boxname
 	RENAME.connect("pressed",self,"_on_rename")
 	RENAMEBOX.connect("confirmed",self,"RENAME_CONFIRMED")
-	
+	specify_box_type(initial_state.get("type","bool"))
+	set_data(initial_state)
 
 func changed(how = null):
 	if CONTAINER:
 		CONTAINER.has_changed()
 
-
+const config_types = PoolStringArray([
+	"bool",
+	"int",
+	"float",
+	"string",
+	"optionbutton",
+	"input",
+	"action",
+])
 
 func specify_box_type(type:String):
 	for i in CONTENT.get_children():
 		i.visible = i.name == type.to_lower()
+		if i.name == type.to_lower():
+			current_box_type = type.to_lower()
 
 func get_data():
+	var data = {}
 	for i in CONTENT.get_children():
 		if i.visible and i.has_method("get_data"):
-			return i.get_data()
-	return {}
+			data = i.get_data()
+	data["type"] = current_box_type
+	return data
+
+func set_data(STATE):
+	for i in CONTENT.get_children():
+		if i.visible and i.has_method("set_data"):
+			i.set_data(STATE)
 
 func _toggle_pressed():
 	toggled = !toggled
@@ -58,6 +79,13 @@ func DELETE():
 		CONTAINER.delete(boxname)
 
 func _on_rename():
+	RENAMEOPTS.clear()
+	for i in config_types:
+		RENAMEOPTS.add_item(i)
+	var current_index = config_types.find(current_box_type)
+	if current_index < 0:
+		current_index = 0
+	RENAMEOPTS.select(current_index)
 	RENAMEEDIT.text = boxname
 	RENAMEEDIT.caret_position = boxname.length()
 	RENAMEBOX.popup_centered()
@@ -66,9 +94,14 @@ func _on_rename():
 func RENAME_CONFIRMED():
 	if CONTAINER:
 		var newname = RENAMEEDIT.text
-		if newname:
+		var newtype = config_types[RENAMEOPTS.selected]
+		if newname or newtype != current_box_type:
 			if newname != boxname:
 				CONTAINER.rename(boxname,newname)
+			if newtype != current_box_type:
+				var state = get_data()
+				specify_box_type(newtype)
+				set_data(state)
 			RENAMEBOX.hide()
 
 func _draw():

@@ -1,6 +1,8 @@
 tool
 extends MarginContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 var value:float = 0.0
@@ -14,8 +16,10 @@ func set_property_value(property):
 		$LineEdit.text = str(float(property))
 
 func _ready():
-	$LineEdit.connect("text_entered",self,"_LE_text_changed")
-	$LineEdit.connect("focus_exited",self,"_lost_focus")
+	if not $LineEdit.is_connected("text_entered",self,"_LE_text_changed"):
+		$LineEdit.connect("text_entered",self,"_LE_text_changed")
+	if not $LineEdit.is_connected("focus_exited",self,"_lost_focus"):
+		$LineEdit.connect("focus_exited",self,"_lost_focus")
 
 func _LE_text_changed(text:String):
 	var ft = float(text)
@@ -28,5 +32,5 @@ func _lost_focus():
 	_LE_text_changed(txt)
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")

@@ -1,6 +1,8 @@
 tool
 extends HBoxContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 var value:Color = Color.black
@@ -18,8 +20,10 @@ func set_property_value(property):
 		
 
 func _ready():
-	$PanelContainer/Button.connect("pressed",self,"_show_picker")
-	$AcceptDialog.connect("confirmed",self,"_select_color")
+	if not $PanelContainer/Button.is_connected("pressed",self,"_show_picker"):
+		$PanelContainer/Button.connect("pressed",self,"_show_picker")
+	if not $AcceptDialog.is_connected("confirmed",self,"_select_color"):
+		$AcceptDialog.connect("confirmed",self,"_select_color")
 
 func _show_picker():
 	$AcceptDialog/PanelContainer/ColorPicker.color = value
@@ -31,5 +35,5 @@ func _select_color():
 	_on_changed()
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")

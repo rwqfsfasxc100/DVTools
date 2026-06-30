@@ -1,3 +1,4 @@
+tool
 extends VBoxContainer
 
 onready var NAME = $name/property_editor
@@ -14,17 +15,17 @@ onready var DISABLED = $disabled/property_editor
 
 func get_data() -> Dictionary:
 	var out = {}
-	var nm = NAME.get_property_value()
-	var dc = DESCRIPTION.get_property_value()
-	var df = DEFAULT.get_property_value()
-	var ph = PLACEHOLDER.get_property_value()
-	var ml = MAX_LENGTH.get_property_value()
-	var sc = SECRET.get_property_value()
-	var cb = CLEAR_BUTTON.get_property_value()
-	var rb = REQUIRES_BOOLS.get_property_value()
-	var ibr = INVERT_BOOL_REQUIREMENT.get_property_value()
-	var rr = REQUIRE_RESTART.get_property_value()
-	var db = DISABLED.get_property_value()
+	var nm = NAME.get_property_value()[0]
+	var dc = DESCRIPTION.get_property_value()[0]
+	var df = DEFAULT.get_property_value()[0]
+	var ph = PLACEHOLDER.get_property_value()[0]
+	var ml = MAX_LENGTH.get_property_value()[0]
+	var sc = SECRET.get_property_value()[0]
+	var cb = CLEAR_BUTTON.get_property_value()[0]
+	var rb = REQUIRES_BOOLS.get_property_value()[0]
+	var ibr = INVERT_BOOL_REQUIREMENT.get_property_value()[0]
+	var rr = REQUIRE_RESTART.get_property_value()[0]
+	var db = DISABLED.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
 	if df:out["default"] = df

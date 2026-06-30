@@ -41,5 +41,4 @@ func update_property():
 	
 
 func refresh_control_text():
-	print("setting config data as %s" % str(current_value))
 	CfgContainer.set_data(current_value)

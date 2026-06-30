@@ -14,6 +14,7 @@ onready var ADDENTRY = $BUFFER/BODY/ADD
 onready var ADDCONFIRM = $BUFFER/BODY/ConfirmationDialog
 onready var ADDEDIT = $BUFFER/BODY/ConfirmationDialog/VBoxContainer/LineEdit
 onready var ADDLABEL = $BUFFER/BODY/ConfirmationDialog/VBoxContainer/Label
+onready var ADDOPTS = $BUFFER/BODY/ConfirmationDialog/VBoxContainer/OptionButton
 
 onready var ENTRYBOX = $BUFFER/BODY/ENTRY/COUNT
 onready var PAGEBOX = $BUFFER/BODY/PAGE/COUNT
@@ -39,16 +40,31 @@ func _ready():
 	
 	ADDENTRY.connect("pressed",self,"_on_add_open")
 	ADDCONFIRM.connect("confirmed",self,"_add_confirmed")
+	
 	ENTRYBOX.connect("value_changed",self,"_size_value_changed")
 	PAGEBOX.connect("value_changed",self,"_page_value_changed")
 	
 	for i in initial_state:
-		print("Adding state to section [%s]: %s" %[boxname,str(i)])
-		pass
+		var state = initial_state[i]
+		add(i,state)
 
 var dataStore = {}
 
+const config_types = PoolStringArray([
+	"bool",
+	"int",
+	"float",
+	"string",
+	"optionbutton",
+	"input",
+	"action",
+])
+
 func _on_add_open():
+	ADDOPTS.clear()
+	for i in config_types:
+		ADDOPTS.add_item(i)
+	ADDOPTS.select(0)
 	ADDEDIT.text = ""
 	ADDLABEL.visible = false
 	ADDCONFIRM.popup_centered()
@@ -57,7 +73,8 @@ func _on_add_open():
 func _add_confirmed():
 	var newname = ADDEDIT.text
 	if not newname in dataStore:
-		add(newname)
+		var type = config_types[ADDOPTS.selected]
+		add(newname,{"type":type})
 	else:
 		ADDLABEL.visible = true
 const CfgEntryBox = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgEntryBox.tscn")
@@ -138,9 +155,10 @@ func _size_value_changed(how:float):
 	if how != sz:
 		if how < sz and sz > 0:
 			objList[sz - 1].DELETE()
-		elif how > sz:
-			add("EXAMPLE_SETTING")
+		elif how > sz and not "example_string_name" in dataStore:
+			add("example_string_name",{"type":"bool"})
 	recalculate()
+
 
 func _page_value_changed(how:float):
 	how = int(how)
@@ -167,7 +185,7 @@ func changed(how = null):
 func get_data():
 	var out = {}
 	for i in $BUFFER/BODY/LIST.get_children():
-		out.merge(i.get_data())
+		out[i.boxname] = i.get_data()
 	return out
 
 func _toggle_pressed():

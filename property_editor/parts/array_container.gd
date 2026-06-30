@@ -18,7 +18,8 @@ var initialize_type = ""
 func _enter_tree():
 	if initialize_type and (initialize_type in supported_property_types) or (initialize_type == "byte"):
 		var v = $value
-		v.connect("changed",self,"_on_changed")
+		if not v.is_connected("changed",self,"_on_changed"):
+			v.connect("changed",self,"_on_changed")
 		var byte_init = false
 		if initialize_type == "byte":
 			initialize_type = "int"
@@ -32,8 +33,10 @@ func _on_changed():
 #	emit_signal("changed")
 
 func _ready():
-	$DELETE.connect("pressed",self,"_on_delete")
-	$ConfirmationDialog.connect("confirmed",self,"_do_delete")
+	if not $DELETE.is_connected("pressed",self,"_on_delete"):
+		$DELETE.connect("pressed",self,"_on_delete")
+	if not $ConfirmationDialog.is_connected("confirmed",self,"_do_delete"):
+		$ConfirmationDialog.connect("confirmed",self,"_do_delete")
 
 func _on_delete():
 	$ConfirmationDialog.popup_centered()

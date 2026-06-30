@@ -1,6 +1,8 @@
 tool
 extends HBoxContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 var Xvalue:float = 0.0
@@ -27,14 +29,22 @@ func set_property_value(property):
 		hb.text = str(property.size.y)
 
 func _ready():
-	$XBOX/X.connect("text_entered",self,"_X_text_changed")
-	$XBOX/X.connect("focus_exited",self,"_X_lost_focus")
-	$YBOX/Y.connect("text_entered",self,"_Y_text_changed")
-	$YBOX/Y.connect("focus_exited",self,"_Y_lost_focus")
-	$WBOX/W.connect("text_entered",self,"_W_text_changed")
-	$WBOX/W.connect("focus_exited",self,"_W_lost_focus")
-	$HBOX/H.connect("text_entered",self,"_H_text_changed")
-	$HBOX/H.connect("focus_exited",self,"_H_lost_focus")
+	if not $XBOX/X.is_connected("text_entered",self,"_X_text_changed"):
+		$XBOX/X.connect("text_entered",self,"_X_text_changed")
+	if not $XBOX/X.is_connected("focus_exited",self,"_X_lost_focus"):
+		$XBOX/X.connect("focus_exited",self,"_X_lost_focus")
+	if not $YBOX/Y.is_connected("text_entered",self,"_Y_text_changed"):
+		$YBOX/Y.connect("text_entered",self,"_Y_text_changed")
+	if not $YBOX/Y.is_connected("focus_exited",self,"_Y_lost_focus"):
+		$YBOX/Y.connect("focus_exited",self,"_Y_lost_focus")
+	if not $WBOX/W.is_connected("text_entered",self,"_W_text_changed"):
+		$WBOX/W.connect("text_entered",self,"_W_text_changed")
+	if not $WBOX/W.is_connected("focus_exited",self,"_W_lost_focus"):
+		$WBOX/W.connect("focus_exited",self,"_W_lost_focus")
+	if not $HBOX/H.is_connected("text_entered",self,"_H_text_changed"):
+		$HBOX/H.connect("text_entered",self,"_H_text_changed")
+	if not $HBOX/H.is_connected("focus_exited",self,"_H_lost_focus"):
+		$HBOX/H.connect("focus_exited",self,"_H_lost_focus")
 
 func _X_text_changed(text:String):
 	var ft = float(text)
@@ -77,5 +87,5 @@ func _H_lost_focus():
 	_H_text_changed(txt)
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")

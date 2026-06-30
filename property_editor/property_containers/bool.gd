@@ -1,6 +1,8 @@
 tool
 extends MarginContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 func get_property_value():
@@ -15,8 +17,9 @@ func set_property_value(property):
 		cb.pressed = false
 
 func _ready():
-	$CheckButton.connect("pressed",self,"_on_changed")
+	if not $CheckButton.is_connected("pressed",self,"_on_changed"):
+		$CheckButton.connect("pressed",self,"_on_changed")
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")

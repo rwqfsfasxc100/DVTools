@@ -1,6 +1,8 @@
 tool
 extends MarginContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 var bytes = false
@@ -18,7 +20,8 @@ func set_property_value(property):
 		$SpinBox.value = int(property)
 
 func _ready():
-	$SpinBox.connect("value_changed",self,"recheck")
+	if not $SpinBox.is_connected("value_changed",self,"recheck"):
+		$SpinBox.connect("value_changed",self,"recheck")
 
 func recheck(how):
 	var sb = $SpinBox
@@ -27,5 +30,5 @@ func recheck(how):
 	_on_changed()
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")

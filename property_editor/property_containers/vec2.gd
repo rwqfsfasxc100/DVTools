@@ -1,6 +1,8 @@
 tool
 extends HBoxContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 var Xvalue:float = 0.0
@@ -19,10 +21,14 @@ func set_property_value(property):
 		yb.text = str(property.y)
 
 func _ready():
-	$XBOX/X.connect("text_entered",self,"_X_text_changed")
-	$XBOX/X.connect("focus_exited",self,"_X_lost_focus")
-	$YBOX/Y.connect("text_entered",self,"_Y_text_changed")
-	$YBOX/Y.connect("focus_exited",self,"_Y_lost_focus")
+	if not $XBOX/X.is_connected("text_entered",self,"_X_text_changed"):
+		$XBOX/X.connect("text_entered",self,"_X_text_changed")
+	if not $XBOX/X.is_connected("focus_exited",self,"_X_lost_focus"):
+		$XBOX/X.connect("focus_exited",self,"_X_lost_focus")
+	if not $YBOX/Y.is_connected("text_entered",self,"_Y_text_changed"):
+		$YBOX/Y.connect("text_entered",self,"_Y_text_changed")
+	if not $YBOX/Y.is_connected("focus_exited",self,"_Y_lost_focus"):
+		$YBOX/Y.connect("focus_exited",self,"_Y_lost_focus")
 
 func _X_text_changed(text:String):
 	var ft = float(text)
@@ -45,5 +51,5 @@ func _Y_lost_focus():
 	_Y_text_changed(txt)
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")

@@ -13,8 +13,10 @@ func set_property_value(key,value):
 var parent_container = null
 
 func _ready():
-	$DELETE.connect("pressed",self,"_on_delete")
-	$ConfirmationDialog.connect("confirmed",self,"_do_delete")
+	if not $DELETE.is_connected("pressed",self,"_on_delete"):
+		$DELETE.connect("pressed",self,"_on_delete")
+	if not $ConfirmationDialog.is_connected("confirmed",self,"_do_delete"):
+		$ConfirmationDialog.connect("confirmed",self,"_do_delete")
 
 func _on_delete():
 	$ConfirmationDialog.popup_centered()

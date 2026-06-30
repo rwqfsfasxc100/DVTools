@@ -1,15 +1,6 @@
 tool
 extends Button
 
-func _ready():
-	var nm = get_parent().name
-	text = nm
-	var tt = get_property_tooltip(nm)
-	if tt:
-		nm += "\n\n" + tt
-	hint_tooltip = "Property: " + nm
-	
-
 func get_property_tooltip(property:String) -> String:
 	match property:
 		"name":
@@ -55,3 +46,14 @@ func get_property_tooltip(property:String) -> String:
 		"method":
 			return "Method that the button script would be connected to."
 	return ""
+
+
+func _on_DescriptionLabel_visibility_changed():
+	if is_visible_in_tree():
+		var nm = get_parent().name
+		text = nm
+		var tt = get_property_tooltip(nm)
+		if tt:
+			nm += "\n\n" + tt
+		hint_tooltip = "Property: " + nm
+		

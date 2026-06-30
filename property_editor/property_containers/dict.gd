@@ -1,6 +1,8 @@
 tool
 extends VBoxContainer
 
+export (bool) var emit_update_signal = false
+
 signal changed()
 
 func get_property_value():
@@ -36,16 +38,20 @@ const dict_container = preload("res://addons/DVTools/property_editor/parts/dict_
 
 func _ready():
 	$Collapsable.visible = false
-	$Toggle/Button.connect("toggled",self,"_toggle_collapsed")
+	if not $Toggle/Button.is_connected("toggled",self,"_toggle_collapsed"):
+		$Toggle/Button.connect("toggled",self,"_toggle_collapsed")
 	$Toggle/Button.text = toggle_text % 0
-	$Collapsable/NEW/VBoxContainer/H/Add.connect("pressed",self,"_add_entry")
-	$Collapsable/Info/VBoxContainer/SIZE.connect("value_changed",self,"_size_value_changed")
-	$Collapsable/Info/VBoxContainer/PAGE.connect("value_changed",self,"_page_value_changed")
+	if not $Collapsable/NEW/VBoxContainer/H/Add.is_connected("pressed",self,"_add_entry"):
+		$Collapsable/NEW/VBoxContainer/H/Add.connect("pressed",self,"_add_entry")
+	if not $Collapsable/Info/VBoxContainer/SIZE.is_connected("value_changed",self,"_size_value_changed"):
+		$Collapsable/Info/VBoxContainer/SIZE.connect("value_changed",self,"_size_value_changed")
+	if not $Collapsable/Info/VBoxContainer/PAGE.is_connected("value_changed",self,"_page_value_changed"):
+		$Collapsable/Info/VBoxContainer/PAGE.connect("value_changed",self,"_page_value_changed")
 	recalculate()
 
 func _on_changed():
-	pass
-#	emit_signal("changed")
+	if emit_update_signal:
+		emit_signal("changed")
 
 func _toggle_collapsed(how:bool):
 	var stream = StreamTexture.new()
