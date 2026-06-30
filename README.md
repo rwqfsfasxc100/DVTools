@@ -2,6 +2,11 @@
 
 A Godot plugin containing a collection of tools that are used to help make mods for ΔV: Rings of Saturn
 
+## Quick Links:
+
+- [Installation Instructions](https://github.com/rwqfsfasxc100/DVTools/blob/main/README.md#installation-instructions)
+- [Planned feature list](https://github.com/rwqfsfasxc100/DVTools/blob/main/README.md#planned-feature-list)
+
 # Features
 
 ### Manifest Editing
