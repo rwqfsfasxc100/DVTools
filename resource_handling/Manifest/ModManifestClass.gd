@@ -376,6 +376,8 @@ func set_manifest(value:Dictionary) -> void:
 		LK_links = manifest["links"]
 	if "configs" in manifest:
 		CFG_configs = manifest["configs"]
+	if "languages" in manifest:
+		LG_languages = manifest["languages"]
 	emit_changed()
 
 signal about_to_save()

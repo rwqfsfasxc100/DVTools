@@ -20,6 +20,18 @@ TAG_EXAMPLE={
 "value": null
 }
 
+[links]
+
+LINK_EXAMPLE={
+"ICON": "",
+"TOOLTIP": "",
+"URL": "https://example.com"
+}
+
+[languages]
+
+en="100%"
+
 [manifest_definitions]
 
 manifest_version=2.2

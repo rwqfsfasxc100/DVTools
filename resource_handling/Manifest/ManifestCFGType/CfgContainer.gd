@@ -3,7 +3,7 @@ extends VBoxContainer
 
 signal changed()
 
-const LangBox = preload("res://addons/DVTools/resource_handling/Manifest/ManifestLangType/LangBox.tscn")
+const LangBox = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgSectionBox.tscn")
 
 func _ready():
 	$ADD.connect("pressed",self,"_on_add_open")
