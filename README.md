@@ -4,6 +4,7 @@ A Godot plugin containing a collection of tools that are used to help make mods 
 
 ## Quick Links:
 
+- [Download the plugin](https://github.com/rwqfsfasxc100/DVTools/releases/latest)
 - [Installation Instructions](https://github.com/rwqfsfasxc100/DVTools/blob/main/README.md#installation-instructions)
 - [Planned feature list](https://github.com/rwqfsfasxc100/DVTools/blob/main/README.md#planned-feature-list)
 
