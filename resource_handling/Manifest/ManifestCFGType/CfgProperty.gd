@@ -1,18 +1,18 @@
 tool
 extends EditorProperty
 
-var LangContainer
+var CfgContainer
 
 var current_value = {}
 var updating = false
 
 func _init():
-	LangContainer = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgContainer.tscn").instance()
-	add_child(LangContainer)
-	add_focusable(LangContainer)
-	set_bottom_editor(LangContainer)
+	CfgContainer = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgContainer.tscn").instance()
+	add_child(CfgContainer)
+	add_focusable(CfgContainer)
+	set_bottom_editor(CfgContainer)
 	refresh_control_text()
-	LangContainer.connect("changed",self,"_on_update")
+	CfgContainer.connect("changed",self,"_on_update")
 
 func _ready():
 	var obj = get_edited_object()
@@ -22,7 +22,7 @@ func _on_update():
 	if updating:
 		return
 	
-	current_value = LangContainer.get_data()
+	current_value = CfgContainer.get_data()
 #	refresh_control_text()
 	emit_changed(get_edited_property(), current_value)
 
@@ -41,4 +41,5 @@ func update_property():
 	
 
 func refresh_control_text():
-	LangContainer.set_data(current_value)
+	print("setting config data as %s" % str(current_value))
+	CfgContainer.set_data(current_value)

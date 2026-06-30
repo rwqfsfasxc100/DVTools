@@ -319,6 +319,7 @@ const manifest_template = {
 const always_save = {"mod_information":{"name":"Example Mod","id":"example.mod"},"version":{"version_major":1,"version_minor":0,"version_bugfix":0,},"manifest_definitions":{"manifest_version":default_version,},}
 
 func set_manifest(value:Dictionary) -> void:
+	print("SET MANIFEST AS %s" % str(value))
 	manifest = value
 	if "mod_information" in manifest:
 		for prop in manifest["mod_information"]:
@@ -419,6 +420,7 @@ func get_manifest() -> Dictionary:
 		},
 	}
 	var out = format(initDict)
+	print("GET MANIFEST AS %s" % str(out))
 	return out
 
 static func format(manifest_data : Dictionary) -> Dictionary:
@@ -469,9 +471,15 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 		
 	if "configs" in manifest_data:
 		var configs = manifest_data["configs"]
+		var cout = {}
 		for cfg in configs:
-			dict_template["configs"][cfg] = configs[cfg]
-	
+			var cvData = configs[cfg]
+			for cv in cvData:
+				if not cfg in cout:
+					cout[cfg] = {}
+				cout[cfg][cv] = cvData[cv]
+		if cout:
+			dict_template["configs"] = cout
 	var out = {}
 	
 	for section in dict_template:

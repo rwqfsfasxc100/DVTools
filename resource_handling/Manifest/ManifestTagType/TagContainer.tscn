@@ -101,3 +101,5 @@ text = "Select HevLib built-in tag:"
 margin_top = 72.0
 margin_right = 334.0
 margin_bottom = 92.0
+items = [ "", null, false, 0, null, "TAG_ALLOW_ACHIEVEMENTS", null, false, 1, null, "TAG_QOL", null, false, 2, null, "TAG_OVERHAUL", null, false, 3, null, "TAG_VISUAL", null, false, 4, null, "TAG_FUN", null, false, 5, null, "TAG_UI", null, false, 6, null, "TAG_ADDS_SHIPS", null, false, 7, null, "TAG_ADDS_EQUIPMENT", null, false, 8, null, "TAG_ADDS_GAMEPLAY_MECHANICS", null, false, 9, null, "TAG_ADDS_EVENTS", null, false, 10, null, "TAG_HANDLE_EXTRA_CREW", null, false, 11, null ]
+selected = 0

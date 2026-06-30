@@ -10,7 +10,7 @@ func can_handle(object):
 	return false
 
 func parse_property(object, type, path, hint, hint_text, usage):
-	if path == "LG_languages":
+	if path == "CFG_configs":
 		add_property_editor(path,langprop.new())
 		return true
 	return false

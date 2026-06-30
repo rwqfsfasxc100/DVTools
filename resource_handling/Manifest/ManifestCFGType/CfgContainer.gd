@@ -3,7 +3,7 @@ extends VBoxContainer
 
 signal changed()
 
-const LangBox = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgSectionBox.tscn")
+const CfgSectionBox = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgSectionBox.tscn")
 
 func _ready():
 	$ADD.connect("pressed",self,"_on_add_open")
@@ -42,10 +42,10 @@ func _add_confirmed():
 	else:
 		$ConfirmationDialog/VBoxContainer/Label.visible = true
 
-func add(item_name,percentage=100.0):
-	var box = LangBox.instance()
+func add(item_name,state = {}):
+	var box = CfgSectionBox.instance()
 	box.boxname = item_name
-	box.initial_state = str(float(percentage))
+	box.initial_state = state
 	dataStore[item_name] = box
 	box.CONTAINER = self
 	$ConfirmationDialog.hide()
@@ -119,7 +119,7 @@ func _size_value_changed(how:float):
 		if how < sz and sz > 0:
 			objList[sz - 1].DELETE()
 		elif how > sz:
-			add("en")
+			add("EXAMPLE_SECTION")
 	recalculate()
 
 func _page_value_changed(how:float):

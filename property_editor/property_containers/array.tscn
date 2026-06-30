@@ -1,8 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/DVTools/property_editor/property_containers/array.gd" type="Script" id=1]
-[ext_resource path="res://addons/DVTools/property_editor/icons/collapsed.stex" type="Texture" id=4]
 [ext_resource path="res://addons/DVTools/resource_handling/SpinBoxNoScroll.gd" type="Script" id=5]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://addons/DVTools/property_editor/icons/collapsed.stex"
 
 [node name="array" type="VBoxContainer"]
 margin_right = 40.0
@@ -22,7 +25,7 @@ margin_bottom = 22.0
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Array (size 0)"
-icon = ExtResource( 4 )
+icon = SubResource( 1 )
 icon_align = 2
 
 [node name="Collapsable" type="VBoxContainer" parent="."]

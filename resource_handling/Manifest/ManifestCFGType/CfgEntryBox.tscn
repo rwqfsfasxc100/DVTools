@@ -1,0 +1,1374 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgEntryBox.gd" type="Script" id=1]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/bool.gd" type="Script" id=2]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/int.gd" type="Script" id=3]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/float.gd" type="Script" id=4]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/string.gd" type="Script" id=5]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/input.gd" type="Script" id=6]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/optionbutton.gd" type="Script" id=7]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/action.gd" type="Script" id=8]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/DescriptionLabel.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Image" id=5]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 222, 222, 222, 167, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 167, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 214, 214, 214, 0, 214, 214, 214, 19, 223, 223, 223, 233, 223, 223, 223, 233, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 218, 218, 0, 223, 223, 223, 81, 223, 223, 223, 81, 218, 218, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=4]
+flags = 0
+flags = 0
+image = SubResource( 5 )
+size = Vector2( 16, 16 )
+
+[node name="LangBox" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+
+[node name="Border2" type="HBoxContainer" parent="."]
+margin_right = 2.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2, 0 )
+
+[node name="BOX" type="VBoxContainer" parent="."]
+margin_left = 6.0
+margin_right = 74.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="BUTTONS" type="HBoxContainer" parent="BOX"]
+margin_right = 68.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="TOGGLE" type="Button" parent="BOX/BUTTONS"]
+margin_right = 12.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="RENAME" type="Button" parent="BOX/BUTTONS"]
+margin_left = 16.0
+margin_right = 44.0
+margin_bottom = 22.0
+icon = SubResource( 4 )
+
+[node name="DELETE" type="Button" parent="BOX/BUTTONS"]
+self_modulate = Color( 1, 0, 0, 1 )
+margin_left = 48.0
+margin_right = 68.0
+margin_bottom = 22.0
+text = "X"
+
+[node name="CONTENT" type="VBoxContainer" parent="BOX"]
+visible = false
+margin_top = 26.0
+margin_right = 68.0
+margin_bottom = 278.0
+size_flags_horizontal = 3
+
+[node name="bool" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+script = ExtResource( 2 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="default" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/default" instance=ExtResource( 9 )]
+hint_tooltip = "Property: default
+
+The default value for the config."
+text = "default"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/default" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="require_restart" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/require_restart" instance=ExtResource( 9 )]
+hint_tooltip = "Property: require_restart
+
+Whether changing the config will require and 
+start prompting the user for a game restart."
+text = "require_restart"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/require_restart" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/bool"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/bool/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/bool/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="int" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+script = ExtResource( 3 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/int/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/int/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="min" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/min" instance=ExtResource( 9 )]
+hint_tooltip = "Property: min
+
+The minimum value of the display."
+text = "min"
+
+[node name="property_editor" parent="BOX/CONTENT/int/min" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "int"
+
+[node name="max" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/max" instance=ExtResource( 9 )]
+hint_tooltip = "Property: max
+
+The maximum value of the display."
+text = "max"
+
+[node name="property_editor" parent="BOX/CONTENT/int/max" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "int"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": 10,
+"null": null,
+"string": ""
+}
+
+[node name="step" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/step" instance=ExtResource( 9 )]
+hint_tooltip = "Property: step
+
+How much the value is allowed to be incremented by."
+text = "step"
+
+[node name="property_editor" parent="BOX/CONTENT/int/step" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "int"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": 1,
+"null": null,
+"string": ""
+}
+
+[node name="default" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/default" instance=ExtResource( 9 )]
+hint_tooltip = "Property: default
+
+The default value for the config."
+text = "default"
+
+[node name="property_editor" parent="BOX/CONTENT/int/default" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "int"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": 10,
+"null": null,
+"string": ""
+}
+
+[node name="style" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/style" instance=ExtResource( 9 )]
+hint_tooltip = "Property: style
+
+The style of the value display.
+Accepts \"slider\" and \"spinbox\"."
+text = "style"
+
+[node name="OptionButton" type="OptionButton" parent="BOX/CONTENT/int/style"]
+margin_right = 29.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/int/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 32.0
+margin_right = 68.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/int/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="require_restart" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/require_restart" instance=ExtResource( 9 )]
+hint_tooltip = "Property: require_restart
+
+Whether changing the config will require and 
+start prompting the user for a game restart."
+text = "require_restart"
+
+[node name="property_editor" parent="BOX/CONTENT/int/require_restart" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/int"]
+margin_top = 40.0
+margin_right = 68.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/int/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/int/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="float" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_top = 72.0
+margin_right = 68.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+script = ExtResource( 4 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/float/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/float/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="min" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/min" instance=ExtResource( 9 )]
+hint_tooltip = "Property: min
+
+The minimum value of the display."
+text = "min"
+
+[node name="property_editor" parent="BOX/CONTENT/float/min" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "float"
+
+[node name="max" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/max" instance=ExtResource( 9 )]
+hint_tooltip = "Property: max
+
+The maximum value of the display."
+text = "max"
+
+[node name="property_editor" parent="BOX/CONTENT/float/max" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "float"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 10.0,
+"int": 0,
+"null": null,
+"string": ""
+}
+
+[node name="step" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/step" instance=ExtResource( 9 )]
+margin_top = -16.0
+margin_right = 40.0
+margin_bottom = 4.0
+hint_tooltip = "Property: step
+
+How much the value is allowed to be incremented by."
+text = "step"
+
+[node name="property_editor" parent="BOX/CONTENT/float/step" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "float"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 1.0,
+"int": 0,
+"null": null,
+"string": ""
+}
+
+[node name="default" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/default" instance=ExtResource( 9 )]
+hint_tooltip = "Property: default
+
+The default value for the config."
+text = "default"
+
+[node name="property_editor" parent="BOX/CONTENT/float/default" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "float"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 10.0,
+"int": 0,
+"null": null,
+"string": ""
+}
+
+[node name="style" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/style" instance=ExtResource( 9 )]
+hint_tooltip = "Property: style
+
+The style of the value display.
+Accepts \"slider\" and \"spinbox\"."
+text = "style"
+
+[node name="OptionButton" type="OptionButton" parent="BOX/CONTENT/float/style"]
+margin_right = 29.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/float/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 32.0
+margin_right = 68.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/float/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="require_restart" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/require_restart" instance=ExtResource( 9 )]
+hint_tooltip = "Property: require_restart
+
+Whether changing the config will require and 
+start prompting the user for a game restart."
+text = "require_restart"
+
+[node name="property_editor" parent="BOX/CONTENT/float/require_restart" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/float"]
+margin_top = 40.0
+margin_right = 68.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/float/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/float/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="string" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_top = 116.0
+margin_right = 68.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+script = ExtResource( 5 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/string/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/string/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="placeholder" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/placeholder" instance=ExtResource( 9 )]
+hint_tooltip = "Property: placeholder
+
+Placeholder text used when there is nothing in the string."
+text = "placeholder"
+
+[node name="property_editor" parent="BOX/CONTENT/string/placeholder" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="default" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/default" instance=ExtResource( 9 )]
+hint_tooltip = "Property: default
+
+The default value for the config."
+text = "default"
+
+[node name="property_editor" parent="BOX/CONTENT/string/default" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="max_length" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/max_length" instance=ExtResource( 9 )]
+hint_tooltip = "Property: max_length
+
+The maximum amount of characters allowed in the box."
+text = "max_length"
+
+[node name="property_editor" parent="BOX/CONTENT/string/max_length" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "int"
+
+[node name="secret" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/secret" instance=ExtResource( 9 )]
+hint_tooltip = "Property: secret
+
+Whether the text should be hidden."
+text = "secret"
+
+[node name="property_editor" parent="BOX/CONTENT/string/secret" instance=ExtResource( 10 )]
+property_type = "bool"
+
+[node name="clear_button" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/clear_button" instance=ExtResource( 9 )]
+hint_tooltip = "Property: clear_button
+
+Whether a button to clear the text should be displayed."
+text = "clear_button"
+
+[node name="property_editor" parent="BOX/CONTENT/string/clear_button" instance=ExtResource( 10 )]
+property_type = "bool"
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/string/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 32.0
+margin_right = 68.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/string/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="require_restart" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/require_restart" instance=ExtResource( 9 )]
+hint_tooltip = "Property: require_restart
+
+Whether changing the config will require and 
+start prompting the user for a game restart."
+text = "require_restart"
+
+[node name="property_editor" parent="BOX/CONTENT/string/require_restart" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/string"]
+margin_top = 40.0
+margin_right = 68.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/string/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/string/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="optionbutton" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_top = 160.0
+margin_right = 68.0
+margin_bottom = 192.0
+size_flags_horizontal = 3
+script = ExtResource( 7 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="default" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/default" instance=ExtResource( 9 )]
+hint_tooltip = "Property: default
+
+The default value for the config."
+text = "default"
+
+[node name="OptionButton" type="OptionButton" parent="BOX/CONTENT/optionbutton/default"]
+margin_right = 29.0
+margin_bottom = 20.0
+
+[node name="options" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/options" instance=ExtResource( 9 )]
+hint_tooltip = "Property: options
+
+The names for the options to display."
+text = "options"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/options" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="store_method" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/store_method" instance=ExtResource( 9 )]
+hint_tooltip = "Property: store_method
+
+Whether the index of the selected option or the name of the selected option is stored by the config.
+
+Accepts \"int\" and \"string\"."
+text = "store_method"
+
+[node name="OptionButton" type="OptionButton" parent="BOX/CONTENT/optionbutton/store_method"]
+margin_right = 29.0
+margin_bottom = 20.0
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="require_restart" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/require_restart" instance=ExtResource( 9 )]
+hint_tooltip = "Property: require_restart
+
+Whether changing the config will require and 
+start prompting the user for a game restart."
+text = "require_restart"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/require_restart" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/optionbutton"]
+margin_top = 32.0
+margin_right = 68.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/optionbutton/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/optionbutton/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="input" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_top = 196.0
+margin_right = 68.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+script = ExtResource( 6 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/input/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/input/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="default" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/default" instance=ExtResource( 9 )]
+hint_tooltip = "Property: default
+
+The default value for the config."
+text = "default"
+
+[node name="property_editor" parent="BOX/CONTENT/input/default" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="always_binds" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/always_binds" instance=ExtResource( 9 )]
+hint_tooltip = "Property: always_binds
+
+Keybindss that will always be available for this config, and will not be displayed as options."
+text = "always_binds"
+
+[node name="property_editor" parent="BOX/CONTENT/input/always_binds" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/input/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/input/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/input"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/input/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/input/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="action" type="VBoxContainer" parent="BOX/CONTENT"]
+margin_top = 224.0
+margin_right = 68.0
+margin_bottom = 252.0
+size_flags_horizontal = 3
+script = ExtResource( 8 )
+
+[node name="name" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/name" instance=ExtResource( 9 )]
+hint_tooltip = "Property: name
+
+The display name for the config.
+Can be a translation string."
+text = "name"
+
+[node name="property_editor" parent="BOX/CONTENT/action/name" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="description" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/description" instance=ExtResource( 9 )]
+hint_tooltip = "Property: description
+
+The description tooltip for the config.
+Can be a translation string."
+text = "description"
+
+[node name="property_editor" parent="BOX/CONTENT/action/description" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="script_path" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/script_path" instance=ExtResource( 9 )]
+hint_tooltip = "Property: script_path
+
+Filepath for the script that the action button uses."
+text = "script_path"
+
+[node name="property_editor" parent="BOX/CONTENT/action/script_path" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="button_label" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/button_label" instance=ExtResource( 9 )]
+hint_tooltip = "Property: button_label
+
+String that the action button displays.
+Can be a translation string."
+text = "button_label"
+
+[node name="property_editor" parent="BOX/CONTENT/action/button_label" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="method" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/method" instance=ExtResource( 9 )]
+hint_tooltip = "Property: method
+
+Method that the button script would be connected to."
+text = "method"
+
+[node name="property_editor" parent="BOX/CONTENT/action/method" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "string"
+
+[node name="requires_bools" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/requires_bools" instance=ExtResource( 9 )]
+hint_tooltip = "Property: requires_bools
+
+Config paths to boolean configs required for this config to be editable.
+If a config is not a bool, it is ignored, and all configs must be true.
+
+Configs follow the format of \"Identifier/Section/Config\",
+i.e. \"VelocityPlus/VP_ENCELADUS/enable_achievements\"
+
+Config names cannot have spaces or forward slashes,
+use ConfigDriver.__truncate_to_setting_entry to help format."
+text = "requires_bools"
+
+[node name="property_editor" parent="BOX/CONTENT/action/requires_bools" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/invert_bool_requirement" instance=ExtResource( 9 )]
+hint_tooltip = "Property: invert_bool_requirement
+
+All configs listed in requires_bools now need to be false to make this editable."
+text = "invert_bool_requirement"
+
+[node name="property_editor" parent="BOX/CONTENT/action/invert_bool_requirement" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="disabled" type="HBoxContainer" parent="BOX/CONTENT/action"]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="BOX/CONTENT/action/disabled" instance=ExtResource( 9 )]
+hint_tooltip = "Property: disabled
+
+Whether the config setting is disabled and will be prevented from being parsed with the manifest.
+A mod needs to implement a custom parser to be able to read manifests with disabled configs."
+text = "disabled"
+
+[node name="property_editor" parent="BOX/CONTENT/action/disabled" instance=ExtResource( 10 )]
+can_edit_type = false
+property_type = "bool"
+
+[node name="Border" type="HBoxContainer" parent="."]
+margin_left = 78.0
+margin_right = 80.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2, 0 )
+
+[node name="DoDelete" type="ConfirmationDialog" parent="."]
+margin_left = 84.0
+margin_right = 284.0
+margin_bottom = 75.0
+window_title = "Delete link?"
+dialog_text = "Are you sure you want to delete '%s'?"
+dialog_autowrap = true
+
+[node name="RenameTo" type="ConfirmationDialog" parent="."]
+margin_left = 84.0
+margin_right = 284.0
+margin_bottom = 70.0
+window_title = "Edit locale name"
+
+[node name="LineEdit" type="LineEdit" parent="RenameTo"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 192.0
+margin_bottom = 34.0
+placeholder_text = "en_..."

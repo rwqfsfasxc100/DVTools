@@ -100,6 +100,7 @@ func resort():
 		var i = dataStore[r]
 		if is_instance_valid(i) and not i.is_queued_for_deletion():
 			LIST.add_child(i)
+	has_changed()
 	recalculate()
 
 func _draw():
@@ -134,7 +135,7 @@ func recalculate():
 		PAGE.value = current_page
 	else:
 		current_page = 0
-	has_changed()
+	
 
 func _size_value_changed(how:float):
 	how = int(how)
@@ -143,7 +144,7 @@ func _size_value_changed(how:float):
 	if how != sz:
 		if how < sz and sz > 0:
 			objList[sz - 1].DELETE()
-		elif how > sz:
+		elif how > sz and not "TAG_EXAMPLE" in dataStore:
 			add("TAG_EXAMPLE")
 	recalculate()
 

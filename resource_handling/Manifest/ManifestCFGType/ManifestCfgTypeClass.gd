@@ -1,6 +1,6 @@
 tool
 extends Resource
-class_name ManifestLangTypeResource
+class_name ManifestCfgTypeResource
 
 var URL:String = "" setget set_url
 var ICON:String = "" setget set_icon

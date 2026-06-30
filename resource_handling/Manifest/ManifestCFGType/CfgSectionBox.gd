@@ -1,14 +1,22 @@
 tool
-extends HBoxContainer
+extends VBoxContainer
 
-onready var TOGGLE = $BOX/BUTTONS/TOGGLE
-onready var RENAME = $BOX/BUTTONS/RENAME
-onready var DELETE = $BOX/BUTTONS/DELETE
+onready var TOGGLE = $HEADER/TOGGLE
+onready var RENAME = $HEADER/RENAME
+onready var DELETE = $HEADER/DELETE
 onready var DELETEMENU = $DoDelete
-onready var CONTENT = $BOX/CONTENT
-onready var URL = $BOX/CONTENT/URL/LineEdit
+onready var BODY = $BUFFER/BODY
+onready var CONTENT = $BUFFER/BODY/LIST
 onready var RENAMEBOX = $RenameTo
 onready var RENAMEEDIT = $RenameTo/LineEdit
+
+onready var ADDENTRY = $BUFFER/BODY/ADD
+onready var ADDCONFIRM = $BUFFER/BODY/ConfirmationDialog
+onready var ADDEDIT = $BUFFER/BODY/ConfirmationDialog/VBoxContainer/LineEdit
+onready var ADDLABEL = $BUFFER/BODY/ConfirmationDialog/VBoxContainer/Label
+
+onready var ENTRYBOX = $BUFFER/BODY/ENTRY/COUNT
+onready var PAGEBOX = $BUFFER/BODY/PAGE/COUNT
 
 var toggled = false
 
@@ -18,7 +26,7 @@ var deleteformat = ""
 
 var CONTAINER
 
-var initial_state = 100.0
+var initial_state:Dictionary = {}
 
 func _ready():
 	deleteformat = DELETEMENU.dialog_text
@@ -28,29 +36,139 @@ func _ready():
 	TOGGLE.text = boxname
 	RENAME.connect("pressed",self,"_on_rename")
 	RENAMEBOX.connect("confirmed",self,"RENAME_CONFIRMED")
-	URL.connect("text_entered",self,"_LE_text_changed")
-	URL.connect("focus_exited",self,"_lost_focus")
-	URL.text = str(initial_state)
+	
+	ADDENTRY.connect("pressed",self,"_on_add_open")
+	ADDCONFIRM.connect("confirmed",self,"_add_confirmed")
+	ENTRYBOX.connect("value_changed",self,"_size_value_changed")
+	PAGEBOX.connect("value_changed",self,"_page_value_changed")
+	
+	for i in initial_state:
+		print("Adding state to section [%s]: %s" %[boxname,str(i)])
+		pass
+
+var dataStore = {}
+
+func _on_add_open():
+	ADDEDIT.text = ""
+	ADDLABEL.visible = false
+	ADDCONFIRM.popup_centered()
+	ADDEDIT.grab_focus()
+
+func _add_confirmed():
+	var newname = ADDEDIT.text
+	if not newname in dataStore:
+		add(newname)
+	else:
+		ADDLABEL.visible = true
+const CfgEntryBox = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgEntryBox.tscn")
+
+func add(item_name,state = {}):
+	var box = CfgEntryBox.instance()
+	box.boxname = item_name
+	box.initial_state = state
+	dataStore[item_name] = box
+	box.CONTAINER = self
+	ADDCONFIRM.hide()
+	changed()
+	resort()
+
+func has_changed():
+	changed()
+
+func delete(which):
+	if which in dataStore:
+		var box = dataStore[which]
+		box.queue_free()
+		dataStore.erase(which)
+		changed()
+		resort()
+
+func rename(old,new):
+	if old in dataStore:
+		var ov = dataStore[old]
+		ov.boxname = new
+		dataStore.erase(old)
+		dataStore[new] = ov
+		changed()
+		resort()
+
+func resort():
+	for i in CONTENT.get_children():
+		CONTENT.remove_child(i)
+	for r in dataStore:
+		var i = dataStore[r]
+		if is_instance_valid(i) and not i.is_queued_for_deletion():
+			CONTENT.add_child(i)
+	recalculate()
+
+func get_list():
+	var objList = []
+	for i in dataStore:
+		objList.append(dataStore[i])
+	return objList
+
+const page_size = 10
+var current_page = 0
+func recalculate():
+	var size = dataStore.size()
+	if CONTENT and CONTENT.is_visible_in_tree():
+		var objList = get_list()
+		ENTRYBOX.value = size
+		var offset = (current_page * page_size)
+		var max_pages = int(ceil(float(size)/float(page_size))) - 1
+		for iv in objList:
+			iv.visible = false
+		if size > page_size:
+			for iv in range(clamp(size - offset,0,page_size)):
+				objList[iv + offset].visible = true
+			PAGEBOX.get_parent().visible = true
+		else:
+			for iv in objList:
+				iv.visible = true
+			PAGEBOX.get_parent().visible = false
+			current_page = 0
+		PAGEBOX.value = current_page
+	else:
+		current_page = 0
+
+func _size_value_changed(how:float):
+	how = int(how)
+	var objList = get_list()
+	var sz = objList.size()
+	if how != sz:
+		if how < sz and sz > 0:
+			objList[sz - 1].DELETE()
+		elif how > sz:
+			add("EXAMPLE_SETTING")
+	recalculate()
+
+func _page_value_changed(how:float):
+	how = int(how)
+	if how != current_page:
+		var size = dataStore.size()
+		var offset = (current_page * page_size)
+		var max_pages = int(ceil(float(size)/float(page_size))) - 1
+		if how < current_page and current_page > 0:
+			current_page -= 1
+		elif how > current_page:
+			if current_page < max_pages:
+				current_page += 1
+	recalculate()
+
+
+
+
 
 func changed(how = null):
 	if CONTAINER:
 		CONTAINER.has_changed()
 
-func _LE_text_changed(text:String):
-	var ft = float(text)
-	URL.text = str(ft)
-	changed()
-
-func _lost_focus():
-	var txt = URL.text
-	_LE_text_changed(txt)
-
 
 func get_data():
-	var txt = $BOX/CONTENT/URL/LineEdit.text
-	if not txt:
-		txt = 100.0
-	return str(txt) + "%"
+	var out = {}
+	for i in $BUFFER/BODY/LIST.get_children():
+		out.merge(i.get_data())
+	return out
 
 func _toggle_pressed():
 	toggled = !toggled
@@ -79,6 +197,6 @@ func RENAME_CONFIRMED():
 			RENAMEBOX.hide()
 
 func _draw():
-	if CONTENT:
-		CONTENT.visible = toggled
+	if BODY:
+		BODY.visible = toggled
 		TOGGLE.text = boxname

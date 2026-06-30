@@ -2,8 +2,11 @@
 
 [ext_resource path="res://addons/DVTools/property_editor/property_containers/dict.gd" type="Script" id=1]
 [ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/DVTools/property_editor/icons/collapsed.stex" type="Texture" id=4]
 [ext_resource path="res://addons/DVTools/resource_handling/SpinBoxNoScroll.gd" type="Script" id=5]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://addons/DVTools/property_editor/icons/collapsed.stex"
 
 [node name="dict" type="VBoxContainer"]
 margin_right = 40.0
@@ -23,7 +26,7 @@ margin_bottom = 22.0
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Dictionary (size 0)"
-icon = ExtResource( 4 )
+icon = SubResource( 1 )
 icon_align = 2
 
 [node name="Collapsable" type="VBoxContainer" parent="."]
@@ -90,13 +93,13 @@ size_flags_horizontal = 3
 
 [node name="Panel" type="Panel" parent="Collapsable/NEW"]
 margin_right = 302.0
-margin_bottom = 104.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Collapsable/NEW"]
 margin_right = 302.0
-margin_bottom = 104.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 
 [node name="Key" type="HBoxContainer" parent="Collapsable/NEW/VBoxContainer"]
