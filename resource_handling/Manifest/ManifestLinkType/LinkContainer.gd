@@ -24,7 +24,9 @@ var dataStore = {}
 func get_data():
 	var out = {}
 	for i in dataStore:
-		out[i] = dataStore[i].get_data()
+		var dta = dataStore[i].get_data()
+		if dta:
+			out[i] = dta
 	return out
 
 func set_data(STATE):
