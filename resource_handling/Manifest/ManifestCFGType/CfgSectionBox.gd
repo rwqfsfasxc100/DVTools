@@ -212,6 +212,7 @@ func RENAME_CONFIRMED():
 		if newname:
 			if newname != boxname:
 				CONTAINER.rename(boxname,newname)
+				toggled = false
 			RENAMEBOX.hide()
 
 func _draw():

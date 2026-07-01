@@ -117,6 +117,7 @@ func _on_rename():
 	RENAMEEDIT.caret_position = boxname.length()
 	RENAMEBOX.popup_centered()
 	RENAMEEDIT.grab_focus()
+	toggled = false
 
 func RENAME_CONFIRMED():
 	if CONTAINER:
