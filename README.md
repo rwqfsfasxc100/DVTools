@@ -92,3 +92,4 @@ Any files that can define mods are highlighted in a light green.
 - `NAMER.gd`
 - `LOAD_RESOURCES.gd`
 - `MOD_DETAILS.txt`
+- `REPLACE_TRANSLATIONS.gd` (If time permits, TranslationTracker already serves this purpose well enough for the time being)
