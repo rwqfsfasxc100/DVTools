@@ -20,7 +20,9 @@ var CONTAINER
 
 var initial_state = {}
 
-var current_box_type = "bool"
+var current_box_type = ""
+
+var loaded_box
 
 func _ready():
 	deleteformat = DELETEMENU.dialog_text
@@ -30,7 +32,7 @@ func _ready():
 	TOGGLE.text = boxname
 	RENAME.connect("pressed",self,"_on_rename")
 	RENAMEBOX.connect("confirmed",self,"RENAME_CONFIRMED")
-	specify_box_type(initial_state.get("type","bool"))
+#	specify_box_type(initial_state.get("type","bool"))
 	set_data(initial_state)
 
 func changed(how = null):
@@ -48,25 +50,48 @@ const config_types = PoolStringArray([
 ])
 
 func specify_box_type(type:String):
-	for i in CONTENT.get_children():
-		i.visible = i.name == type.to_lower()
-		if i.name == type.to_lower():
-			current_box_type = type.to_lower()
+	type = type.to_lower()
+	if type != current_box_type:
+		if loaded_box and not loaded_box.is_queued_for_deletion():
+			CONTENT.remove_child(loaded_box)
+			loaded_box.queue_free()
+		for i in CONTENT.get_children():
+			if i and not i.is_queued_for_deletion():
+				CONTENT.remove_child(i)
+				i.queue_free()
+		if type in boxes:
+			loaded_box = boxes[type].instance()
+			CONTENT.add_child(loaded_box)
+	elif not loaded_box or (loaded_box and not loaded_box.is_queued_for_deletion()):
+		if type in boxes:
+			loaded_box = boxes[type].instance()
+			CONTENT.add_child(loaded_box)
+	if loaded_box:
+		loaded_box.visible = true
+
+var boxes = {
+	"action":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/action.tscn"),
+	"bool":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/bool.tscn"),
+	"float":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/float.tscn"),
+	"input":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/input.tscn"),
+	"int":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/int.tscn"),
+	"optionbutton":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/optionbutton.tscn"),
+	"string":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/string.tscn"),
+}
 
 func get_data():
 	var data = {}
-	for i in CONTENT.get_children():
-		if i.visible and i.has_method("get_data"):
-			data = i.get_data()
+	if loaded_box:
+		data = loaded_box.get_data().duplicate(true)
 	if current_box_type == "optionbutton" and not data.get("options",[]).size():
 		return {}
 	data["type"] = current_box_type
 	return data
 
 func set_data(STATE):
-	for i in CONTENT.get_children():
-		if i.visible and i.has_method("set_data"):
-			i.set_data(STATE)
+	specify_box_type(STATE.get("type","bool"))
+	if loaded_box:
+		loaded_box.set_data(STATE)
 
 func _toggle_pressed():
 	toggled = !toggled
@@ -101,7 +126,7 @@ func RENAME_CONFIRMED():
 			if newname != boxname:
 				CONTAINER.rename(boxname,newname)
 			if newtype != current_box_type:
-				var state = get_data()
+				var state = get_data().duplicate(true)
 				specify_box_type(newtype)
 				if newtype == "optionbutton":
 					state["options"] = PoolStringArray(["EXAMPLE_OPTION"])

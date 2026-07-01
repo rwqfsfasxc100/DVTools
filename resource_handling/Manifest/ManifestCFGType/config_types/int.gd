@@ -63,6 +63,11 @@ func get_style_val():
 	return styles[STYLE.selected]
 
 func set_style_val(how:String):
+	if not STYLE:
+		STYLE = $style/OptionButton
+		STYLE.clear()
+		for i in styles:
+			STYLE.add_item(i)
 	if how in styles:
 		STYLE.select(styles.find(how))
 	else:

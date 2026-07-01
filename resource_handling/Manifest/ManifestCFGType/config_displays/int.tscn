@@ -1,0 +1,130 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/int.gd" type="Script" id=1]
+[ext_resource path="res://addons/DVTools/property_editor/property_containers/string.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/DVTools/property_editor/property_containers/bool.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/DescriptionLabel.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/DVTools/property_editor/property_containers/poolstringarray.tscn" type="PackedScene" id=10]
+[ext_resource path="res://addons/DVTools/property_editor/property_containers/int.tscn" type="PackedScene" id=11]
+
+[node name="int" type="VBoxContainer"]
+visible = false
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+
+[node name="name" type="HBoxContainer" parent="."]
+margin_right = 68.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="name" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="name" instance=ExtResource( 7 )]
+
+[node name="description" type="HBoxContainer" parent="."]
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="description" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="description" instance=ExtResource( 7 )]
+
+[node name="min" type="HBoxContainer" parent="."]
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="min" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="min" instance=ExtResource( 11 )]
+
+[node name="max" type="HBoxContainer" parent="."]
+margin_top = 12.0
+margin_right = 68.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="max" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="max" instance=ExtResource( 11 )]
+
+[node name="step" type="HBoxContainer" parent="."]
+margin_top = 16.0
+margin_right = 68.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="step" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="step" instance=ExtResource( 11 )]
+
+[node name="default" type="HBoxContainer" parent="."]
+margin_top = 20.0
+margin_right = 68.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="default" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="default" instance=ExtResource( 11 )]
+
+[node name="style" type="HBoxContainer" parent="."]
+margin_top = 24.0
+margin_right = 68.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="style" instance=ExtResource( 9 )]
+
+[node name="OptionButton" type="OptionButton" parent="style"]
+margin_right = 29.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "slider"
+items = [ "slider", null, false, 0, null, "spinbox", null, false, 1, null ]
+selected = 0
+
+[node name="requires_bools" type="HBoxContainer" parent="."]
+margin_top = 28.0
+margin_right = 68.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="requires_bools" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="requires_bools" instance=ExtResource( 10 )]
+
+[node name="invert_bool_requirement" type="HBoxContainer" parent="."]
+margin_top = 32.0
+margin_right = 68.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="invert_bool_requirement" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="invert_bool_requirement" instance=ExtResource( 8 )]
+
+[node name="require_restart" type="HBoxContainer" parent="."]
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="require_restart" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="require_restart" instance=ExtResource( 8 )]
+
+[node name="disabled" type="HBoxContainer" parent="."]
+margin_top = 40.0
+margin_right = 68.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="disabled" instance=ExtResource( 9 )]
+
+[node name="property_editor" parent="disabled" instance=ExtResource( 8 )]
