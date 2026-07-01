@@ -54,8 +54,6 @@ func changed(how = null):
 		CONTAINER.has_changed()
 
 
-
-
 func _open_dir():
 	DIRMENU.popup_centered()
 
@@ -63,8 +61,17 @@ func _icon_file_selected(how):
 	ICON.text = how
 
 func get_data():
-	return {"URL":$BOX/CONTENT/URL/LineEdit.text,"ICON":$BOX/CONTENT/ICON/LineEdit.text,"TOOLTIP":$BOX/CONTENT/TOOLTIP/LineEdit.text}
-#	return {"URL":URL.text,"ICON":ICON.text,"TOOLTIP":TOOLTIP.text}
+	var UTXT = $BOX/CONTENT/URL/LineEdit.text
+	var ITXT = $BOX/CONTENT/ICON/LineEdit.text
+	var TTXT = $BOX/CONTENT/TOOLTIP/LineEdit.text
+	var out = {}
+	if UTXT:
+		out["URL"] = UTXT
+		if ITXT:
+			out["ICON"] = ITXT
+		if TTXT:
+			out["TOOLTIP"] = TTXT
+	return out
 
 func _toggle_pressed():
 	toggled = !toggled
