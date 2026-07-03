@@ -3,13 +3,21 @@ extends Node
 
 
 const iconcat = []
+const cache_meta = {"last_mtime": 0}
 
 static func change_tree_appearance(tree: Tree) -> void:
-	var items = __get_script_variables_without_load("res://ModLoader.gd").get("addedMods",[])
-	iconcat.clear()
-	for i in items:
-		iconcat.append("res://" + i.split("/")[2] + "/")
+	var path = "res://ModLoader.gd"
+	var current_mtime = 0
+	var file = File.new()
+	if file.file_exists(path):
+		current_mtime = file.get_modified_time(path)
 	
+	if current_mtime != cache_meta.last_mtime or iconcat.empty():
+		cache_meta.last_mtime = current_mtime
+		iconcat.clear()
+		var items = __get_script_variables_without_load(path).get("addedMods",[])
+		for i in items:
+			iconcat.append("res://" + i.split("/")[2] + "/")
 	
 	change_item_appearance(tree.get_root())
 

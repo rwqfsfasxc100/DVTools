@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-const counter_maximum : float = 0.25 # Time in seconds between refreshes of the FileSystem modification
+#const counter_maximum : float = 0.25 # Time in seconds between refreshes of the FileSystem modification
 
 const classes = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd"),
@@ -30,10 +30,11 @@ var manifest_version_lock_inspectorplugin
 var inspector_plugins = []
 
 var icon_handler:Node
+var file_tree: Tree
+var search_box: LineEdit
+var _is_update_queued = false
 
 func _enter_tree():
-	set_physics_process(true)
-	
 	# Setting up for tooltips
 	get_tree().connect("node_added", self, "_on_node_added", [], CONNECT_DEFERRED)
 	
@@ -93,49 +94,63 @@ func _on_node_added(node: Node):
 
 func add_icon_handler():
 	icon_handler = load("res://addons/DVTools/icon_handler.gd").new()
-	var file_tree: Tree
 	var file_list: ItemList
-	for node in get_editor_interface().get_file_system_dock().get_children():
-	# Only the parent of the file tree and file list is a VSplit
+	var interface := get_editor_interface()
+	for node in interface.get_file_system_dock().get_children():
+		# Only the parent of the file tree and file list is a VSplit
 		if node is VSplitContainer:
 			file_tree = node.get_child(0)
 			file_list = node.get_child(1).get_child(1)
-			break
+		elif node is VBoxContainer:
+			if node.get_child_count() > 0 and node.get_child(0) is HBoxContainer:
+				for child in node.get_child(0).get_children():
+					if child is LineEdit:
+						search_box = child
+						break
 	
-	icon_handler.change_tree_appearance(file_tree)
-	var interface := get_editor_interface()
-	connect("redraw",self,"recheck_icon_handler",[file_tree])
-#	var file_system := interface.get_resource_filesystem()
-#	file_system.connect("filesystem_changed", self, "recheck_icon_handler", [file_tree])
-#	file_system.connect("filesystem_changed", icon_handler, "change_tree_appearance", [file_tree])
+	if file_tree:
+		icon_handler.change_tree_appearance(file_tree)
+		file_tree.connect("item_collapsed", self, "_on_tree_item_collapsed")
+		
+		if search_box:
+			search_box.connect("text_changed", self, "_on_search_changed")
+		
+		var file_system := interface.get_resource_filesystem()
+		file_system.connect("filesystem_changed", self, "recheck_icon_handler")
 
+func _on_tree_item_collapsed(_item: TreeItem):
+	recheck_icon_handler()
 
-signal redraw()
+func _on_search_changed(_new_text: String):
+	recheck_icon_handler()
 
-var ctr:float = 0.0
-
-func _physics_process(delta):
-	ctr += delta
-	if ctr > counter_maximum:
-		ctr = 0.0
-		emit_signal("redraw")
-
-func recheck_icon_handler(file_tree):
+func recheck_icon_handler():
+	if _is_update_queued:
+		return
+	_is_update_queued = true
+	yield(get_tree(), "idle_frame")
+	_is_update_queued = false
+	
+	if not file_tree:
+		return
 	if not icon_handler or not is_instance_valid(icon_handler) or icon_handler.is_queued_for_deletion():
 		icon_handler = load("res://addons/DVTools/icon_handler.gd").new()
-		
-		icon_handler.change_tree_appearance(file_tree)
-#		var file_system := get_editor_interface().get_resource_filesystem()
-#		file_system.connect("filesystem_changed", icon_handler, "change_tree_appearance", [file_tree])
-	else:
-		icon_handler.change_tree_appearance(file_tree)
+	icon_handler.change_tree_appearance(file_tree)
 	
 func remove_icon_handler():
 	var file_system := get_editor_interface().get_resource_filesystem()
-#	file_system.disconnect("filesystem_changed", icon_handler, "change_tree_appearance")
-	disconnect("redraw",self,"recheck_icon_handler")
+	if file_system and file_system.is_connected("filesystem_changed", self, "recheck_icon_handler"):
+		file_system.disconnect("filesystem_changed", self, "recheck_icon_handler")
+	if file_tree:
+		if file_tree.is_connected("item_collapsed", self, "_on_tree_item_collapsed"):
+			file_tree.disconnect("item_collapsed", self, "_on_tree_item_collapsed")
+	if search_box and search_box.is_connected("text_changed", self, "_on_search_changed"):
+		search_box.disconnect("text_changed", self, "_on_search_changed")
+		
 	file_system.scan()
 	icon_handler = null
+	file_tree = null
+	search_box = null
 
 
 
