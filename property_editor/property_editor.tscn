@@ -4,7 +4,7 @@
 
 [sub_resource type="StreamTexture" id=2]
 flags = 4
-load_path = "res://HevLib/development_tools/property_editor/icons/edit.stex"
+load_path = "res://addons/DVTools/property_editor/icons/edit.stex"
 
 [sub_resource type="StreamTexture" id=1]
 flags = 4

@@ -449,35 +449,50 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 	
 	if "links" in manifest_data:
 		var links = manifest_data["links"]
+		var ovLinks = {}
 		for link in links:
-			var d = links[link]
-			if d.get("URL",""):
-				dict_template["links"].merge({link:d})
+			var ld = links[link]
+			if typeof(ld) == TYPE_DICTIONARY:
+				if "URL" in ld and typeof(ld.URL) == TYPE_STRING:
+					ovLinks[link] = ld
+		if ovLinks:
+			dict_template["links"] = ovLinks
 	if "tags" in manifest_data:
 		var tags = manifest_data["tags"]
+		var ovTags = {}
 		for tag in tags:
-			dict_template["tags"].merge({tag:tags.get(tag)})
+			var td = tags[tag]
+			if typeof(td) == TYPE_DICTIONARY:
+				if "type" in td and "value" in td and typeof(td.type) == TYPE_STRING:
+					ovTags[tag] = td
+		if ovTags:
+			dict_template["tags"] = ovTags
 	if "languages" in manifest_data:
 		var languages = manifest_data["languages"]
 		for language in languages:
-			dict_template["languages"].merge({language:languages.get(language)})
-	else:
-		dict_template["languages"].merge({"en":"100%"})
+			var ld = languages[language]
+			var tld = typeof(ld)
+			if tld == TYPE_STRING:
+				dict_template["languages"][language] = ld
+			elif tld == TYPE_INT or tld == TYPE_REAL:
+				dict_template["languages"][language] = str(ld) + "%"
 	if "library" in manifest_data:
 		dict_template["library"]["is_library"] = manifest_data["library"].get("is_library",false)
 		dict_template["library"]["always_display"] = manifest_data["library"].get("always_display",false)
 		
 	if "configs" in manifest_data:
 		var configs = manifest_data["configs"]
-		var cout = {}
-		for cfg in configs:
-			var cvData = configs[cfg]
-			for cv in cvData:
-				if not cfg in cout:
-					cout[cfg] = {}
-				cout[cfg][cv] = cvData[cv]
-		if cout:
-			dict_template["configs"] = cout
+		var ovConfigs = {}
+		for section in configs:
+			var sec_data = configs[section]
+			for cfname in sec_data:
+				var cfdata = sec_data[cfname]
+				if not cfdata.get("disabled",false):
+					if not section in ovConfigs:
+						ovConfigs[section] = {}
+					ovConfigs[section][cfname] = cfdata
+		if ovConfigs:
+			dict_template["configs"] = ovConfigs
 	var out = {}
 	
 	for section in dict_template:

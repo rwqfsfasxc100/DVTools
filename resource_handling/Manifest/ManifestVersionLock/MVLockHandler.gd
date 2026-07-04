@@ -1,3 +1,4 @@
+tool
 extends EditorInspectorPlugin
 
 const manifestclass = preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd")

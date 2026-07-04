@@ -1,7 +1,8 @@
 tool
 extends EditorPlugin
 
-#const counter_maximum : float = 0.25 # Time in seconds between refreshes of the FileSystem modification
+const panel_enabled = false
+
 
 const classes = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd"),
@@ -18,14 +19,11 @@ const property_handler_plugins = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLangType/LangHandler.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgHandler.gd"),
 	
+	
 ]
 
 
-
-
-# Inspector plugins
-var tag_inspectorplugin
-var manifest_version_lock_inspectorplugin
+var tool_panel_instance
 
 var inspector_plugins = []
 
@@ -35,6 +33,19 @@ var search_box: LineEdit
 var _is_update_queued = false
 
 func _enter_tree():
+	# Initializes the main panel
+	if panel_enabled:
+		tool_panel_instance = preload("res://addons/DVTools/DVToolPanel.tscn").instance()
+		get_editor_interface().get_editor_viewport().add_child(tool_panel_instance)
+		make_visible(false)
+		
+		# Driver detection
+		var scriptEditor = get_editor_interface().get_script_editor()
+		scriptEditor.connect("editor_script_changed",self,"handle_driver")
+		scriptEditor.connect("script_close",self,"close_script")
+	
+	set_physics_process(true)
+	
 	# Setting up for tooltips
 	get_tree().connect("node_added", self, "_on_node_added", [], CONNECT_DEFERRED)
 	
@@ -51,6 +62,8 @@ func _enter_tree():
 func _exit_tree():
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
+	
+	# Removing inspector plugins
 	for plugin in inspector_plugins:
 		remove_inspector_plugin(plugin)
 	
@@ -58,15 +71,57 @@ func _exit_tree():
 	
 	remove_icon_handler()
 	
+	if panel_enabled:
+		# Removing main screen panel
+		if tool_panel_instance:
+			tool_panel_instance.queue_free()
+		
+		# Removing driver detection
+		var scriptEditor = get_editor_interface().get_script_editor()
+		scriptEditor.disconnect("editor_script_changed",self,"handle_driver")
+		scriptEditor.disconnect("script_close",self,"close_script")
+	
 
+# Main screen panel handling
 
+func has_main_screen():
+	return panel_enabled
+
+const plugin_name = "ΔV Tools"
+
+func make_visible(visible):
+	if tool_panel_instance:
+		tool_panel_instance.visible = visible
+		if visible:
+			get_editor_interface().set_main_screen_editor(plugin_name)
 
 func get_plugin_name():
-	return "ΔV Tools"
-
+	return plugin_name
 
 func get_plugin_icon():
 	return get_editor_interface().get_base_control().get_icon("Node", "EditorIcons")
+
+
+var supported_driver_files = PoolStringArray([
+	"ADD_EQUIPMENT_ITEMS.gd",
+	
+])
+
+func handle_driver(script:Script):
+	var path = script.resource_path
+	make_visible(path.get_file() in supported_driver_files)
+
+func close_script(script:Object):
+	make_visible(false)
+
+func handles(object):
+	
+	return false
+
+
+
+# Tooltip handling
+# Tooltips for properties can be added by setting a 'hint_tooltip' entry in the property's _get_property_list entry
 
 func _on_node_added(node: Node):
 	if node:
@@ -86,9 +141,6 @@ func _on_node_added(node: Node):
 								var tt = p.hint_tooltip
 								np.hint_tooltip = pname + "\n" + tt
 								np.update()
-
-
-
 
 # Code to handle icon changes
 
@@ -135,6 +187,8 @@ func recheck_icon_handler():
 		return
 	if not icon_handler or not is_instance_valid(icon_handler) or icon_handler.is_queued_for_deletion():
 		icon_handler = load("res://addons/DVTools/icon_handler.gd").new()
+
+	
 	icon_handler.change_tree_appearance(file_tree)
 	
 func remove_icon_handler():
