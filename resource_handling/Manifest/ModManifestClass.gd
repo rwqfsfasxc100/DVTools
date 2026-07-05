@@ -280,7 +280,7 @@ const manifest_template = {
 		"description":"",
 		"brief":"",
 		"author":"",
-		"credits":PoolStringArray([])
+		"credits":PoolStringArray()
 	},
 	"version":{
 		"version_major":1,
@@ -307,9 +307,9 @@ const manifest_template = {
 	},
 	"manifest_definitions":{
 		"manifest_version":default_version,
-		"dependancy_mod_ids":PoolStringArray([]),
-		"conflicting_mod_ids":PoolStringArray([]),
-		"complementary_mod_ids":PoolStringArray([]),
+		"dependancy_mod_ids":PoolStringArray(),
+		"conflicting_mod_ids":PoolStringArray(),
+		"complementary_mod_ids":PoolStringArray(),
 		"manifest_url":"", # EXAMPLE: https://raw.githubusercontent.com/rwqfsfasxc100/HevLib/main/Mod.manifest
 		"changelog_path":"", # This is relative to the ModMain.gd file. EXAMPLE: for a file at 'res://Example Mod/data/folder/changelogs.txt', you would put 'data/folder/changelogs.txt'
 		"modlet_priority":0, # SPECIFIC TO MODLETS! The order at which the modlet would be loaded. Most modlets load before other mods, but this will affect load order within the list of installed modlets
