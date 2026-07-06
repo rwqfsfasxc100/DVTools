@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-const panel_enabled = false
+const panel_enabled = true
 
 
 const classes = [
@@ -35,7 +35,8 @@ var _is_update_queued = false
 func _enter_tree():
 	# Initializes the main panel
 	if panel_enabled:
-		tool_panel_instance = preload("res://addons/DVTools/DVToolPanel.tscn").instance()
+		tool_panel_instance = ResourceLoader.load("res://addons/DVTools/DVToolPanel.tscn","",true).instance()
+		tool_panel_instance.connect("reload_scripts",self,"reload_open_scripts")
 		get_editor_interface().get_editor_viewport().add_child(tool_panel_instance)
 		make_visible(false)
 		
@@ -63,6 +64,9 @@ func _exit_tree():
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
 	
+	tool_panel_instance.disconnect("reload_scripts",self,"reload_open_scripts")
+	tool_panel_instance.queue_free()
+	
 	# Removing inspector plugins
 	for plugin in inspector_plugins:
 		remove_inspector_plugin(plugin)
@@ -84,16 +88,25 @@ func _exit_tree():
 
 # Main screen panel handling
 
+func reload_open_scripts():
+	var scriptEditor : ScriptEditor = get_editor_interface().get_script_editor()
+	scriptEditor.reload_scripts()
+
+
 func has_main_screen():
 	return panel_enabled
 
 const plugin_name = "ΔV Tools"
 
-func make_visible(visible):
+func make_visible(visible:bool,file_to_load:String = ""):
 	if tool_panel_instance:
 		tool_panel_instance.visible = visible
 		if visible:
 			get_editor_interface().set_main_screen_editor(plugin_name)
+			if file_to_load:
+				if tool_panel_instance.has_method("load_this_file"):
+					tool_panel_instance.load_this_file(file_to_load)
+		
 
 func get_plugin_name():
 	return plugin_name
@@ -107,12 +120,20 @@ var supported_driver_files = PoolStringArray([
 	
 ])
 
+var can_open_driver = true
 func handle_driver(script:Script):
-	var path = script.resource_path
-	make_visible(path.get_file() in supported_driver_files)
+	yield(get_tree(),"idle_frame")
+	if can_open_driver:
+		var path = script.resource_path
+		make_visible(path.get_file() in supported_driver_files,path)
 
 func close_script(script:Object):
+	can_open_driver = false
 	make_visible(false)
+	yield(get_tree(),"idle_frame")
+	yield(get_tree(),"idle_frame")
+	can_open_driver = true
+	
 
 func handles(object):
 	
