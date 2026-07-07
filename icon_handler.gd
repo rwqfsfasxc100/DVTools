@@ -3,21 +3,37 @@ extends Node
 
 
 const iconcat = []
-const cache_meta = {"last_mtime": 0}
+const cache_meta = {"last_mtime": 0, "last_ctime": 0}
 
 static func change_tree_appearance(tree: Tree) -> void:
-	var path = "res://ModLoader.gd"
+	var modloaderPath = "res://ModLoader.gd"
+	var cfgPath = "user://cfg/Mod_Configurations.cfg"
 	var current_mtime = 0
+	var current_ctime = 0
 	var file = File.new()
-	if file.file_exists(path):
-		current_mtime = file.get_modified_time(path)
+	if file.file_exists(modloaderPath):
+		current_mtime = file.get_modified_time(modloaderPath)
+	if file.file_exists(cfgPath):
+		current_ctime = file.get_modified_time(cfgPath)
 	
-	if current_mtime != cache_meta.last_mtime or iconcat.empty():
+	if iconcat.empty():
+		current_ctime = -1
+		current_mtime = -1
+	
+	if current_mtime != cache_meta.last_mtime or current_ctime != cache_meta.last_ctime:
 		cache_meta.last_mtime = current_mtime
+		cache_meta.last_ctime = current_ctime
 		iconcat.clear()
-		var items = __get_script_variables_without_load(path).get("addedMods",[])
+		var items = __get_script_variables_without_load(modloaderPath).get("addedMods",[])
+		var modlets = __get_value("HevLib","modlets","seen_modlets")
+		if modlets:
+			for mod in modlets:
+				if modlets[mod]:
+					items.append(mod)
 		for i in items:
-			iconcat.append("res://" + i.split("/")[2] + "/")
+			var r:PoolStringArray = i.get_base_dir().split("/",false)
+			if r.size() > 1:
+				iconcat.append("res://" + r[1] + "/")
 	
 	change_item_appearance(tree.get_root())
 
@@ -51,10 +67,22 @@ static func change_item_appearance(tree_item: TreeItem) -> void:
 		tree_item = tree_item.get_next()
 
 
-
+static func __get_value(mod_id: String, section: String, key: String):
+	var full = "".join(mod_id.split("/")).join(mod_id.split(" ")) + "/" + "".join(section.split("/"))
+	var cfg:ConfigFile = ConfigFile.new()
+	var error:int = cfg.load("user://cfg/Mod_Configurations.cfg")
+	if error != OK:
+		return null
+	
+	if cfg.has_section(full):
+		var keys : Array = cfg.get_section_keys(full)
+		if key in keys:
+			var data = cfg.get_value(full,key)
+			return data
+		return null
+	return null
 
 static func __get_script_variables_without_load(script_path : String) -> Dictionary:
-		var filepath : String  = "user://cache/.HevLib_Cache/Variable_Fetch/"
 		var pathway : Array = __trim_scripts(script_path)
 		if pathway[1].size() == 0:
 			return {}
