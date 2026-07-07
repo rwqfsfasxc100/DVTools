@@ -25,7 +25,7 @@ size_flags_horizontal = 3
 script = ExtResource( 2 )
 
 [node name="HEADER" type="HBoxContainer" parent="."]
-margin_right = 68.0
+margin_right = 100.0
 margin_bottom = 22.0
 
 [node name="TOGGLE" type="Button" parent="HEADER"]
@@ -46,9 +46,21 @@ margin_right = 68.0
 margin_bottom = 22.0
 text = "X"
 
+[node name="UP" type="Button" parent="HEADER"]
+margin_left = 72.0
+margin_right = 84.0
+margin_bottom = 22.0
+text = "↑"
+
+[node name="DOWN" type="Button" parent="HEADER"]
+margin_left = 88.0
+margin_right = 100.0
+margin_bottom = 22.0
+text = "↓"
+
 [node name="BUFFER" type="HBoxContainer" parent="."]
 margin_top = 26.0
-margin_right = 68.0
+margin_right = 100.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 

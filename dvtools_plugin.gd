@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-const panel_enabled = true
+const panel_enabled = false
 
 
 const classes = [
@@ -35,7 +35,7 @@ var _is_update_queued = false
 func _enter_tree():
 	# Initializes the main panel
 	if panel_enabled:
-		tool_panel_instance = ResourceLoader.load("res://addons/DVTools/DVToolPanel.tscn","",true).instance()
+		tool_panel_instance = ResourceLoader.load("res://addons/DVTools/tool_panel/DVToolPanel.tscn","",true).instance()
 		tool_panel_instance.connect("reload_scripts",self,"reload_open_scripts")
 		get_editor_interface().get_editor_viewport().add_child(tool_panel_instance)
 		make_visible(false)
@@ -63,9 +63,9 @@ func _enter_tree():
 func _exit_tree():
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
-	
-	tool_panel_instance.disconnect("reload_scripts",self,"reload_open_scripts")
-	tool_panel_instance.queue_free()
+	if panel_enabled:
+		tool_panel_instance.disconnect("reload_scripts",self,"reload_open_scripts")
+		tool_panel_instance.queue_free()
 	
 	# Removing inspector plugins
 	for plugin in inspector_plugins:

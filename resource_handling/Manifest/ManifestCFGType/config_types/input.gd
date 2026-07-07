@@ -1,6 +1,9 @@
 tool
 extends VBoxContainer
 
+const type = "input"
+var boxname = ""
+
 onready var NAME = $name/property_editor
 onready var DESCRIPTION = $description/property_editor
 onready var DEFAULT = $default/property_editor

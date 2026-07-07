@@ -1,15 +1,6 @@
 tool
 extends HBoxContainer
 
-onready var TOGGLE = $BOX/BUTTONS/TOGGLE
-onready var RENAME = $BOX/BUTTONS/RENAME
-onready var DELETE = $BOX/BUTTONS/DELETE
-onready var DELETEMENU = $DoDelete
-onready var CONTENT = $BOX/CB/CONTENT
-onready var RENAMEBOX = $RenameTo
-onready var RENAMEEDIT = $RenameTo/VBoxContainer/LineEdit
-onready var RENAMEOPTS = $RenameTo/VBoxContainer/OptionButton
-
 var toggled = false
 
 var boxname = ""
@@ -25,19 +16,30 @@ var current_box_type = ""
 var loaded_box
 
 func _ready():
-	deleteformat = DELETEMENU.dialog_text
-	TOGGLE.connect("pressed",self,"_toggle_pressed")
-	DELETE.connect("pressed",self,"_on_delete")
-	DELETEMENU.connect("confirmed",self,"DELETE")
-	TOGGLE.text = boxname
-	RENAME.connect("pressed",self,"_on_rename")
-	RENAMEBOX.connect("confirmed",self,"RENAME_CONFIRMED")
+	deleteformat = $DoDelete.dialog_text
+	$BOX/BUTTONS/TOGGLE.connect("pressed",self,"_toggle_pressed")
+	$BOX/BUTTONS/DELETE.connect("pressed",self,"_on_delete")
+	$DoDelete.connect("confirmed",self,"$BOX/BUTTONS/DELETE")
+	$BOX/BUTTONS/TOGGLE.text = boxname
+	$BOX/BUTTONS/RENAME.connect("pressed",self,"_on_rename")
+	$RenameTo.connect("confirmed",self,"RENAME_CONFIRMED")
+	$BOX/BUTTONS/UP.connect("pressed",self,"_on_up_pressed")
+	$BOX/BUTTONS/DOWN.connect("pressed",self,"_on_down_pressed")
 #	specify_box_type(initial_state.get("type","bool"))
-	set_data(initial_state)
+	set_data(initial_state,boxname)
+	yield(get_tree(),"idle_frame")
+	_on_down_pressed()
 
 func changed(how = null):
 	if CONTAINER:
 		CONTAINER.has_changed()
+
+func _on_up_pressed():
+	if CONTAINER:
+		CONTAINER.move_id_up(boxname,get_position_in_parent())
+func _on_down_pressed():
+	if CONTAINER:
+		CONTAINER.move_id_down(boxname,get_position_in_parent())
 
 const config_types = PoolStringArray([
 	"bool",
@@ -50,24 +52,47 @@ const config_types = PoolStringArray([
 ])
 
 func specify_box_type(type:String):
-	type = type.to_lower()
+	type = fix_type_name(type)
 	if type != current_box_type:
 		if loaded_box and not loaded_box.is_queued_for_deletion():
-			CONTENT.remove_child(loaded_box)
+			$BOX/CB/CONTENT.remove_child(loaded_box)
 			loaded_box.queue_free()
-		for i in CONTENT.get_children():
+		for i in $BOX/CB/CONTENT.get_children():
 			if i and not i.is_queued_for_deletion():
-				CONTENT.remove_child(i)
+				$BOX/CB/CONTENT.remove_child(i)
 				i.queue_free()
 		if type in boxes:
-			loaded_box = boxes[type].instance()
-			CONTENT.add_child(loaded_box)
+			var box = boxes[type].instance()
+			box.name = "loaded_box"
+			box.boxname = boxname
+			loaded_box = box
+			$BOX/CB/CONTENT.add_child(loaded_box)
 	elif not loaded_box or (loaded_box and not loaded_box.is_queued_for_deletion()):
 		if type in boxes:
-			loaded_box = boxes[type].instance()
-			CONTENT.add_child(loaded_box)
+			var box = boxes[type].instance()
+			box.name = "loaded_box"
+			box.boxname = boxname
+			loaded_box = box
+			$BOX/CB/CONTENT.add_child(loaded_box)
 	if loaded_box:
 		loaded_box.visible = true
+	else:
+		printerr("Loaded box was not set")
+
+func fix_type_name(type:String = "bool") -> String:
+	type = type.to_lower()
+	match type:
+		"boolean":
+			type = "bool"
+		"integer":
+			type = "int"
+		"real":
+			type = "float"
+		"str":
+			type = "string"
+		"option","option_button":
+			type = "optionbutton"
+	return type
 
 var boxes = {
 	"action":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/action.tscn"),
@@ -81,48 +106,54 @@ var boxes = {
 
 func get_data():
 	var data = {}
+	if not loaded_box:
+		loaded_box = $BOX/CB/CONTENT.get_node("loaded_box")
 	if loaded_box:
+		boxname = loaded_box.boxname
+		current_box_type = loaded_box.type
 		data = loaded_box.get_data().duplicate(true)
 	if current_box_type == "optionbutton" and not data.get("options",[]).size():
 		return {}
 	data["type"] = current_box_type
 	return data
 
-func set_data(STATE):
+func set_data(STATE,bn:String = ""):
 	specify_box_type(STATE.get("type","bool"))
 	if loaded_box:
 		loaded_box.set_data(STATE)
+		if bn:
+			loaded_box.boxname = bn
 
 func _toggle_pressed():
 	toggled = !toggled
 	update()
 
 func _on_delete():
-	DELETEMENU.dialog_text = deleteformat % boxname
-	DELETEMENU.popup_centered()
+	$DoDelete.dialog_text = deleteformat % boxname
+	$DoDelete.popup_centered()
 
 func DELETE():
 	if CONTAINER:
 		CONTAINER.delete(boxname)
 
 func _on_rename():
-	RENAMEOPTS.clear()
+	$RenameTo/VBoxContainer/OptionButton.clear()
 	for i in config_types:
-		RENAMEOPTS.add_item(i)
+		$RenameTo/VBoxContainer/OptionButton.add_item(i)
 	var current_index = config_types.find(current_box_type)
 	if current_index < 0:
 		current_index = 0
-	RENAMEOPTS.select(current_index)
-	RENAMEEDIT.text = boxname
-	RENAMEEDIT.caret_position = boxname.length()
-	RENAMEBOX.popup_centered()
-	RENAMEEDIT.grab_focus()
+	$RenameTo/VBoxContainer/OptionButton.select(current_index)
+	$RenameTo/VBoxContainer/LineEdit.text = boxname
+	$RenameTo/VBoxContainer/LineEdit.caret_position = boxname.length()
+	$RenameTo.popup_centered()
+	$RenameTo/VBoxContainer/LineEdit.grab_focus()
 	toggled = false
 
 func RENAME_CONFIRMED():
 	if CONTAINER:
-		var newname = RENAMEEDIT.text
-		var newtype = config_types[RENAMEOPTS.selected]
+		var newname = $RenameTo/VBoxContainer/LineEdit.text
+		var newtype = config_types[$RenameTo/VBoxContainer/OptionButton.selected]
 		if newname or newtype != current_box_type:
 			if newname != boxname:
 				CONTAINER.rename(boxname,newname)
@@ -132,9 +163,9 @@ func RENAME_CONFIRMED():
 				if newtype == "optionbutton":
 					state["options"] = PoolStringArray(["EXAMPLE_OPTION"])
 				set_data(state)
-			RENAMEBOX.hide()
+			$RenameTo.hide()
 
 func _draw():
-	if CONTENT:
-		CONTENT.visible = toggled
-		TOGGLE.text = boxname
+	if $BOX/CB/CONTENT:
+		$BOX/CB/CONTENT.visible = toggled
+		$BOX/BUTTONS/TOGGLE.text = boxname

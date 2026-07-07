@@ -19,6 +19,9 @@ onready var ADDOPTS = $BUFFER/BODY/ConfirmationDialog/VBoxContainer/OptionButton
 onready var ENTRYBOX = $BUFFER/BODY/ENTRY/COUNT
 onready var PAGEBOX = $BUFFER/BODY/PAGE/COUNT
 
+onready var UPBTN = $HEADER/UP
+onready var DWNBTN = $HEADER/DOWN
+
 var toggled = false
 
 var boxname = ""
@@ -44,9 +47,25 @@ func _ready():
 	ENTRYBOX.connect("value_changed",self,"_size_value_changed")
 	PAGEBOX.connect("value_changed",self,"_page_value_changed")
 	
-	for i in initial_state:
+	UPBTN.connect("pressed",self,"_on_up_pressed")
+	DWNBTN.connect("pressed",self,"_on_down_pressed")
+	
+	var isKeys = initial_state.keys()
+	for idx in range(isKeys.size()):
+		var i = isKeys[idx]
 		var state = initial_state[i]
+		if not "display_order_position" in state:
+			state["display_order_position"] = idx
 		add(i,state)
+	yield(get_tree(),"idle_frame")
+	_on_down_pressed()
+
+func _on_up_pressed():
+	if CONTAINER:
+		CONTAINER.move_id_up(boxname,get_position_in_parent())
+func _on_down_pressed():
+	if CONTAINER:
+		CONTAINER.move_id_down(boxname,get_position_in_parent())
 
 var dataStore = {}
 
@@ -124,6 +143,26 @@ func get_list():
 		objList.append(dataStore[i])
 	return objList
 
+var order = []
+func move_id_up(bn:String,idx:int):
+	if not bn in order:
+		order.append(bn)
+	if not bn in dataStore:
+		dataStore[bn] = get_child(idx)
+	if idx > 0:
+		order.remove(idx)
+		order.insert(idx - 1,bn)
+		recalculate()
+func move_id_down(bn:String,idx:int):
+	if not bn in order:
+		order.append(bn)
+	if not bn in dataStore:
+		dataStore[bn] = get_child(idx)
+	if idx < (order.size() - 1):
+		order.remove(idx)
+		order.insert(idx + 1,bn)
+		recalculate()
+
 const page_size = 10
 var current_page = 0
 func recalculate():
@@ -147,6 +186,8 @@ func recalculate():
 		PAGEBOX.value = current_page
 	else:
 		current_page = 0
+	for i in order:
+		CONTENT.move_child(dataStore[i],size)
 
 func _size_value_changed(how:float):
 	how = int(how)
@@ -185,7 +226,9 @@ func changed(how = null):
 func get_data():
 	var out = {}
 	for i in $BUFFER/BODY/LIST.get_children():
-		out[i.boxname] = i.get_data()
+		var data = i.get_data()
+		data["display_order_position"] = order.find(i.boxname)
+		out[i.boxname] = data
 	return out
 
 func _toggle_pressed():

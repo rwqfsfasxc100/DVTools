@@ -15,8 +15,9 @@ var dataStore = {}
 
 func get_data():
 	var out = {}
-	for i in dataStore:
-		out[i] = dataStore[i].get_data()
+	for i in $LIST.get_children():
+		var data = i.get_data()
+		out[i.boxname] = data
 	return out
 
 func set_data(STATE):
@@ -87,6 +88,26 @@ func get_list():
 		objList.append(dataStore[i])
 	return objList
 
+var order = []
+func move_id_up(bn:String,idx:int):
+	if not bn in order:
+		order.append(bn)
+	if not bn in dataStore:
+		dataStore[bn] = get_child(idx)
+	if idx > 0:
+		order.remove(idx)
+		order.insert(idx - 1,bn)
+		recalculate()
+func move_id_down(bn:String,idx:int):
+	if not bn in order:
+		order.append(bn)
+	if not bn in dataStore:
+		dataStore[bn] = get_child(idx)
+	if idx < (order.size() - 1):
+		order.remove(idx)
+		order.insert(idx + 1,bn)
+		recalculate()
+
 const page_size = 10
 var current_page = 0
 func recalculate():
@@ -110,6 +131,8 @@ func recalculate():
 		$PAGE/COUNT.value = current_page
 	else:
 		current_page = 0
+	for i in order:
+		$LIST.move_child(dataStore[i],size)
 
 func _size_value_changed(how:float):
 	how = int(how)

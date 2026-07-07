@@ -30,12 +30,12 @@ rect_min_size = Vector2( 2, 0 )
 
 [node name="BOX" type="VBoxContainer" parent="."]
 margin_left = 6.0
-margin_right = 74.0
+margin_right = 106.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="BUTTONS" type="HBoxContainer" parent="BOX"]
-margin_right = 68.0
+margin_right = 100.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 
@@ -57,9 +57,21 @@ margin_right = 68.0
 margin_bottom = 22.0
 text = "X"
 
+[node name="UP" type="Button" parent="BOX/BUTTONS"]
+margin_left = 72.0
+margin_right = 84.0
+margin_bottom = 22.0
+text = "↑"
+
+[node name="DOWN" type="Button" parent="BOX/BUTTONS"]
+margin_left = 88.0
+margin_right = 100.0
+margin_bottom = 22.0
+text = "↓"
+
 [node name="CB" type="HBoxContainer" parent="BOX"]
 margin_top = 26.0
-margin_right = 68.0
+margin_right = 100.0
 margin_bottom = 26.0
 
 [node name="Border1" type="HBoxContainer" parent="BOX/CB"]
@@ -78,8 +90,8 @@ margin_right = 8.0
 rect_min_size = Vector2( 2, 0 )
 
 [node name="Border" type="HBoxContainer" parent="."]
-margin_left = 78.0
-margin_right = 80.0
+margin_left = 110.0
+margin_right = 112.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 2, 0 )
 

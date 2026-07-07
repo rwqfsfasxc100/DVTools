@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_ITEMS.gd/EquipmentPanel.gd" type="Script" id=1]
+
+[node name="EquipmentPanel" type="VBoxContainer"]
+script = ExtResource( 1 )

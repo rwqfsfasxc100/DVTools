@@ -1,6 +1,9 @@
 tool
 extends VBoxContainer
 
+const type = "optionbutton"
+var boxname = ""
+
 onready var NAME = $name/property_editor
 onready var DESCRIPTION = $description/property_editor
 onready var DEFAULT = $default/OptionButton
