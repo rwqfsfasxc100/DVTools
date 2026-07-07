@@ -50,13 +50,32 @@ func _ready():
 	UPBTN.connect("pressed",self,"_on_up_pressed")
 	DWNBTN.connect("pressed",self,"_on_down_pressed")
 	
+	var addOrder = {}
+	
+	var noOrder = []
+	
 	var isKeys = initial_state.keys()
 	for idx in range(isKeys.size()):
 		var i = isKeys[idx]
 		var state = initial_state[i]
-		if not "display_order_position" in state:
-			state["display_order_position"] = idx
-		add(i,state)
+		if "display_order_position" in state:
+			var ido = state.display_order_position
+			while ido in addOrder:
+				ido += 1
+			addOrder[ido] = [i,state]
+		else:
+			noOrder.append([i,state])
+	var ctr = 0
+	var aoKeys = addOrder.keys()
+	aoKeys.sort()
+	for r in aoKeys:
+		var i = addOrder[r]
+		add(i[0],i[1])
+		ctr += 1
+	for i in noOrder:
+		i[1]["display_order_position"] = ctr
+		add(i[0],i[1])
+		ctr += 1
 	yield(get_tree(),"idle_frame")
 	_on_down_pressed()
 
@@ -227,8 +246,8 @@ func get_data():
 	var out = {}
 	for i in $BUFFER/BODY/LIST.get_children():
 		var data = i.get_data()
-		data["display_order_position"] = order.find(i.boxname)
 		out[i.boxname] = data
+	boxname = $HEADER/TOGGLE.text
 	return out
 
 func _toggle_pressed():

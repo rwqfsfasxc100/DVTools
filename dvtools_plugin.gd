@@ -1,8 +1,7 @@
 tool
 extends EditorPlugin
 
-const panel_enabled = false
-
+const panel_enabled = true
 
 const classes = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ModManifestClass.gd"),
@@ -32,6 +31,8 @@ var file_tree: Tree
 var search_box: LineEdit
 var _is_update_queued = false
 
+var _did_enable_panel = false
+
 func _enter_tree():
 	# Initializes the main panel
 	if panel_enabled:
@@ -44,6 +45,7 @@ func _enter_tree():
 		var scriptEditor = get_editor_interface().get_script_editor()
 		scriptEditor.connect("editor_script_changed",self,"handle_driver")
 		scriptEditor.connect("script_close",self,"close_script")
+		_did_enable_panel = true
 	
 	set_physics_process(true)
 	
@@ -63,9 +65,6 @@ func _enter_tree():
 func _exit_tree():
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
-	if panel_enabled:
-		tool_panel_instance.disconnect("reload_scripts",self,"reload_open_scripts")
-		tool_panel_instance.queue_free()
 	
 	# Removing inspector plugins
 	for plugin in inspector_plugins:
@@ -75,11 +74,12 @@ func _exit_tree():
 	
 	remove_icon_handler()
 	
-	if panel_enabled:
+	if _did_enable_panel:
 		# Removing main screen panel
 		if tool_panel_instance:
 			tool_panel_instance.queue_free()
-		
+			tool_panel_instance.disconnect("reload_scripts",self,"reload_open_scripts")
+			tool_panel_instance.queue_free()
 		# Removing driver detection
 		var scriptEditor = get_editor_interface().get_script_editor()
 		scriptEditor.disconnect("editor_script_changed",self,"handle_driver")

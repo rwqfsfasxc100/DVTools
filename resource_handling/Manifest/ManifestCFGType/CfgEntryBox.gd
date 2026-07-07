@@ -115,6 +115,7 @@ func get_data():
 	if current_box_type == "optionbutton" and not data.get("options",[]).size():
 		return {}
 	data["type"] = current_box_type
+	data["display_order_position"] = get_position_in_parent()
 	return data
 
 func set_data(STATE,bn:String = ""):
