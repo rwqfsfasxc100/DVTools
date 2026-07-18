@@ -9,7 +9,7 @@ size_flags_vertical = 3
 script = ExtResource( 1 )
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
-margin_right = 670.0
+margin_right = 898.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -55,9 +55,8 @@ margin_bottom = 26.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HSplitContainer"]
 margin_left = 220.0
-margin_right = 670.0
+margin_right = 898.0
 margin_bottom = 26.0
-rect_min_size = Vector2( 450, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -65,22 +64,34 @@ size_flags_vertical = 3
 margin_right = 4.0
 margin_bottom = 26.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer2"]
+[node name="HSplitContainer" type="HSplitContainer" parent="HSplitContainer/HBoxContainer2"]
 margin_left = 8.0
-margin_right = 450.0
+margin_right = 678.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer"]
+margin_right = 450.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 450, 0 )
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer"]
+margin_right = 442.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer"]
 margin_right = 200.0
 margin_bottom = 692.0
 
-[node name="system" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="system" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_right = 200.0
 margin_bottom = 20.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/system" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/system" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: system
 
@@ -88,12 +99,12 @@ The equipment's system identifier. This is a required entry to add this equipmen
 text = "system"
 property_tooltip = "The equipment's system identifier. This is a required entry to add this equipment."
 
-[node name="price" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="price" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 24.0
 margin_right = 200.0
 margin_bottom = 44.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/price" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/price" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: price
 
@@ -101,12 +112,12 @@ The cost of the equipment item."
 text = "price"
 property_tooltip = "The cost of the equipment item."
 
-[node name="name_override" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="name_override" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 48.0
 margin_right = 200.0
 margin_bottom = 68.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/name_override" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/name_override" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: name_override
 
@@ -114,12 +125,12 @@ Override to use a different system/translation string for the equipment's name i
 text = "name_override"
 property_tooltip = "Override to use a different system/translation string for the equipment's name instead of using the default of \"<system>\""
 
-[node name="description" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="description" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 72.0
 margin_right = 200.0
 margin_bottom = 92.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/description" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/description" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: description
 
@@ -127,12 +138,12 @@ Override to use a different translation string for the equipment's description i
 text = "description"
 property_tooltip = "Override to use a different translation string for the equipment's description instead of using the default of \"<system>_DESC\""
 
-[node name="manual" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="manual" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 96.0
 margin_right = 200.0
 margin_bottom = 116.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/manual" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/manual" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: manual
 
@@ -140,12 +151,12 @@ Override to use a different translation string for the equipment's manual instea
 text = "manual"
 property_tooltip = "Override to use a different translation string for the equipment's manual instead of using the default of \"<system>_MANUAL\""
 
-[node name="specs" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="specs" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 120.0
 margin_right = 200.0
 margin_bottom = 140.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/specs" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/specs" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: specs
 
@@ -153,12 +164,12 @@ Override to use a different translation string for the equipment's spec list ins
 text = "specs"
 property_tooltip = "Override to use a different translation string for the equipment's spec list instead of using the default of \"<system>_SPECS\""
 
-[node name="num_val" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="num_val" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 144.0
 margin_right = 200.0
 margin_bottom = 164.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/num_val" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/num_val" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: num_val
 
@@ -174,12 +185,12 @@ property_tooltip = "If this equipment represents a numerical slot, how much this
 
 i.e. ammo, nanodrones, propellant, turbine, reactor core, ultracapacitor"
 
-[node name="capability_lock" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="capability_lock" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 168.0
 margin_right = 200.0
 margin_bottom = 188.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/capability_lock" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/capability_lock" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: capability_lock
 
@@ -193,12 +204,12 @@ property_tooltip = "Whether this equipment item will show only if it has been re
 If set to true, your equipment's node must call registerCapability(slot, system) to the ship node. 
 'slot' is the equipment slot (i.e. \"cargo.equipment\"), and 'system' is the equipment's system value"
 
-[node name="test_protocol" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="test_protocol" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 192.0
 margin_right = 200.0
 margin_bottom = 212.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/test_protocol" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/test_protocol" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: test_protocol
 
@@ -238,12 +249,12 @@ backwards twice each, then repeats
 'pdt' - zooms the camera out, and spawns many small ringroids on the east side of the screen travelling west
 'damage' - severely damages the ship"
 
-[node name="default" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="default" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 216.0
 margin_right = 200.0
 margin_bottom = 236.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/default" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/default" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: default
 
@@ -251,12 +262,12 @@ Whether this equipment item should be default for the slot if nothing is registe
 text = "default"
 property_tooltip = "Whether this equipment item should be default for the slot if nothing is registered as being installed to the ship"
 
-[node name="control" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="control" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 240.0
 margin_right = 200.0
 margin_bottom = 260.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/control" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/control" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: control
 
@@ -264,12 +275,12 @@ The input map keybind that should be displayed as the activation key for this eq
 text = "control"
 property_tooltip = "The input map keybind that should be displayed as the activation key for this equipment."
 
-[node name="story_flag" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="story_flag" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 264.0
 margin_right = 200.0
 margin_bottom = 284.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/story_flag" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: story_flag
 
@@ -277,12 +288,12 @@ If set, the story flag that this equipment must abide by to be available."
 text = "story_flag"
 property_tooltip = "If set, the story flag that this equipment must abide by to be available."
 
-[node name="story_flag_min" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="story_flag_min" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 288.0
 margin_right = 200.0
 margin_bottom = 308.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag_min" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/story_flag_min" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: story_flag_min
 
@@ -294,12 +305,12 @@ property_tooltip = "The minimum value the story flag has to be to make this equi
 
 \"-1\" disables this."
 
-[node name="story_flag_max" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="story_flag_max" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 312.0
 margin_right = 200.0
 margin_bottom = 332.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag_max" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/story_flag_max" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: story_flag_max
 
@@ -311,12 +322,12 @@ property_tooltip = "The maximum value the story flag has to be to make this equi
 
 \"-1\" disables this."
 
-[node name="warn_if_thermal_below" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="warn_if_thermal_below" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 336.0
 margin_right = 200.0
 margin_bottom = 356.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/warn_if_thermal_below" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/warn_if_thermal_below" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: warn_if_thermal_below
 
@@ -328,12 +339,12 @@ property_tooltip = "The minimum thermal power (in gigawatts) that your ship must
 
 Actual results will vary based on usage."
 
-[node name="warn_if_electric_below" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="warn_if_electric_below" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 360.0
 margin_right = 200.0
 margin_bottom = 380.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/warn_if_electric_below" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/warn_if_electric_below" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: warn_if_electric_below
 
@@ -345,12 +356,12 @@ property_tooltip = "The minimum electrical power (in megawatts) that your ship m
 
 Actual results will vary based on usage."
 
-[node name="sticker_price_format" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="sticker_price_format" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 384.0
 margin_right = 200.0
 margin_bottom = 404.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/sticker_price_format" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/sticker_price_format" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: sticker_price_format
 
@@ -360,12 +371,12 @@ text = "sticker_price_format"
 property_tooltip = "The format used for the price label.
 String MUST include \"%s\" only once for the price value."
 
-[node name="sticker_price_multi_format" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="sticker_price_multi_format" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 408.0
 margin_right = 200.0
 margin_bottom = 428.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/sticker_price_multi_format" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/sticker_price_multi_format" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: sticker_price_multi_format
 
@@ -375,12 +386,12 @@ text = "sticker_price_multi_format"
 property_tooltip = "The format used for the price label when this specific slot installs to multiple locations on the ship simultaneously.
 String MUST include \"%s\" and \"%d\" only once each for the price value and equipment number."
 
-[node name="normal_color" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="normal_color" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 432.0
 margin_right = 200.0
 margin_bottom = 452.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/normal_color" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/normal_color" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: normal_color
 
@@ -388,12 +399,12 @@ The color of the equipment's name when it is available for purchase but not inst
 text = "normal_color"
 property_tooltip = "The color of the equipment's name when it is available for purchase but not installed to the ship."
 
-[node name="installed_color" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="installed_color" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 456.0
 margin_right = 200.0
 margin_bottom = 476.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/installed_color" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/installed_color" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: installed_color
 
@@ -401,12 +412,12 @@ The color of the equipment's name when it is installed to the ship."
 text = "installed_color"
 property_tooltip = "The color of the equipment's name when it is installed to the ship."
 
-[node name="disabled_color" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="disabled_color" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 480.0
 margin_right = 200.0
 margin_bottom = 500.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/disabled_color" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/disabled_color" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: disabled_color
 
@@ -414,12 +425,12 @@ The color of the equipment's name when it is unable to be purchased."
 text = "disabled_color"
 property_tooltip = "The color of the equipment's name when it is unable to be purchased."
 
-[node name="config_id" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="config_id" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 504.0
 margin_right = 200.0
 margin_bottom = 524.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/config_id" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/config_id" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: config_id
 
@@ -427,12 +438,12 @@ If setting equipment visibility behind a config, the mod ID for the config."
 text = "config_id"
 property_tooltip = "If setting equipment visibility behind a config, the mod ID for the config."
 
-[node name="config_section" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="config_section" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 528.0
 margin_right = 200.0
 margin_bottom = 548.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/config_section" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/config_section" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: config_section
 
@@ -440,12 +451,12 @@ If setting equipment visibility behind a config, the section for the config."
 text = "config_section"
 property_tooltip = "If setting equipment visibility behind a config, the section for the config."
 
-[node name="config_entry" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="config_entry" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 552.0
 margin_right = 200.0
 margin_bottom = 572.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/config_entry" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/config_entry" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: config_entry
 
@@ -453,12 +464,12 @@ If setting equipment visibility behind a config, the entry for the config."
 text = "config_entry"
 property_tooltip = "If setting equipment visibility behind a config, the entry for the config."
 
-[node name="config_invert_config" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="config_invert_config" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 576.0
 margin_right = 200.0
 margin_bottom = 596.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/config_invert_config" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/config_invert_config" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: config_invert_config
 
@@ -466,12 +477,12 @@ If setting equipment visibility behind a config, inverts the boolean output and 
 text = "config_invert_config"
 property_tooltip = "If setting equipment visibility behind a config, inverts the boolean output and sets that the equipment should be hidden if the config is true."
 
-[node name="equipment_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="equipment_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 600.0
 margin_right = 200.0
 margin_bottom = 620.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/equipment_type" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/equipment_type" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: equipment_type
 
@@ -479,12 +490,12 @@ The equipment type tag that this equipment uses to dictate which slots it's able
 text = "equipment_type"
 property_tooltip = "The equipment type tag that this equipment uses to dictate which slots it's able to be added to."
 
-[node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 624.0
 margin_right = 200.0
 margin_bottom = 644.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: slot_type
 
@@ -492,12 +503,12 @@ The slot type that this equipment will be added to."
 text = "slot_type"
 property_tooltip = "The slot type that this equipment will be added to."
 
-[node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 648.0
 margin_right = 200.0
 margin_bottom = 668.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: alignment
 
@@ -509,12 +520,12 @@ property_tooltip = "If this equipment is to be added to hardpoints, specifies th
 
 Leaving this blank means all alignments are supported and will add this equipment."
 
-[node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 672.0
 margin_right = 200.0
 margin_bottom = 692.0
 
-[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 2 )]
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 2 )]
 margin_right = 200.0
 hint_tooltip = "Property: restriction
 
@@ -525,3 +536,49 @@ text = "restriction"
 property_tooltip = "Specifies a restriction which must be matched by an appropriate slot to be added to.
 
 Leaving this blank means all slots with the same slot type that support this equipment type will add this equipment."
+
+[node name="VSeparator" type="VSeparator" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer"]
+margin_left = 446.0
+margin_right = 450.0
+margin_bottom = 26.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer"]
+margin_left = 462.0
+margin_right = 670.0
+margin_bottom = 26.0
+size_flags_vertical = 3
+
+[node name="VSeparator" type="VSeparator" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2"]
+margin_right = 4.0
+margin_bottom = 26.0
+
+[node name="SubDrivers" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2"]
+margin_left = 8.0
+margin_right = 208.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2/SubDrivers"]
+margin_right = 200.0
+margin_bottom = 14.0
+text = "Subdrivers"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2/SubDrivers"]
+margin_top = 18.0
+margin_right = 200.0
+margin_bottom = 22.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2/SubDrivers"]
+margin_top = 26.0
+margin_right = 200.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2/SubDrivers/ScrollContainer"]
+margin_right = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
