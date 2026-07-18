@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/DVTools/tool_panel/DVToolPanel.gd" type="Script" id=1]
+[ext_resource path="res://addons/DVTools/tool_panel/tab_list/TabList.gd" type="Script" id=2]
 [ext_resource path="res://addons/DVTools/tool_panel/FilePopup.gd" type="Script" id=3]
 
 [node name="DVToolPanel" type="MarginContainer"]
@@ -29,12 +30,26 @@ margin_left = 7.0
 margin_right = 42.0
 margin_bottom = 20.0
 text = "File"
+items = [ "Save", null, 0, false, false, 0, 0, null, "", false, "Save As", null, 0, false, false, 1, 0, null, "", false, "Open", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, false, -1, 0, null, "", true, "New", null, 0, false, false, 4, 0, null, "New_submenu", false ]
 script = ExtResource( 3 )
+menu_root_name = "File"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 640.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="TabList" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 36 )
+script = ExtResource( 2 )
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
-margin_top = 24.0
+margin_top = 64.0
 margin_right = 640.0
 margin_bottom = 480.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
+tabs_visible = false

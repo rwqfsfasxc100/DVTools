@@ -124,12 +124,16 @@ var can_open_driver = true
 func handle_driver(script:Script):
 	yield(get_tree(),"idle_frame")
 	if can_open_driver:
+		can_open_driver = false
+		yield(get_tree(),"idle_frame")
 		var path = script.resource_path
 		make_visible(path.get_file() in supported_driver_files,path)
-
+		can_open_driver = true
 func close_script(script:Object):
 	can_open_driver = false
 	make_visible(false)
+	if tool_panel_instance.has_method("close_script"):
+		tool_panel_instance.close_script(script.resource_path)
 	yield(get_tree(),"idle_frame")
 	yield(get_tree(),"idle_frame")
 	can_open_driver = true
