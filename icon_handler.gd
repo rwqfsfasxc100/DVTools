@@ -1,7 +1,5 @@
 extends Node
 
-
-
 const iconcat = []
 const cache_meta = {"last_mtime": 0, "last_ctime": 0}
 
@@ -35,7 +33,37 @@ static func change_tree_appearance(tree: Tree) -> void:
 			if r.size() > 1:
 				iconcat.append("res://" + r[1] + "/")
 	
+	
 	change_item_appearance(tree.get_root())
+
+static func __fetch_folder_files(folder: String, showFolders: bool = true, returnFullPath: bool = true) -> Array:
+	var directory = Directory.new()
+	var fileList : PoolStringArray = PoolStringArray()
+	if not folder.ends_with("/"):
+		folder += "/"
+	if not directory.dir_exists(folder):
+		return []
+	directory.open(folder)
+	directory.list_dir_begin(true)
+	while true:
+		var fileName : String = directory.get_next()
+		var capture:bool = true
+		if fileName.ends_with("/"):
+			capture = false
+		if fileName == "." or fileName == "..":
+			capture = false
+		if capture:
+			if not fileName:
+				break
+			if directory.current_is_dir():
+				if not showFolders:
+					continue
+				if not fileName.ends_with("/"):
+					fileName = fileName + "/"
+			if returnFullPath:
+				fileName = folder + fileName
+			fileList.append(fileName)
+	return Array(fileList)
 
 static func change_item_appearance(tree_item: TreeItem) -> void:
 	while tree_item:

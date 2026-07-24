@@ -5,9 +5,9 @@ signal selected(identifier)
 
 export (String) var menu_root_name = ""
 
-var base_menu_data = []
+var base_menu_data:Array = []
 
-var menu_store = {}
+var menu_store:Dictionary = {}
 
 func handle_menubuttons():
 	var popupmenu = get_popup()
@@ -22,8 +22,11 @@ func add_menu_buttons(menu_data: Array,popupmenu:PopupMenu,path:String = menu_ro
 		var iname = i.get("name","")
 		var children = i.get("children",[])
 		var separator = i.get("separator",false)
+		var checkbox = i.get("checkbox",false)
 		if separator:
 			popupmenu.add_separator(iname)
+		elif checkbox:
+			popupmenu.add_check_item(iname)
 		elif children:
 			var pm = PopupMenu.new()
 			pm.name = iname + "_submenu"

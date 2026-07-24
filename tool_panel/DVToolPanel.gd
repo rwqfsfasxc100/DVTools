@@ -6,6 +6,8 @@ signal reload_scripts
 onready var tab_container = $VBoxContainer/ScrollContainer/TabList
 onready var FileMenu = $VBoxContainer/Menu/File
 
+var plugin_settings
+
 func load_this_file(file_to_load:String):
 	if tab_container and tab_container.has_method("load_this_script"):
 		tab_container.load_this_script(file_to_load)

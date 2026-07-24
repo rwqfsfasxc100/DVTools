@@ -33,11 +33,17 @@ var _is_update_queued = false
 
 var _did_enable_panel = false
 
+var plugin_settings
+
 func _enter_tree():
+	plugin_settings = load("res://addons/DVTools/tool_panel/settings/SettingsHandler.tscn").instance()
+	add_child(plugin_settings)
+	plugin_settings.init_settings()
 	# Initializes the main panel
 	if panel_enabled:
 		tool_panel_instance = ResourceLoader.load("res://addons/DVTools/tool_panel/DVToolPanel.tscn","",true).instance()
 		tool_panel_instance.connect("reload_scripts",self,"reload_open_scripts")
+		tool_panel_instance.plugin_settings = plugin_settings
 		get_editor_interface().get_editor_viewport().add_child(tool_panel_instance)
 		make_visible(false)
 		
@@ -63,6 +69,7 @@ func _enter_tree():
 
 
 func _exit_tree():
+	plugin_settings = null
 	# Removing tooltips
 	get_tree().disconnect("node_added", self, "_on_node_added")
 	
@@ -194,7 +201,9 @@ func add_icon_handler():
 		
 		var file_system := interface.get_resource_filesystem()
 		file_system.connect("filesystem_changed", self, "recheck_icon_handler")
-
+		file_system.connect("filesystem_changed", plugin_settings, "recheck_fs")
+	
+	
 func _on_tree_item_collapsed(_item: TreeItem):
 	recheck_icon_handler()
 
@@ -213,8 +222,8 @@ func recheck_icon_handler():
 	if not icon_handler or not is_instance_valid(icon_handler) or icon_handler.is_queued_for_deletion():
 		icon_handler = load("res://addons/DVTools/icon_handler.gd").new()
 
-	
-	icon_handler.change_tree_appearance(file_tree)
+	if is_instance_valid(icon_handler):
+		icon_handler.change_tree_appearance(file_tree)
 	
 func remove_icon_handler():
 	var file_system := get_editor_interface().get_resource_filesystem()
