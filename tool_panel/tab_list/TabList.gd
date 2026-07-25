@@ -106,6 +106,7 @@ func active_tab_valid():
 	return false
 
 func open_save_as():
+	print("Trying to open save as")
 	if active_tab_valid():
 		var path:String = active_tab.script_path
 		save_as_file_diag.set_current_file(path.get_file())

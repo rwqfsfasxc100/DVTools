@@ -18,6 +18,9 @@ func _ready():
 	display_button.set_physics_process(false)
 	display_button.set_process(false)
 
+func SAVE():
+	if container and container.has_method("SAVE"):
+		container.SAVE()
 
 func _on_selected():
 	emit_signal("pressed")

@@ -8,15 +8,27 @@ var config:Dictionary = {
 }
 
 var discovered_drivers:Array = [] setget setDisDrivers , getDisDrivers
+var drivers_by_type:Dictionary = {} setget , getDT
 
 func setDisDrivers(how:Array):
 	if how:
+		drivers_by_type.clear()
+		for driver in how:
+			var file = driver.get_file()
+			if not file in drivers_by_type:
+				drivers_by_type[file] = []
+			drivers_by_type[file].append(driver)
 		discovered_drivers = how
 
 func getDisDrivers():
 	if not discovered_drivers:
 		recheck_fs()
 	return discovered_drivers
+
+func getDT():
+	if not drivers_by_type:
+		setDisDrivers(self.discovered_drivers)
+	return drivers_by_type
 
 var file:File = File.new()
 var directory:Directory = Directory.new()
