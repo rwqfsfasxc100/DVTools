@@ -24,8 +24,15 @@ jobs:
       - name: Read Manifest Version
         id: manifest
         run: |
-          MOD_VERSION="$(grep -oP 'version=\K\d+' plugin.cfg)"
+          MAJOR=$(grep -oP 'version=\K\d+' plugin.cfg)
           
+          if [ -z "$MAJOR" ]; then
+             echo "::error::Could not parse version components from plugin.cfg!"
+             exit 1
+          fi
+
+          MOD_VERSION="${MAJOR}"
+
           echo "Detected Version: $MOD_VERSION"
           echo "version=$MOD_VERSION" >> $GITHUB_OUTPUT
 
