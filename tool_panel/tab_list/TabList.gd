@@ -24,12 +24,18 @@ var save_as_file_diag = EditorFileDialog.new()
 
 # Setter method for the current_tab value
 func set_current_tab(val:int):
-	if tab_container.get_child_count():
+	var count = tab_container.get_child_count()
+	if count:
+		for i in range(count):
+			tab_container.get_child(i).visible = i == val
 		current_tab = val
 		tab_container.current_tab = val
-		tab_container.get_child(val)._on_selected()
+#		tab_container.get_child(val)._on_selected()
+				
 	else:
 		active_tab = null
+
+signal save_confirmed
 
 func _ready():
 	tool_panel.connect("operation",self,"_on_menu_operation")
@@ -54,7 +60,7 @@ func setup_file_dialog(diag:EditorFileDialog,mode:int):
 			diag.mode = EditorFileDialog.MODE_SAVE_FILE
 			diag.add_filter("*.gd ; Driver files")
 			diag.connect("file_selected",self,"_save_this_as_file")
-	add_child(diag)
+	tool_panel.call_deferred("add_child",diag)
 
 func _open_this_file(file_path:String):
 	load_this_script(file_path)
@@ -64,7 +70,9 @@ var file = File.new()
 func _save_this_as_file(file_path:String):
 	if active_tab_valid() and active_tab.has_method("save_driver_data"):
 		var data:String = active_tab.save_driver_data()
-		
+		save_data(data,file_path)
+		emit_signal("save_confirmed")
+	
 
 func save_data(data:String,file_path:String):
 	if data:
@@ -106,10 +114,13 @@ func active_tab_valid():
 	return false
 
 func open_save_as():
-	print("Trying to open save as")
 	if active_tab_valid():
 		var path:String = active_tab.script_path
-		save_as_file_diag.set_current_file(path.get_file())
+		var fp = path.get_file()
+		var s = fp.split("temp_")
+		if s.size() > 1:
+			s = s[1]
+		save_as_file_diag.set_current_file(s)
 		save_as_file_diag.popup_centered()
 
 
@@ -142,11 +153,20 @@ func get_panel_for_driver(panel_type:String,driver_script_path:String = ""):
 			return panel
 	return null
 
+func SAVE():
+	if is_visible_in_tree() and active_tab_valid() and tabs[active_tab.script_path].needs_save:
+		var path = active_tab.script_path
+		if path.begins_with("new://"):
+			open_save_as()
+		else:
+			_save_this_as_file(path)
+			
+
 
 func _input(event):
 	if event is InputEventKey and event.pressed and active_tab_valid() and tabs[active_tab.script_path].needs_save:
 		if event.scancode == KEY_S and event.control:
-			active_tab.SAVE()
+			SAVE()
 
 func add_item(item:Node,script_path:String):
 	tabs[script_path] = item
@@ -167,7 +187,7 @@ func change_tab_to(btn:String):
 		var has = sc == btn
 		i.set_active_tab(has)
 		if has:
-			current_tab = i.get_position_in_parent()
+			self.current_tab = i.get_position_in_parent()
 
 func set_tab_title(script:String,title:String):
 	tab_buttons[script].set_text(title)
