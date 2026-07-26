@@ -24,16 +24,12 @@ jobs:
       - name: Read Manifest Version
         id: manifest
         run: |
-          MAJOR=$(grep -oP 'version_major=\K\d+' Mod.manifest)
-          MINOR=$(grep -oP 'version_minor=\K\d+' Mod.manifest)
-          BUGFIX=$(grep -oP 'version_bugfix=\K\d+' Mod.manifest)
+          MOD_VERSION=$(grep -oP 'version=\K\d+' plugin.cfg)
           
-          if [ -z "$MAJOR" ] || [ -z "$MINOR" ] || [ -z "$BUGFIX" ]; then
+          if [ -z "$MOD_VERSION" ]; then
              echo "::error::Could not parse version components from Mod.manifest!"
              exit 1
           fi
-
-          MOD_VERSION="${MAJOR}.${MINOR}.${BUGFIX}"
 
           echo "Detected Version: $MOD_VERSION"
           echo "version=$MOD_VERSION" >> $GITHUB_OUTPUT
