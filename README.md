@@ -12,13 +12,23 @@ A Godot plugin containing a collection of tools that are used to help make mods 
 
 ### Manifest Editing
 
-Mod manifests can now be modified in-editor, as well as being made visible to the FileSystem dock.
+Mod manifests can be modified in-editor, as well as being made visible to the FileSystem dock.
 
 <img width="144" height="69" alt="image" src="https://github.com/user-attachments/assets/9a41f8c0-6bfa-4e92-bd39-5e1c5cb0de97" />
 
 Fully-functional editor in the inspector dock, with coverage for all ManifestV2.2 features.
 
 <img width="408" height="320" alt="image" src="https://github.com/user-attachments/assets/d01a4bf3-edd6-4c41-b3c8-5d895faadec3" />
+
+### `ADD_EQUIPMENT_ITEMS.gd` Driver Creation & Editing
+
+Any `ADD_EQUIPMENT_ITEMS.gd` driver can be edited within the ∆V Tools dock.
+
+<img width="1041" height="861" alt="image" src="https://github.com/user-attachments/assets/c813fb55-3ccb-4a90-8a49-c0b8ec0c6534" />
+
+Additionally has the option to create new drivers, or save the current driver to a different location.
+
+<img width="318" height="186" alt="image" src="https://github.com/user-attachments/assets/d8f3d1dd-12ac-430a-a457-7af539050ab9" />
 
 ### Enabled Mod Directory Highlighting
 
@@ -70,6 +80,15 @@ Any files that can define mods are highlighted in a light green.
   ~~- `Highlight Modlets`~~
 - `ADD_MINERALS.gd`
 - ~~`ADD_EQUIPMENT_ITEMS.gd`~~
+  - Subdrivers:
+    - `weapon_slot` / `WEAPONSLOT_ADD`
+    - `REGISTER_AMMO`
+    - `REGISTER_NANO`
+    - `AUX_POWER_SLOT` / `THRUSTERS` / `AUX_POWER_AND_THRUSTERS` / `auxiliary_power_unit`
+    - `REGISTER_REACTOR_RODS`
+    - `REGISTER_ULTRACAPACITORS`
+    - `REGISTER_TURBINES`
+    - `REGISTER_PROPELLANT`
 - `ADD_EQUIPMENT_SLOTS.gd`
 - `EQUIPMENT_TAGS.gd`
 - `SLOT_ORDER.gd`
