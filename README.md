@@ -67,9 +67,9 @@ Any files that can define mods are highlighted in a light green.
 # Planned feature list
 - ~~`Manifests`~~
 - ~~`Highlighting`~~
-  - `Highlight Modlets`
+  ~~- `Highlight Modlets`~~
 - `ADD_MINERALS.gd`
-- `ADD_EQUIPMENT_ITEMS.gd`
+- ~~`ADD_EQUIPMENT_ITEMS.gd`~~
 - `ADD_EQUIPMENT_SLOTS.gd`
 - `EQUIPMENT_TAGS.gd`
 - `SLOT_ORDER.gd`
