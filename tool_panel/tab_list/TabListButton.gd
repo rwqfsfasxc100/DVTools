@@ -72,7 +72,6 @@ func close_without_saving():
 var is_active_tab = false
 
 func set_active_tab(how:bool):
-	print(self," setting active tab: ",how)
 	is_active_tab = how
 	if how:
 		container.active_tab = self

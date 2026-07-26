@@ -11,12 +11,14 @@ onready var add_entry_button = $HSplitContainer/HBoxContainer/SysList/AddEntry
 onready var system_entry = load("res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_ITEMS.gd/SystemEntry.tscn")
 
 func _ready():
-	add_entry_button.connect("pressed",self,"add_example_entry")
+	add_entry_button.connect("pressed",self,"add_entry")
 	if not this_script_path.begins_with("new://"):
 		var data = __get_script_constant_map_without_load(this_script_path)
 		if data:
 			for i in data:
-				add_example_entry(i)
+				yield(get_tree(),"idle_frame")
+				add_example_entry(data[i])
+	yield(get_tree(),"idle_frame")
 	if not button_list.get_child_count():
 		add_example_entry()
 	
@@ -26,15 +28,28 @@ func _ready():
 	lc.get_node("alignment/TagPopup").initialize_current_tags()
 	lc.get_node("equipment_type/TagPopup").initialize_current_tags()
 	_open_this_button(button_list.get_child(0))
+	
 
 func save_driver_data() -> String:
 	var out:String = ""
 	can_change_sys_display = false
-	for i in button_list.get_children():
-		pass
-		
-		
+	for i in range(button_list.get_child_count()):
+		var btn = button_list.get_child(i)
+		var ov = convert_to_constant(btn.stored_state,"_%03d" % i)
+		if ov:
+			out += ov + "\n\n"
 	can_change_sys_display = true
+	return out
+
+func convert_to_constant(data:Dictionary, constant_name:String) -> String:
+	var out = ""
+	if data:
+		var x = "{"
+		for property in data:
+			var st = stringify_property(data[property],0,false)
+			x += "\n\t" + st
+		x += "\n}"
+		out = "const %s = %s" % [constant_name, x]
 	return out
 
 func stringify_property(property,depth:int = 0,stringify:bool = true):
@@ -144,26 +159,35 @@ func _safe_open_from_button(btn):
 	if current_button:
 		current_button.stored_state = get_this_dict_for_saving()
 		current_button = null
+	yield(get_tree(),"idle_frame")
 	_open_this_button(btn)
 
 func _open_this_button(btn):
 	current_button = btn
 	set_properties_from_dict(btn.stored_state)
+	btn._change_system_display(btn.stored_state.get("system","SYSTEM_EXAMPLE"))
 
 func _delete_this_button(btn):
 	button_list.remove_child(btn)
 	btn.queue_free()
+	yield(get_tree(),"idle_frame")
 	if not button_list.get_child_count():
-		add_example_entry()
+		add_entry()
+	else:
+		_open_this_button(button_list.get_child(0))
 
 func add_example_entry(system_dict:Dictionary = {}):
 	var button = system_entry.instance()
 	button.panel = self
+	current_button = button
 	if system_dict.empty():
 		needs_save = true
-	set_properties_from_dict(system_dict)
+	button.stored_state = system_dict
 	button_list.add_child(button)
-	_safe_open_from_button(button)
+	return button
+
+func add_entry(system_dict:Dictionary = {}):
+	_safe_open_from_button(add_example_entry(system_dict))
 
 var can_change_sys_display = true
 
@@ -173,6 +197,8 @@ func _change_system_display():
 		current_button._change_system_display(lc.get_node("system/property_editor").get_property_value()[0])
 
 func set_properties_from_dict(dict:Dictionary):
+	if not lc:
+		lc = get_node("HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer")
 	lc.get_node("system/property_editor").set_property_value(dict.get("system","SYSTEM_EXAMPLE"))
 	lc.get_node("price/property_editor").set_property_value(dict.get("price",0))
 	lc.get_node("name_override/property_editor").set_property_value(dict.get("name_override",""))
@@ -205,6 +231,8 @@ func set_properties_from_dict(dict:Dictionary):
 	lc.get_node("alignment/TagPopup").initialize_current_tags(dict.get("alignment",""))
 
 func get_this_dict_for_saving() -> Dictionary:
+	if not lc:
+		lc = get_node("HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer")
 	var out:Dictionary = {}
 	var system = lc.get_node("system/property_editor").get_property_value()[0]
 	var price = lc.get_node("price/property_editor").get_property_value()[0]
