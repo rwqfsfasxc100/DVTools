@@ -26,11 +26,6 @@ jobs:
         run: |
           MOD_VERSION=$(grep -oP 'version=\K\d+' plugin.cfg)
           
-          if [ -z $MOD_VERSION ]; then
-             echo "::error::Could not parse version components from Mod.manifest!"
-             exit 1
-          fi
-
           echo "Detected Version: $MOD_VERSION"
           echo "version=$MOD_VERSION" >> $GITHUB_OUTPUT
 
