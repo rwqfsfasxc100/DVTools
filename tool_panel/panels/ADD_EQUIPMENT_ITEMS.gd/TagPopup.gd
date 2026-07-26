@@ -6,18 +6,13 @@ func _ready():
 	match tag_type:
 		"slot_type":
 			connect("refresh",equipmenttype_node,"_on_refresh",[],CONNECT_DEFERRED)
-			connect("refresh",hardpointtype_node,"_on_refresh")
 			connect("refresh",alignmenttype_node,"_on_refresh")
-		"hardpoint_type":
-			connect("refresh",equipmenttype_node,"_on_refresh")
 		
 
-export (String,"equipment_type","slot_type","alignment","hardpoint_type") var tag_type = "equipment_type"
+export (String,"equipment_type","slot_type","alignment") var tag_type = "equipment_type"
 
 export (NodePath) var slot_type_path = NodePath()
 onready var slottype_node = get_node_or_null(slot_type_path)
-export (NodePath) var hardpoint_type_path = NodePath()
-onready var hardpointtype_node = get_node_or_null(hardpoint_type_path)
 export (NodePath) var equipment_type_path = NodePath()
 onready var equipmenttype_node = get_node_or_null(equipment_type_path)
 export (NodePath) var alignment_type_path = NodePath()
@@ -98,26 +93,19 @@ func initialize_current_tags(use_specific:String = last_used):
 				if slottype_node and slottype_node.has_method("get_selected_string"):
 					var st = slottype_node.get_selected_string()
 					if st == "HARDPOINT":
-						if hardpointtype_node and hardpointtype_node.has_method("get_selected_string"):
-							var ht = hardpointtype_node.get_selected_string()
-							available = slot_defaults.get(ht,[""])
-						else:
-							available = [""]
+						var allHP = []
+						for i in hardpoint_types:
+							for r in slot_defaults.get(i,[]):
+								if not r in allHP:
+									allHP.append(r)
+						available = allHP
+#						available = slot_defaults.get(rt,[""])
 					else:
 						available = slot_defaults.get(st,[""])
 				else:
 					available = equipment_types
 			"slot_type":
 				available = slot_types
-			"hardpoint_type":
-				if slottype_node and slottype_node.has_method("get_selected_string"):
-					var st = slottype_node.get_selected_string()
-					if st == "HARDPOINT":
-						available = hardpoint_types
-					else:
-						available = [""]
-				else:
-					available = hardpoint_types
 			"alignment":
 				if slottype_node and slottype_node.has_method("get_selected_string"):
 					var st = slottype_node.get_selected_string()

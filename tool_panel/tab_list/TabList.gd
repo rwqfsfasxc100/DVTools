@@ -30,12 +30,17 @@ func set_current_tab(val:int):
 			tab_container.get_child(i).visible = i == val
 		current_tab = val
 		tab_container.current_tab = val
-#		tab_container.get_child(val)._on_selected()
-				
 	else:
 		active_tab = null
 
 signal save_confirmed
+
+var ctr = 0
+func _physics_process(delta):
+	ctr += 1
+	if ctr > 4:
+		ctr = 0
+		refresh_titles()
 
 func _ready():
 	tool_panel.connect("operation",self,"_on_menu_operation")
@@ -68,11 +73,22 @@ func _open_this_file(file_path:String):
 var file = File.new()
 
 func _save_this_as_file(file_path:String):
-	if active_tab_valid() and active_tab.has_method("save_driver_data"):
-		var data:String = active_tab.save_driver_data()
-		save_data(data,file_path)
-		emit_signal("save_confirmed")
-	
+	var panel = null
+	print("Saving file as ",file_path)
+	if file_path in tabs:
+		panel = tabs[file_path]
+	else:
+		for tb in tabs:
+			var tab = tabs[tb]
+			if tab.visible:
+				panel = tab
+				break
+	if panel:
+		if panel.has_method("save_driver_data"):
+			print("Saving to ",file_path)
+			var data:String = panel.save_driver_data()
+			save_data(data,file_path)
+			emit_signal("save_confirmed")
 
 func save_data(data:String,file_path:String):
 	if data:
@@ -96,7 +112,7 @@ func _on_menu_operation(operation:String):
 		if operation.begins_with("File/"):
 			match split[1]:
 				"Save":
-					if active_tab_valid() and tabs[active_tab.script_path].needs_save:
+					if active_tab_valid():# and tabs[active_tab.script_path].needs_save:
 						active_tab.SAVE()
 				"Save As":
 					if active_tab_valid():
@@ -120,6 +136,8 @@ func open_save_as():
 		var s = fp.split("temp_")
 		if s.size() > 1:
 			s = s[1]
+		else:
+			s = s[0]
 		save_as_file_diag.set_current_file(s)
 		save_as_file_diag.popup_centered()
 
@@ -154,7 +172,7 @@ func get_panel_for_driver(panel_type:String,driver_script_path:String = ""):
 	return null
 
 func SAVE():
-	if is_visible_in_tree() and active_tab_valid() and tabs[active_tab.script_path].needs_save:
+	if is_visible_in_tree() and active_tab_valid():# and tabs[active_tab.script_path].needs_save:
 		var path = active_tab.script_path
 		if path.begins_with("new://"):
 			open_save_as()
@@ -164,7 +182,7 @@ func SAVE():
 
 
 func _input(event):
-	if event is InputEventKey and event.pressed and active_tab_valid() and tabs[active_tab.script_path].needs_save:
+	if event is InputEventKey and event.pressed and active_tab_valid():# and tabs[active_tab.script_path].needs_save:
 		if event.scancode == KEY_S and event.control:
 			SAVE()
 

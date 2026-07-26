@@ -36,10 +36,12 @@ func changed(how = null):
 	if CONTAINER:
 		CONTAINER.has_changed()
 
+var last_val = ""
 func _LE_text_changed(text:String):
-	var ft = float(text)
-	URL.text = str(ft)
-	changed()
+	if last_val != text:
+		last_val = text
+		URL.text = text
+		changed()
 
 func _lost_focus():
 	var txt = URL.text

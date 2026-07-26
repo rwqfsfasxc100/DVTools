@@ -23,7 +23,8 @@ func show():
 
 onready var discovery_pref = get_node_or_null("PanelContainer/ScrollContainer/VBoxContainer/DiscoveryPreference/OptionButton")
 onready var specific_tag_filepaths = get_node_or_null("PanelContainer/ScrollContainer/VBoxContainer/SpecificTagFilepaths/TextEdit")
-onready var driver_filepaths = get_node_or_null("PanelContainer/ScrollContainer/VBoxContainer/DiscoveredDrivers/TextEdit")
+onready var driver_filepaths = get_node_or_null("PanelContainer/ScrollContainer/VBoxContainer/DiscoveredDriversByMod/TextEdit")
+onready var driver_filepaths_by_driver = get_node_or_null("PanelContainer/ScrollContainer/VBoxContainer/DiscoveredDriversByDriver/TextEdit")
 
 
 
@@ -71,6 +72,28 @@ func loadCurrentConfigs():
 					txt = i
 				lastDir = thisDir
 			driver_filepaths.text = txt
+		if driver_filepaths_by_driver:
+			var how = plugin_settings.discovered_drivers
+			var txt = ""
+			var dict = {}
+			for i in how:
+				var thisDriver = i.get_file()
+				if not thisDriver in dict:
+					dict[thisDriver] = []
+				if not i in dict[thisDriver]:
+					dict[thisDriver].append(i)
+			for driver in dict:
+				var driverData = dict[driver]
+				if txt:
+					txt += "\n\n\t=== %s ===\t" % driver
+				else:
+					txt = "\t=== %s ===\t" % driver
+				for i in driverData:
+					if txt:
+						txt += "\n" + i
+					else:
+						txt = i
+			driver_filepaths_by_driver.text = txt
 		
 
 func saveSettings():
