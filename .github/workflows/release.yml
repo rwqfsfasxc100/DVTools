@@ -24,7 +24,7 @@ jobs:
       - name: Read Manifest Version
         id: manifest
         run: |
-          MOD_VERSION=$(grep -oP 'version=\K\d+' plugin.cfg)
+          MOD_VERSION="$(grep -oP 'version=\K\d+' plugin.cfg)"
           
           echo "Detected Version: $MOD_VERSION"
           echo "version=$MOD_VERSION" >> $GITHUB_OUTPUT
