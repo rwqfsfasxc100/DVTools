@@ -44,11 +44,11 @@ func save_driver_data() -> String:
 
 
 func _safe_open_from_button(btn):
-	if current_button:
+	if is_valid(current_button):
 		current_button.stored_state = get_this_dict_for_saving()
 		current_button._change_system_display()
 		current_button.calc_hash()
-		current_button = null
+	current_button = null
 	_open_this_button(btn)
 
 func _open_this_button(btn):
@@ -87,14 +87,15 @@ func _physics_process(delta):
 	ctr += 1
 	if ctr > 4:
 		ctr = 0
-		if can_change_sys_display and current_button:
+		if can_change_sys_display and is_valid(current_button):
 			var dict = get_this_dict_for_saving()
 			current_button.stored_state = dict
 			if current_button.has_method("_change_system_display"):
 				current_button._change_system_display()
 		
 
-
+func is_valid(button):
+	return button and is_instance_valid(button) and not button.is_queued_for_deletion()
 
 func set_properties_from_dict(dict:Dictionary):
 	if not lc:

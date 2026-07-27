@@ -74,7 +74,6 @@ var file = File.new()
 
 func _save_this_as_file(file_path:String):
 	var panel = null
-	print("Saving file as ",file_path)
 	if file_path in tabs:
 		panel = tabs[file_path]
 	else:
@@ -82,10 +81,17 @@ func _save_this_as_file(file_path:String):
 			var tab = tabs[tb]
 			if tab.visible:
 				panel = tab
+				if tb.begins_with("new://"):
+					tabs.erase(tb)
+					var tr = tab_buttons[tb]
+					tab_buttons.erase(tb)
+					tabs[file_path] = panel
+					tab_buttons[file_path] = tr
+					tr.script_path = file_path
+					panel.this_script_path = file_path
 				break
 	if panel:
 		if panel.has_method("save_driver_data"):
-			print("Saving to ",file_path)
 			var data:String = panel.save_driver_data()
 			save_data(data,file_path)
 			emit_signal("save_confirmed")
