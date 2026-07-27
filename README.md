@@ -44,6 +44,17 @@ Any files that can define mods are highlighted in a light green.
 
 <img width="124" height="100" alt="image" src="https://github.com/user-attachments/assets/dd910c6d-8cd7-4f38-ab0b-852c9d357831" />
 
+### Modlet toggling
+
+All available modlets can be toggled from the ∆V Tool panel. This provides the ability to toggle them without needing to open the game or the mod config file to toggle them.
+
+<img width="229" height="54" alt="image" src="https://github.com/user-attachments/assets/277e285b-57d3-4ba4-893f-d7cc70912fec" />
+
+Modlets also include both the mod name and their manifest's filepath.
+
+<img width="660" height="526" alt="image" src="https://github.com/user-attachments/assets/f8af4024-0583-4ab7-a6b2-203fe814ebfb" />
+
+
 # Installation Instructions
 
 1. Download the plugin's zip from the releases page [here](https://github.com/rwqfsfasxc100/DVTools/releases/latest)
@@ -78,6 +89,7 @@ Any files that can define mods are highlighted in a light green.
 - ~~`Manifests`~~
 - ~~`Highlighting`~~
   ~~- `Highlight Modlets`~~
+  ~~`Toggling Modlets`~~
 - `ADD_MINERALS.gd`
 - ~~`ADD_EQUIPMENT_ITEMS.gd`~~
   - Subdrivers:
