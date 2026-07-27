@@ -46,7 +46,7 @@ Any files that can define mods are highlighted in a light green.
 
 ### Modlet toggling
 
-All available modlets can be toggled from the ∆V Tool panel.
+All available modlets can be toggled from the ∆V Tool panel. This provides the ability to toggle them without needing to open the game or the mod config file to toggle them.
 
 <img width="229" height="54" alt="image" src="https://github.com/user-attachments/assets/277e285b-57d3-4ba4-893f-d7cc70912fec" />
 
