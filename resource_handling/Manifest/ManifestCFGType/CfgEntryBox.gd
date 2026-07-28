@@ -43,6 +43,7 @@ func _on_down_pressed():
 
 const config_types = PoolStringArray([
 	"bool",
+	"color",
 	"int",
 	"float",
 	"string",
@@ -84,6 +85,8 @@ func fix_type_name(type:String = "bool") -> String:
 	match type:
 		"boolean":
 			type = "bool"
+		"colour":
+			type = "color"
 		"integer":
 			type = "int"
 		"real":
@@ -97,6 +100,7 @@ func fix_type_name(type:String = "bool") -> String:
 var boxes = {
 	"action":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/action.tscn"),
 	"bool":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/bool.tscn"),
+	"color":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/color.tscn"),
 	"float":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/float.tscn"),
 	"input":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/input.tscn"),
 	"int":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/int.tscn"),
@@ -161,7 +165,7 @@ func RENAME_CONFIRMED():
 			if newtype != current_box_type:
 				var state = get_data().duplicate(true)
 				specify_box_type(newtype)
-				if newtype == "optionbutton":
+				if newtype == "optionbutton" and state.get("options",PoolStringArray()).empty():
 					state["options"] = PoolStringArray(["EXAMPLE_OPTION"])
 				set_data(state)
 			$RenameTo.hide()

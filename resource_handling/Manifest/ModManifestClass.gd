@@ -1,6 +1,6 @@
 tool
 extends Resource
-class_name ManifestResource , "res://addons/DVTools/resource_handling/Manifest/ManifestIcon.tres"
+class_name ModManifest , "res://addons/DVTools/resource_handling/Manifest/ManifestIcon.tres"
 
 var manifest : Dictionary = {} setget set_manifest , get_manifest
 

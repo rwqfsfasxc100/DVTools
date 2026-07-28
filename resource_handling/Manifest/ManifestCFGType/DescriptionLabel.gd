@@ -45,6 +45,8 @@ func get_property_tooltip(property:String) -> String:
 			return "String that the action button displays.\nCan be a translation string."
 		"method":
 			return "Method that the button script would be connected to."
+		"edit_alpha":
+			return "Whether the color can make use of the alpha channel"
 	return ""
 
 

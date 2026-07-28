@@ -24,7 +24,10 @@ var this_menu_data = [
 			},
 			{
 				"name":"ADD_EQUIPMENT_ITEMS.gd"
-			}
+			},
+			{
+				"name":"ADD_EQUIPMENT_SLOTS.gd"
+			},
 		]
 	},
 ]

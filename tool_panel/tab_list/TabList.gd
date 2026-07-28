@@ -3,6 +3,7 @@ extends HBoxContainer
 
 export (Dictionary) var supported_driver_files = {
 	"ADD_EQUIPMENT_ITEMS.gd":"res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_ITEMS.gd/EquipmentPanel.tscn",
+	"ADD_EQUIPMENT_SLOTS.gd":"res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_SLOTS.gd/SlotPanel.tscn",
 	
 }
 
