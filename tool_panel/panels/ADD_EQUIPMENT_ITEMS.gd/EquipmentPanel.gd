@@ -22,9 +22,9 @@ func _ready():
 	if not button_list.get_child_count():
 		add_example_entry()
 	
-	lc.get_node("slot_type/TagPopup").initialize_current_tags()
-	lc.get_node("alignment/TagPopup").initialize_current_tags()
-	lc.get_node("equipment_type/TagPopup").initialize_current_tags()
+	lc.get_node("slot_type/dropdown/TagPopup").initialize_current_tags()
+	lc.get_node("alignment/dropdown/TagPopup").initialize_current_tags()
+	lc.get_node("equipment_type/dropdown/TagPopup").initialize_current_tags()
 	_open_this_button(button_list.get_child(0))
 	
 
@@ -126,9 +126,9 @@ func set_properties_from_dict(dict:Dictionary):
 	lc.get_node("config_entry/property_editor").set_property_value(dict.get("config",{}).get("entry",""))
 	lc.get_node("config_invert_config/property_editor").set_property_value(dict.get("config",{}).get("invert_config",""))
 	lc.get_node("restriction/property_editor").set_property_value(dict.get("restriction",""))
-	lc.get_node("equipment_type/TagPopup").initialize_current_tags(dict.get("equipment_type",""))
-	lc.get_node("slot_type/TagPopup").initialize_current_tags(dict.get("slot_type","HARDPOINT"))
-	lc.get_node("alignment/TagPopup").initialize_current_tags(dict.get("alignment",""))
+	lc.get_node("equipment_type/dropdown/TagPopup").initialize_current_tags(dict.get("equipment_type",""))
+	lc.get_node("slot_type/dropdown/TagPopup").initialize_current_tags(dict.get("slot_type","HARDPOINT"))
+	lc.get_node("alignment/dropdown/TagPopup").initialize_current_tags(dict.get("alignment",""))
 
 func get_this_dict_for_saving() -> Dictionary:
 	if not lc:
@@ -160,9 +160,9 @@ func get_this_dict_for_saving() -> Dictionary:
 	var config_entry = lc.get_node("config_entry/property_editor").get_property_value()[0]
 	var config_invert_config = lc.get_node("config_invert_config/property_editor").get_property_value()[0]
 	var restriction = lc.get_node("restriction/property_editor").get_property_value()[0]
-	var equipment_type = lc.get_node("equipment_type/TagPopup").get_selected_string()
-	var slot_type = lc.get_node("slot_type/TagPopup").get_selected_string()
-	var align = lc.get_node("alignment/TagPopup").get_selected_string()
+	var equipment_type = lc.get_node("equipment_type/dropdown/TagPopup").get_selected_string()
+	var slot_type = lc.get_node("slot_type/dropdown/TagPopup").get_selected_string()
+	var align = lc.get_node("alignment/dropdown/TagPopup").get_selected_string()
 	if system:
 		out["system"] = system
 		if price > 0:
@@ -178,11 +178,11 @@ func get_this_dict_for_saving() -> Dictionary:
 		if num_val > -1:
 			out["num_val"] = num_val
 		if capability_lock:
-			out["capability_lock"] = capability_lock
+			out["capability_lock"] = true
 		if test_protocol != "fire":
 			out["test_protocol"] = test_protocol
 		if default:
-			out["default"] = default
+			out["default"] = true
 		if control:
 			out["control"] = control
 		if story_flag:
@@ -211,7 +211,7 @@ func get_this_dict_for_saving() -> Dictionary:
 			cfg["section"] = config_section
 			cfg["entry"] = config_entry
 			if config_invert_config:
-				cfg["invert_config"] = config_invert_config
+				cfg["invert_config"] = true
 			out["config"] = cfg
 		if equipment_type:
 			out["equipment_type"] = equipment_type

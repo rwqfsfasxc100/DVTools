@@ -8,10 +8,19 @@ const hold_types = PoolStringArray([
 	"mono",
 ])
 
+const tooltips = {
+	"":"",
+	"divided":"Storage is equally split among all mineral types",
+	"amorphic":"Storage is total maximum for all minerals combined",
+	"mono":"Storage can only be used for one mineral type",
+}
+
 func _ready():
 	clear()
-	for i in hold_types:
+	for r in range(hold_types.size()):
+		var i = hold_types[r]
 		add_item(i)
+		set_item_tooltip(r,tooltips.get(i,""))
 	select(0)
 
 func set_hold_type(how:String):

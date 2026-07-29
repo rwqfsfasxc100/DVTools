@@ -61,7 +61,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/SlotList/ScrollContainer"]
-margin_right = 200.0
+margin_right = 188.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -91,7 +92,7 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer"]
 margin_right = 438.0
-margin_bottom = 542.0
+margin_bottom = 554.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -437,70 +438,121 @@ defaults_for_type = {
 [node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
 margin_top = 364.0
 margin_right = 438.0
-margin_bottom = 384.0
+margin_bottom = 388.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 24.0
 hint_tooltip = "Property: slot_type
 
 The slot type used to dictate what sort of equipment this slot should be able to hold."
 text = "slot_type"
-property_tooltip = "The slot type used to dictate what sort of equipment this slot should be able to hold."
+property_tooltip = "The slot type used to dictate what sort of equipment this slot should be able to hold.
 
-[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 5 )]
+The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
+
+[node name="dropdown" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type"]
 margin_left = 204.0
 margin_right = 438.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type/dropdown"]
+margin_right = 115.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type/dropdown" instance=ExtResource( 5 )]
+margin_left = 119.0
+margin_right = 234.0
+margin_bottom = 24.0
 tag_type = "slot_type"
-alignment_type_path = NodePath("../../alignment/TagPopup")
-hardpoint_type_path = NodePath("../../hardpoint_type/TagPopup")
-panel_path = NodePath("../../../../../..")
+alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
+hardpoint_type_path = NodePath("../../../hardpoint_type/dropdown/TagPopup")
+panel_path = NodePath("../../../../../../..")
 
 [node name="hardpoint_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 388.0
+margin_top = 392.0
 margin_right = 438.0
-margin_bottom = 408.0
+margin_bottom = 416.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 24.0
 hint_tooltip = "Property: hardpoint_type
 
 If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot."
 text = "hardpoint_type"
-property_tooltip = "If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot."
+property_tooltip = "If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot.
 
-[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type" instance=ExtResource( 5 )]
+The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
+
+[node name="dropdown" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type"]
 margin_left = 204.0
 margin_right = 438.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type/dropdown"]
+margin_right = 115.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type/dropdown" instance=ExtResource( 5 )]
+margin_left = 119.0
+margin_right = 234.0
+margin_bottom = 24.0
 tag_type = "hardpoint_type"
-slot_type_path = NodePath("../../slot_type/TagPopup")
-alignment_type_path = NodePath("../../alignment/TagPopup")
-panel_path = NodePath("../../../../../..")
+slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
+alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
+panel_path = NodePath("../../../../../../..")
 
 [node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 412.0
+margin_top = 420.0
 margin_right = 438.0
-margin_bottom = 432.0
+margin_bottom = 444.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 24.0
 hint_tooltip = "Property: alignment
 
 If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.."
 text = "alignment"
-property_tooltip = "If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.."
+property_tooltip = "If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.
 
-[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 5 )]
+The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
+
+[node name="dropdown" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment"]
 margin_left = 204.0
 margin_right = 438.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment/dropdown"]
+margin_right = 115.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment/dropdown" instance=ExtResource( 5 )]
+margin_left = 119.0
+margin_right = 234.0
+margin_bottom = 24.0
 tag_type = "alignment"
-slot_type_path = NodePath("../../slot_type/TagPopup")
-hardpoint_type_path = NodePath("../../hardpoint_type/TagPopup")
-panel_path = NodePath("../../../../../..")
+slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
+hardpoint_type_path = NodePath("../../../hardpoint_type/dropdown/TagPopup")
+panel_path = NodePath("../../../../../../..")
 
 [node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 436.0
+margin_top = 448.0
 margin_right = 438.0
-margin_bottom = 466.0
+margin_bottom = 478.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -519,9 +571,9 @@ can_edit_type = false
 property_type = "string"
 
 [node name="override_additive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 470.0
+margin_top = 482.0
 margin_right = 438.0
-margin_bottom = 492.0
+margin_bottom = 504.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_additive" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -540,9 +592,9 @@ can_edit_type = false
 property_type = "PoolStringArray"
 
 [node name="override_subtractive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 496.0
+margin_top = 508.0
 margin_right = 438.0
-margin_bottom = 518.0
+margin_bottom = 530.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_subtractive" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -561,9 +613,9 @@ can_edit_type = false
 property_type = "PoolStringArray"
 
 [node name="restrict_hold_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 522.0
+margin_top = 534.0
 margin_right = 438.0
-margin_bottom = 542.0
+margin_bottom = 554.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_hold_type" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -575,8 +627,9 @@ property_tooltip = "If set, the default processed cargo hold type that the ship 
 
 [node name="RestrictHoldType" type="OptionButton" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_hold_type"]
 margin_left = 204.0
-margin_right = 233.0
+margin_right = 438.0
 margin_bottom = 20.0
+size_flags_horizontal = 3
 items = [ "", null, false, 0, null, "divided", null, false, 1, null, "amorphic", null, false, 2, null, "mono", null, false, 3, null ]
 selected = 0
 script = ExtResource( 4 )

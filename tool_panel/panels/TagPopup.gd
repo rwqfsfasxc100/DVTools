@@ -11,8 +11,10 @@ export (NodePath) var alignment_type_path = NodePath()
 onready var alignmenttype_node = get_node_or_null(alignment_type_path)
 export (NodePath) var hardpoint_type_path = NodePath()
 onready var hardpointtype_node = get_node_or_null(hardpoint_type_path)
+export (NodePath) var lineedit_path = NodePath("../LineEdit")
+onready var line_edit = get_node_or_null(lineedit_path)
 
-export (NodePath) var panel_path = NodePath("../../../../../../../..")
+export (NodePath) var panel_path = NodePath("../../../../../../../../..")
 onready var panel = get_node_or_null(panel_path)
 
 var panel_settings
@@ -31,9 +33,9 @@ func _ready():
 				connect("refresh",equipmenttype_node,"_on_refresh",[],CONNECT_DEFERRED)
 			if alignmenttype_node:
 				connect("refresh",alignmenttype_node,"_on_refresh")
-		"hardpoint_type":
-			if slottype_node:
-				connect("refresh",slottype_node,"_on_refresh")
+			if hardpointtype_node:
+				connect("refresh",hardpointtype_node,"_on_refresh",[],CONNECT_DEFERRED)
+	clip_text = true
 
 var available:Array = []
 var slot_tooltips:Dictionary = {"":""}
@@ -44,7 +46,9 @@ var hardpoint_tooltips:Dictionary = {"":""}
 
 
 func get_selected_string() -> String:
-	if available:
+	if line_edit:
+		return line_edit.text
+	elif available:
 		if selected < available.size() and selected > -1:
 			return available[selected]
 		return available[0]
@@ -179,24 +183,47 @@ func initialize_current_tags(use_specific:String = last_used):
 				var av = available.find(use_specific)
 				if av > -1:
 					select(av)
+					hint_tooltip = use_specific
+					if line_edit:
+						line_edit.text = use_specific
+						line_edit.hint_tooltip = use_specific
 				else:
 					select(0)
+					hint_tooltip = available[0]
+					if line_edit:
+						line_edit.text = available[0]
+						line_edit.hint_tooltip = available[0]
 			else:
 				select(0)
+				hint_tooltip = available[0]
+				if line_edit:
+					line_edit.text = available[0]
+					line_edit.hint_tooltip = available[0]
 			last_used = available[selected]
 		else:
 			last_used = ""
+			hint_tooltip = ""
+			if line_edit:
+				line_edit.text = ""
+				line_edit.hint_tooltip = ""
 
 signal refresh
 
 func _do_refresh(how):
 	emit_signal("refresh")
+	if line_edit:
+		if available:
+			line_edit.text = available[how]
+		else:
+			line_edit.text = ""
 
 func _on_refresh():
 	if available:
 		last_used = available[selected]
+		if line_edit: line_edit.text = available[selected]
 	else:
 		last_used = ""
+		if line_edit: line_edit.text = ""
 	initialize_current_tags()
 
 func __get_script_constant_map_without_load(script_path : String) -> Dictionary:

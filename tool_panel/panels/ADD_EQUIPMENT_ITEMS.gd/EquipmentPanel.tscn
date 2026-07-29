@@ -57,6 +57,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/SysList/ScrollContainer"]
+margin_right = 188.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -96,8 +98,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer"]
-margin_right = 320.0
-margin_bottom = 818.0
+margin_right = 430.0
+margin_bottom = 970.0
 size_flags_horizontal = 3
 
 [node name="system" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
@@ -893,11 +895,11 @@ property_type = "string"
 [node name="config_invert_config" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 812.0
 margin_right = 430.0
-margin_bottom = 842.0
+margin_bottom = 852.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/config_invert_config" instance=ExtResource( 2 )]
 margin_right = 200.0
-margin_bottom = 30.0
+margin_bottom = 40.0
 hint_tooltip = "Property: config_invert_config
 
 If setting equipment visibility behind a config, inverts the boolean output and sets that the equipment should be hidden if the config is true."
@@ -907,17 +909,18 @@ property_tooltip = "If setting equipment visibility behind a config, inverts the
 [node name="property_editor" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/config_invert_config" instance=ExtResource( 3 )]
 margin_left = 204.0
 margin_right = 430.0
-margin_bottom = 30.0
+margin_bottom = 40.0
 can_edit_type = false
 property_type = "bool"
 
 [node name="equipment_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 846.0
+margin_top = 856.0
 margin_right = 430.0
-margin_bottom = 866.0
+margin_bottom = 880.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/equipment_type" instance=ExtResource( 2 )]
 margin_right = 200.0
+margin_bottom = 24.0
 hint_tooltip = "Property: equipment_type
 
 The equipment type tag that this equipment uses to dictate which slots it's able to be added to.
@@ -930,20 +933,35 @@ property_tooltip = "The equipment type tag that this equipment uses to dictate w
 
 NOTE: Available equipment depends on the slot type tag.
 
-Equipment type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used."
+Equipment type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used. The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 
-[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/equipment_type" instance=ExtResource( 4 )]
+[node name="dropdown" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/equipment_type"]
 margin_left = 204.0
 margin_right = 430.0
-slot_type_path = NodePath("../../slot_type/TagPopup")
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/equipment_type/dropdown"]
+margin_right = 111.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/equipment_type/dropdown" instance=ExtResource( 4 )]
+margin_left = 115.0
+margin_right = 226.0
+margin_bottom = 24.0
+slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
 
 [node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 870.0
+margin_top = 884.0
 margin_right = 430.0
-margin_bottom = 890.0
+margin_bottom = 908.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 2 )]
 margin_right = 200.0
+margin_bottom = 24.0
 hint_tooltip = "Property: slot_type
 
 The slot type that this equipment will be added to.
@@ -952,22 +970,37 @@ Slot type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure 
 text = "slot_type"
 property_tooltip = "The slot type that this equipment will be added to.
 
-Slot type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used."
+Slot type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used. The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 
-[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 4 )]
+[node name="dropdown" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/slot_type"]
 margin_left = 204.0
 margin_right = 430.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/slot_type/dropdown"]
+margin_right = 111.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/slot_type/dropdown" instance=ExtResource( 4 )]
+margin_left = 115.0
+margin_right = 226.0
+margin_bottom = 24.0
 tag_type = "slot_type"
-equipment_type_path = NodePath("../../equipment_type/TagPopup")
-alignment_type_path = NodePath("../../alignment/TagPopup")
+equipment_type_path = NodePath("../../../equipment_type/dropdown/TagPopup")
+alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
 
 [node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 894.0
+margin_top = 912.0
 margin_right = 430.0
-margin_bottom = 914.0
+margin_bottom = 936.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 2 )]
 margin_right = 200.0
+margin_bottom = 24.0
 hint_tooltip = "Property: alignment
 
 If this equipment is to be added to hardpoints, specifies the slot alignment that this equipment is able to be equipped to.
@@ -980,18 +1013,32 @@ property_tooltip = "If this equipment is to be added to hardpoints, specifies th
 
 Leaving this blank means all alignments are supported and will add this equipment.
 
-Alignment tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used."
+Alignment tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used. The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 
-[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 4 )]
+[node name="dropdown" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/alignment"]
 margin_left = 204.0
 margin_right = 430.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/alignment/dropdown"]
+margin_right = 111.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/alignment/dropdown" instance=ExtResource( 4 )]
+margin_left = 115.0
+margin_right = 226.0
+margin_bottom = 24.0
 tag_type = "alignment"
-slot_type_path = NodePath("../../slot_type/TagPopup")
+slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
 
 [node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 918.0
+margin_top = 940.0
 margin_right = 430.0
-margin_bottom = 948.0
+margin_bottom = 970.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 2 )]
 margin_right = 200.0
@@ -1059,7 +1106,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2/SubDrivers/ScrollContainer"]
-margin_right = 1.0
+margin_right = 188.0
 margin_bottom = 320.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -38,11 +38,11 @@ func _on_delete():
 		panel._delete_this_button(self)
 
 func _change_system_display():
-	if stored_state and "system" in stored_state:
-		var sys = stored_state.get("system","SYSTEM_EXAMPLE")
+	if stored_state and "slot_display_name" in stored_state:
+		var sys = stored_state.get("slot_display_name","SLOT_EXAMPLE")
 		mainbutton.text = sys
 		mainbutton.hint_tooltip = sys
 
 func _check_delete():
-	confirmation.dialog_text = confirm_format % stored_state.get("system","SYSTEM_EXAMPLE")
+	confirmation.dialog_text = confirm_format % stored_state.get("slot_display_name","SLOT_EXAMPLE")
 	confirmation.popup_centered()
