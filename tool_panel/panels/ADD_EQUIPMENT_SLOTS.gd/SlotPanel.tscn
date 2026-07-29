@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/DVTools/tool_panel/panels/DescriptionLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_SLOTS.gd/SlotPanel.gd" type="Script" id=2]
+[ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_SLOTS.gd/RestrictHoldType.gd" type="Script" id=4]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/TagPopup.tscn" type="PackedScene" id=5]
 
 [node name="SlotPanel" type="HBoxContainer"]
 margin_right = 40.0
@@ -88,16 +91,17 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer"]
 margin_right = 438.0
-margin_bottom = 404.0
+margin_bottom = 542.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="system_slot" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
 margin_right = 438.0
-margin_bottom = 20.0
+margin_bottom = 30.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/system_slot" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 30.0
 hint_tooltip = "Property: system_slot
 
 Config slot identifier as to where the slot is stored within the ship's config.
@@ -108,13 +112,21 @@ property_tooltip = "Config slot identifier as to where the slot is stored within
 
 Each subsection is separated by a '.'; e.g. 'cargo.type' equates to {\"cargo\":{\"type\":\"SYSTEM_EXAMPLE\"))"
 
-[node name="slot_node_name" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 24.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/system_slot" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 44.0
+margin_bottom = 30.0
+can_edit_type = false
+property_type = "string"
+
+[node name="slot_node_name" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 34.0
+margin_right = 438.0
+margin_bottom = 64.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_node_name" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 30.0
 hint_tooltip = "Property: slot_node_name
 
 The node name used for the slot. Since identical node names will cause issues, make sure to use a unique identifier.
@@ -125,26 +137,86 @@ property_tooltip = "The node name used for the slot. Since identical node names 
 
 This is required due to it being used for several other specific proecesses."
 
-[node name="slot_display_name" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 48.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_node_name" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 68.0
+margin_bottom = 30.0
+can_edit_type = false
+property_type = "string"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": 0,
+"null": null,
+"string": "ExampleSlotName"
+}
+
+[node name="slot_display_name" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 68.0
+margin_right = 438.0
+margin_bottom = 98.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_display_name" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 30.0
 hint_tooltip = "Property: slot_display_name
 
 The string/translation string used for the slot's display name in the equipment tab."
 text = "slot_display_name"
 property_tooltip = "The string/translation string used for the slot's display name in the equipment tab."
 
-[node name="has_none" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 72.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_display_name" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 92.0
+margin_bottom = 30.0
+can_edit_type = false
+property_type = "string"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": 0,
+"null": null,
+"string": "SLOT_EXAMPLE"
+}
+
+[node name="has_none" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 102.0
+margin_right = 438.0
+margin_bottom = 142.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/has_none" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 40.0
 hint_tooltip = "Property: has_none
 
 Whether the slot should automatically add an empty slot; worth nothing in price, set as slot default, and uses the system \"SYSTEM_EMPTY\"
@@ -155,13 +227,43 @@ property_tooltip = "Whether the slot should automatically add an empty slot; wor
 
 If you want to create an empty slot using a different name, or for a num_val equal to 0, you will need to create the slot using ADD_EQUIPMENT_ITEMS.gd"
 
-[node name="always_display" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 96.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/has_none" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 116.0
+margin_bottom = 40.0
+can_edit_type = false
+property_type = "bool"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": true,
+"float": 0.0,
+"int": 0,
+"null": null,
+"string": ""
+}
+
+[node name="always_display" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 146.0
+margin_right = 438.0
+margin_bottom = 186.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/always_display" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 40.0
 hint_tooltip = "Property: always_display
 
 Whether the slot will always be visible regardless of whether the current ship has this slot's system_slot in it's config.
@@ -172,13 +274,43 @@ property_tooltip = "Whether the slot will always be visible regardless of whethe
 
 Will be overriden by further filtering, but can be useful as a base without requiring additional code to insert the slot into a ship scene."
 
-[node name="restrict_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 120.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/always_display" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 140.0
+margin_bottom = 40.0
+can_edit_type = false
+property_type = "bool"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": true,
+"float": 0.0,
+"int": 0,
+"null": null,
+"string": ""
+}
+
+[node name="restrict_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 190.0
+margin_right = 438.0
+margin_bottom = 220.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_type" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 30.0
 hint_tooltip = "Property: restrict_type
 
 If set, restricts this slot to a specific ship type.
@@ -189,62 +321,123 @@ property_tooltip = "If set, restricts this slot to a specific ship type.
 
 Vanilla uses \"fission\" for fission reactor ships, and \"fusion-dec\" for the EIME, however this can be whatever is set in the `shipType` property of a ship scene."
 
-[node name="open_by_default" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 144.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_type" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 164.0
+margin_bottom = 30.0
+can_edit_type = false
+property_type = "string"
+
+[node name="open_by_default" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 224.0
+margin_right = 438.0
+margin_bottom = 264.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/open_by_default" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 40.0
 hint_tooltip = "Property: open_by_default
 
 Whether this slot would be automatically expanded when the equipment menu is first opened."
 text = "open_by_default"
 property_tooltip = "Whether this slot would be automatically expanded when the equipment menu is first opened."
 
-[node name="limit_ships" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 168.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/open_by_default" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 188.0
+margin_bottom = 40.0
+can_edit_type = false
+property_type = "bool"
+
+[node name="limit_ships" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 268.0
+margin_right = 438.0
+margin_bottom = 290.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/limit_ships" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 22.0
 hint_tooltip = "Property: limit_ships
 
 If set, restricts this slot so that only ship names (shipName property in ship scenes) set in this array will be able to use this slot."
 text = "limit_ships"
 property_tooltip = "If set, restricts this slot so that only ship names (shipName property in ship scenes) set in this array will be able to use this slot."
 
-[node name="prevent_ships" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 192.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/limit_ships" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 212.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="prevent_ships" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 294.0
+margin_right = 438.0
+margin_bottom = 316.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/prevent_ships" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 22.0
 hint_tooltip = "Property: prevent_ships
 
 If set, restricts this slot so that any ship names (shipName property in ship scenes) set in this array will not be able to use this slot at all."
 text = "prevent_ships"
 property_tooltip = "If set, restricts this slot so that any ship names (shipName property in ship scenes) set in this array will not be able to use this slot at all."
 
-[node name="add_vanilla_equipment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 216.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/prevent_ships" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 236.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="add_vanilla_equipment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 320.0
+margin_right = 438.0
+margin_bottom = 360.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/add_vanilla_equipment" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 40.0
 hint_tooltip = "Property: add_vanilla_equipment
 
 Whether vanilla equipment should be added to this slot, based on the equipment tags set as default in EQUIPMENT_TAGS.gd and any overrides made through EQUIPMENT_TAGS.gd."
 text = "add_vanilla_equipment"
 property_tooltip = "Whether vanilla equipment should be added to this slot, based on the equipment tags set as default in EQUIPMENT_TAGS.gd and any overrides made through EQUIPMENT_TAGS.gd."
 
-[node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 240.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/add_vanilla_equipment" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 260.0
+margin_bottom = 40.0
+can_edit_type = false
+property_type = "bool"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": true,
+"float": 0.0,
+"int": 0,
+"null": null,
+"string": ""
+}
+
+[node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 364.0
+margin_right = 438.0
+margin_bottom = 384.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -254,10 +447,18 @@ The slot type used to dictate what sort of equipment this slot should be able to
 text = "slot_type"
 property_tooltip = "The slot type used to dictate what sort of equipment this slot should be able to hold."
 
-[node name="hardpoint_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 264.0
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 5 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 284.0
+tag_type = "slot_type"
+alignment_type_path = NodePath("../../alignment/TagPopup")
+hardpoint_type_path = NodePath("../../hardpoint_type/TagPopup")
+panel_path = NodePath("../../../../../..")
+
+[node name="hardpoint_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 388.0
+margin_right = 438.0
+margin_bottom = 408.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -267,10 +468,18 @@ If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should defin
 text = "hardpoint_type"
 property_tooltip = "If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot."
 
-[node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 288.0
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type" instance=ExtResource( 5 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 308.0
+tag_type = "hardpoint_type"
+slot_type_path = NodePath("../../slot_type/TagPopup")
+alignment_type_path = NodePath("../../alignment/TagPopup")
+panel_path = NodePath("../../../../../..")
+
+[node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 412.0
+margin_right = 438.0
+margin_bottom = 432.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -280,49 +489,81 @@ If set and slot_type is \"HARDPOINT\", equipment must either have no alignment o
 text = "alignment"
 property_tooltip = "If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.."
 
-[node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 312.0
+[node name="TagPopup" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 5 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 332.0
+tag_type = "alignment"
+slot_type_path = NodePath("../../slot_type/TagPopup")
+hardpoint_type_path = NodePath("../../hardpoint_type/TagPopup")
+panel_path = NodePath("../../../../../..")
+
+[node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 436.0
+margin_right = 438.0
+margin_bottom = 466.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 30.0
 hint_tooltip = "Property: restriction
 
 If set, determines a restriction that equipment must have to be added to this slot. Only equipment without a restriction or a restriction string equal to this would be added."
 text = "restriction"
 property_tooltip = "If set, determines a restriction that equipment must have to be added to this slot. Only equipment without a restriction or a restriction string equal to this would be added."
 
-[node name="override_additive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 336.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 356.0
+margin_bottom = 30.0
+can_edit_type = false
+property_type = "string"
+
+[node name="override_additive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 470.0
+margin_right = 438.0
+margin_bottom = 492.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_additive" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 22.0
 hint_tooltip = "Property: override_additive
 
 Equipment tags that would be added to this slot, overriding whatever is set for this slot's default in EQUIPMENT_TAGS.gd"
 text = "override_additive"
 property_tooltip = "Equipment tags that would be added to this slot, overriding whatever is set for this slot's default in EQUIPMENT_TAGS.gd"
 
-[node name="override_subtractive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 360.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_additive" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 380.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="override_subtractive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 496.0
+margin_right = 438.0
+margin_bottom = 518.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_subtractive" instance=ExtResource( 1 )]
 margin_right = 200.0
+margin_bottom = 22.0
 hint_tooltip = "Property: override_subtractive
 
 Equipment tags that would be removed from this slot, overriding any if they were set for this slot's default in EQUIPMENT_TAGS.gd or set as additive overrides."
 text = "override_subtractive"
 property_tooltip = "Equipment tags that would be removed from this slot, overriding any if they were set for this slot's default in EQUIPMENT_TAGS.gd or set as additive overrides."
 
-[node name="restrict_hold_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 384.0
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_subtractive" instance=ExtResource( 3 )]
+margin_left = 204.0
 margin_right = 438.0
-margin_bottom = 404.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+
+[node name="restrict_hold_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 522.0
+margin_right = 438.0
+margin_bottom = 542.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_hold_type" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -331,3 +572,11 @@ hint_tooltip = "Property: restrict_hold_type
 If set, the default processed cargo hold type that the ship must have for this slot to be used."
 text = "restrict_hold_type"
 property_tooltip = "If set, the default processed cargo hold type that the ship must have for this slot to be used."
+
+[node name="RestrictHoldType" type="OptionButton" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_hold_type"]
+margin_left = 204.0
+margin_right = 233.0
+margin_bottom = 20.0
+items = [ "", null, false, 0, null, "divided", null, false, 1, null, "amorphic", null, false, 2, null, "mono", null, false, 3, null ]
+selected = 0
+script = ExtResource( 4 )

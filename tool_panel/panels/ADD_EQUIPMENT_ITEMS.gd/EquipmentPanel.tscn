@@ -3,7 +3,7 @@
 [ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_ITEMS.gd/EquipmentPanel.gd" type="Script" id=1]
 [ext_resource path="res://addons/DVTools/tool_panel/panels/DescriptionLabel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_ITEMS.gd/TagPopup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/TagPopup.tscn" type="PackedScene" id=4]
 
 [node name="EquipmentPanel" type="HBoxContainer"]
 size_flags_horizontal = 3
@@ -57,8 +57,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/SysList/ScrollContainer"]
-margin_right = 188.0
-margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -98,8 +96,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer"]
-margin_right = 430.0
-margin_bottom = 948.0
+margin_right = 320.0
+margin_bottom = 818.0
 size_flags_horizontal = 3
 
 [node name="system" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
@@ -1061,7 +1059,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer2/SubDrivers/ScrollContainer"]
-margin_right = 188.0
+margin_right = 1.0
 margin_bottom = 320.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -1,15 +1,7 @@
 tool
 extends OptionButton
 
-func _ready():
-	connect("item_selected",self,"_do_refresh")
-	match tag_type:
-		"slot_type":
-			connect("refresh",equipmenttype_node,"_on_refresh",[],CONNECT_DEFERRED)
-			connect("refresh",alignmenttype_node,"_on_refresh")
-		
-
-export (String,"equipment_type","slot_type","alignment") var tag_type = "equipment_type"
+export (String,"equipment_type","slot_type","alignment","hardpoint_type") var tag_type = "equipment_type"
 
 export (NodePath) var slot_type_path = NodePath()
 onready var slottype_node = get_node_or_null(slot_type_path)
@@ -17,6 +9,8 @@ export (NodePath) var equipment_type_path = NodePath()
 onready var equipmenttype_node = get_node_or_null(equipment_type_path)
 export (NodePath) var alignment_type_path = NodePath()
 onready var alignmenttype_node = get_node_or_null(alignment_type_path)
+export (NodePath) var hardpoint_type_path = NodePath()
+onready var hardpointtype_node = get_node_or_null(hardpoint_type_path)
 
 export (NodePath) var panel_path = NodePath("../../../../../../../..")
 onready var panel = get_node_or_null(panel_path)
@@ -29,7 +23,25 @@ var alignments:Array = []
 var hardpoint_types:Array = []
 var slot_defaults:Dictionary = {}
 
+func _ready():
+	connect("item_selected",self,"_do_refresh")
+	match tag_type:
+		"slot_type":
+			if equipmenttype_node:
+				connect("refresh",equipmenttype_node,"_on_refresh",[],CONNECT_DEFERRED)
+			if alignmenttype_node:
+				connect("refresh",alignmenttype_node,"_on_refresh")
+		"hardpoint_type":
+			if slottype_node:
+				connect("refresh",slottype_node,"_on_refresh")
+
 var available:Array = []
+var slot_tooltips:Dictionary = {"":""}
+var equipment_tooltips:Dictionary = {"":""}
+var alignment_tooltips:Dictionary = {"":""}
+var hardpoint_tooltips:Dictionary = {"":""}
+
+
 
 func get_selected_string() -> String:
 	if available:
@@ -50,6 +62,20 @@ func initialize_current_tags(use_specific:String = last_used):
 		alignments = vanilla_tags.get("alignments",[])
 		hardpoint_types = vanilla_tags.get("hardpoint_types",[])
 		slot_defaults = vanilla_tags.get("slot_defaults",{})
+		match tag_type:
+			"slot_type":
+				for i in slot_types:
+					slot_tooltips[i] = "Vanilla/Built-in"
+			"equipment_type":
+				for i in equipment_types:
+					equipment_tooltips[i] = "Vanilla/Built-in"
+			"alignment":
+				for i in alignments:
+					alignment_tooltips[i] = "Vanilla/Built-in"
+			"hardpoint_type":
+				for i in hardpoint_types:
+					hardpoint_tooltips[i] = "Vanilla/Built-in"
+		
 		if panel_settings:
 			match panel_settings.get_value("driver_tag_discovery_preference"):
 				0:
@@ -67,18 +93,26 @@ func initialize_current_tags(use_specific:String = last_used):
 				for st in slotTypes:
 					if not st in slot_types:
 						slot_types.append(st)
+					if tag_type == "slot_type":
+						slot_tooltips[st] = tag
 			if equipmentItems.size() > 0:
 				for st in equipmentItems:
 					if not st in equipment_types:
 						equipment_types.append(st)
+					if tag_type == "equipment_type":
+						equipment_tooltips[st] = tag
 			if AL:
 				for st in AL:
 					if not st in alignments:
 						alignments.append(st)
+					if tag_type == "alignment":
+						alignment_tooltips[st] = tag
 			if hardpointTypes:
 				for st in hardpointTypes:
 					if not st in hardpoint_types:
 						hardpoint_types.append(st)
+					if tag_type == "hardpoint_type":
+						hardpoint_tooltips[st] = tag
 			if slotDefaults:
 				for st in slotDefaults:
 					if st in slot_defaults:
@@ -88,6 +122,7 @@ func initialize_current_tags(use_specific:String = last_used):
 					else:
 						slot_defaults.merge({st:slotDefaults.get(st)})
 		clear()
+		var source_tooltips:Dictionary = {"":""}
 		match tag_type:
 			"equipment_type":
 				if slottype_node and slottype_node.has_method("get_selected_string"):
@@ -99,25 +134,46 @@ func initialize_current_tags(use_specific:String = last_used):
 								if not r in allHP:
 									allHP.append(r)
 						available = allHP
-#						available = slot_defaults.get(rt,[""])
+						source_tooltips.merge(equipment_tooltips)
 					else:
 						available = slot_defaults.get(st,[""])
+						source_tooltips.merge(equipment_tooltips)
 				else:
 					available = equipment_types
+					source_tooltips.merge(equipment_tooltips)
 			"slot_type":
 				available = slot_types
+				source_tooltips.merge(slot_tooltips)
+			"hardpoint_type":
+				if slottype_node and slottype_node.has_method("get_selected_string"):
+					var st = slottype_node.get_selected_string()
+					if st == "HARDPOINT":
+						var allHP = []
+						for i in hardpoint_types:
+							allHP.append(i)
+						available = allHP
+						source_tooltips.merge(hardpoint_tooltips)
+					else:
+						available = [""]
+				else:
+					available = [""]
 			"alignment":
 				if slottype_node and slottype_node.has_method("get_selected_string"):
 					var st = slottype_node.get_selected_string()
 					if st == "HARDPOINT":
 						available = [""]
 						available.append_array(alignments)
+						source_tooltips.merge(alignment_tooltips)
 					else:
 						available = [""]
 				else:
 					available = [""]
-		for i in available:
+		
+		for r in range(available.size()):
+			var i = available[r]
 			add_item(i)
+			if i in source_tooltips:
+				set_item_tooltip(r,source_tooltips[i])
 		if available:
 			if use_specific:
 				var av = available.find(use_specific)
