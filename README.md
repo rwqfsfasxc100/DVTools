@@ -124,3 +124,4 @@ Modlets also include both the mod name and their manifest's filepath.
 - `LOAD_RESOURCES.gd`
 - `MOD_DETAILS.txt`
 - `REPLACE_TRANSLATIONS.gd` (If time permits, TranslationTracker already serves this purpose well enough for the time being)
+- Mod downloading/updating
