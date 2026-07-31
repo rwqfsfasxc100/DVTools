@@ -11,7 +11,7 @@ var CONTAINER
 
 var initial_state = {}
 
-var current_box_type = ""
+var current_box_type = "bool"
 
 var loaded_box
 
@@ -19,13 +19,12 @@ func _ready():
 	deleteformat = $DoDelete.dialog_text
 	$BOX/BUTTONS/TOGGLE.connect("pressed",self,"_toggle_pressed")
 	$BOX/BUTTONS/DELETE.connect("pressed",self,"_on_delete")
-	$DoDelete.connect("confirmed",self,"$BOX/BUTTONS/DELETE")
+	$DoDelete.connect("confirmed",self,"DELETE")
 	$BOX/BUTTONS/TOGGLE.text = boxname
 	$BOX/BUTTONS/RENAME.connect("pressed",self,"_on_rename")
 	$RenameTo.connect("confirmed",self,"RENAME_CONFIRMED")
 	$BOX/BUTTONS/UP.connect("pressed",self,"_on_up_pressed")
 	$BOX/BUTTONS/DOWN.connect("pressed",self,"_on_down_pressed")
-#	specify_box_type(initial_state.get("type","bool"))
 	set_data(initial_state,boxname)
 	yield(get_tree(),"idle_frame")
 	_on_down_pressed()
@@ -44,6 +43,7 @@ func _on_down_pressed():
 const config_types = PoolStringArray([
 	"bool",
 	"color",
+	"display",
 	"int",
 	"float",
 	"string",
@@ -53,6 +53,7 @@ const config_types = PoolStringArray([
 ])
 
 func specify_box_type(type:String):
+	current_box_type = fix_type_name(current_box_type)
 	type = fix_type_name(type)
 	if type != current_box_type:
 		if loaded_box and not loaded_box.is_queued_for_deletion():
@@ -69,12 +70,17 @@ func specify_box_type(type:String):
 			loaded_box = box
 			$BOX/CB/CONTENT.add_child(loaded_box)
 	elif not loaded_box or (loaded_box and not loaded_box.is_queued_for_deletion()):
+		for i in $BOX/CB/CONTENT.get_children():
+			if i and not i.is_queued_for_deletion():
+				$BOX/CB/CONTENT.remove_child(i)
+				i.queue_free()
 		if type in boxes:
 			var box = boxes[type].instance()
 			box.name = "loaded_box"
 			box.boxname = boxname
 			loaded_box = box
 			$BOX/CB/CONTENT.add_child(loaded_box)
+	current_box_type = type
 	if loaded_box:
 		loaded_box.visible = true
 	else:
@@ -101,6 +107,7 @@ var boxes = {
 	"action":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/action.tscn"),
 	"bool":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/bool.tscn"),
 	"color":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/color.tscn"),
+	"display":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/display.tscn"),
 	"float":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/float.tscn"),
 	"input":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/input.tscn"),
 	"int":load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/int.tscn"),
@@ -114,7 +121,6 @@ func get_data():
 		loaded_box = $BOX/CB/CONTENT.get_node("loaded_box")
 	if loaded_box:
 		boxname = loaded_box.boxname
-		current_box_type = loaded_box.type
 		data = loaded_box.get_data().duplicate(true)
 	if current_box_type == "optionbutton" and not data.get("options",[]).size():
 		return {}
@@ -123,7 +129,8 @@ func get_data():
 	return data
 
 func set_data(STATE,bn:String = ""):
-	specify_box_type(STATE.get("type","bool"))
+	var newtype = fix_type_name(STATE.get("type",current_box_type))
+	specify_box_type(newtype)
 	if loaded_box:
 		loaded_box.set_data(STATE)
 		if bn:
@@ -158,12 +165,13 @@ func _on_rename():
 func RENAME_CONFIRMED():
 	if CONTAINER:
 		var newname = $RenameTo/VBoxContainer/LineEdit.text
-		var newtype = config_types[$RenameTo/VBoxContainer/OptionButton.selected]
+		var newtype = fix_type_name(config_types[$RenameTo/VBoxContainer/OptionButton.selected])
 		if newname or newtype != current_box_type:
 			if newname != boxname:
 				CONTAINER.rename(boxname,newname)
 			if newtype != current_box_type:
 				var state = get_data().duplicate(true)
+				state["type"] = newtype
 				specify_box_type(newtype)
 				if newtype == "optionbutton" and state.get("options",PoolStringArray()).empty():
 					state["options"] = PoolStringArray(["EXAMPLE_OPTION"])

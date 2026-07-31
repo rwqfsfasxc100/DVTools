@@ -29,6 +29,7 @@ func set_data(STATE):
 
 func has_changed():
 	emit_signal("changed")
+	
 
 func _on_add_open():
 	$ConfirmationDialog/VBoxContainer/LineEdit.text = ""
@@ -56,8 +57,9 @@ func add(item_name,state = {}):
 func delete(which):
 	if which in dataStore:
 		var box = dataStore[which]
-		box.queue_free()
 		dataStore.erase(which)
+		order.erase(which)
+		box.queue_free()
 		has_changed()
 		resort()
 
@@ -98,6 +100,7 @@ func move_id_up(bn:String,idx:int):
 		order.remove(idx)
 		order.insert(idx - 1,bn)
 		recalculate()
+		has_changed()
 func move_id_down(bn:String,idx:int):
 	if not bn in order:
 		order.append(bn)
@@ -107,6 +110,7 @@ func move_id_down(bn:String,idx:int):
 		order.remove(idx)
 		order.insert(idx + 1,bn)
 		recalculate()
+		has_changed()
 
 const page_size = 10
 var current_page = 0

@@ -445,7 +445,9 @@ margin_right = 200.0
 margin_bottom = 24.0
 hint_tooltip = "Property: slot_type
 
-The slot type used to dictate what sort of equipment this slot should be able to hold."
+The slot type used to dictate what sort of equipment this slot should be able to hold.
+
+The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 text = "slot_type"
 property_tooltip = "The slot type used to dictate what sort of equipment this slot should be able to hold.
 
@@ -483,7 +485,9 @@ margin_right = 200.0
 margin_bottom = 24.0
 hint_tooltip = "Property: hardpoint_type
 
-If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot."
+If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot.
+
+The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 text = "hardpoint_type"
 property_tooltip = "If slot_type is \"HARDPOINT\", which specific type of hardpoint tag should define this slot.
 
@@ -521,7 +525,9 @@ margin_right = 200.0
 margin_bottom = 24.0
 hint_tooltip = "Property: alignment
 
-If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.."
+If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.
+
+The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 text = "alignment"
 property_tooltip = "If set and slot_type is \"HARDPOINT\", equipment must either have no alignment or a matching alignment to be added to this slot.
 

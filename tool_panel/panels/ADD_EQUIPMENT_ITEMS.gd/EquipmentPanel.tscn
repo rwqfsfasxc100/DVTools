@@ -927,7 +927,7 @@ The equipment type tag that this equipment uses to dictate which slots it's able
 
 NOTE: Available equipment depends on the slot type tag.
 
-Equipment type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used."
+Equipment type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used. The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 text = "equipment_type"
 property_tooltip = "The equipment type tag that this equipment uses to dictate which slots it's able to be added to.
 
@@ -966,7 +966,7 @@ hint_tooltip = "Property: slot_type
 
 The slot type that this equipment will be added to.
 
-Slot type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used."
+Slot type tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used. The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 text = "slot_type"
 property_tooltip = "The slot type that this equipment will be added to.
 
@@ -1007,7 +1007,7 @@ If this equipment is to be added to hardpoints, specifies the slot alignment tha
 
 Leaving this blank means all alignments are supported and will add this equipment.
 
-Alignment tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used."
+Alignment tags are added/modified using the EQUIPMENT_TAGS.gd driver. Make sure you have HevLib installed properly to permit built-in/Vanilla tags to be used. The text box lets you input any string for the tag if needs be (such as with equipment overrides), however please double check with whatever overrides you are using."
 text = "alignment"
 property_tooltip = "If this equipment is to be added to hardpoints, specifies the slot alignment that this equipment is able to be equipped to.
 

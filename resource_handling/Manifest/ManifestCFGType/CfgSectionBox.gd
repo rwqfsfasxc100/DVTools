@@ -90,6 +90,8 @@ var dataStore = {}
 
 const config_types = PoolStringArray([
 	"bool",
+	"color",
+	"display",
 	"int",
 	"float",
 	"string",
@@ -135,6 +137,7 @@ func delete(which):
 		var box = dataStore[which]
 		box.queue_free()
 		dataStore.erase(which)
+		order.erase(which)
 		changed()
 		resort()
 
