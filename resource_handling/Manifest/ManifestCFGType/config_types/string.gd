@@ -43,15 +43,15 @@ func get_data() -> Dictionary:
 	return out
 
 func set_data(STATE:Dictionary):
-	if "name" in STATE:$name/property_editor.set_property_value(STATE["name"])
-	if "description" in STATE:$description/property_editor.set_property_value(STATE["description"])
-	if "default" in STATE:$default/property_editor.set_property_value(STATE["default"])
-	if "placeholder" in STATE:$placeholder/property_editor.set_property_value(STATE["placeholder"])
-	if "max_length" in STATE:$max_length/property_editor.set_property_value(STATE["max_length"])
-	if "secret" in STATE:$secret/property_editor.set_property_value(STATE["secret"])
-	if "clear_button" in STATE:$clear_button/property_editor.set_property_value(STATE["clear_button"])
-	if "requires_bools" in STATE:$requires_bools/property_editor.set_property_value(STATE["requires_bools"])
-	if "invert_bool_requirement" in STATE:$invert_bool_requirement/property_editor.set_property_value(STATE["invert_bool_requirement"])
-	if "require_restart" in STATE:$require_restart/property_editor.set_property_value(STATE["require_restart"])
-	if "disabled" in STATE:$disabled/property_editor.set_property_value(STATE[""])
+	$name/property_editor.set_property_value(STATE.get("name","STRING_MISSING_NAME"))
+	$description/property_editor.set_property_value(STATE.get("description",""))
+	$default/property_editor.set_property_value(STATE.get("default",""))
+	$placeholder/property_editor.set_property_value(STATE.get("placeholder","HEVLIB_CONFIG_LINEEDIT_PLACEHOLDER"))
+	$max_length/property_editor.set_property_value(STATE.get("max_length",0))
+	$secret/property_editor.set_property_value(STATE.get("secret",false))
+	$clear_button/property_editor.set_property_value(STATE.get("clear_button",false))
+	$requires_bools/property_editor.set_property_value(STATE.get("requires_bools",PoolStringArray()))
+	$invert_bool_requirement/property_editor.set_property_value(STATE.get("invert_bool_requirement",false))
+	$require_restart/property_editor.set_property_value(STATE.get("require_restart",false))
+	$disabled/property_editor.set_property_value(STATE.get("disabled",false))
 

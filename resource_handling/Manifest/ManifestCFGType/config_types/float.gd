@@ -43,17 +43,17 @@ func get_data() -> Dictionary:
 	return out
 
 func set_data(STATE:Dictionary):
-	if "name" in STATE:$name/property_editor.set_property_value(STATE["name"])
-	if "description" in STATE:$description/property_editor.set_property_value(STATE["description"])
-	if "default" in STATE:$default/property_editor.set_property_value(STATE["default"])
-	if "min" in STATE:$min/property_editor.set_property_value(STATE["min"])
-	if "max" in STATE:$max/property_editor.set_property_value(STATE["max"])
-	if "step" in STATE:$step/property_editor.set_property_value(STATE["step"])
-	if "style" in STATE:set_style_val(STATE["style"])
-	if "requires_bools" in STATE:$requires_bools/property_editor.set_property_value(STATE["requires_bools"])
-	if "invert_bool_requirement" in STATE:$invert_bool_requirement/property_editor.set_property_value(STATE["invert_bool_requirement"])
-	if "require_restart" in STATE:$require_restart/property_editor.set_property_value(STATE["require_restart"])
-	if "disabled" in STATE:$disabled/property_editor.set_property_value(STATE["disabled"])
+	$name/property_editor.set_property_value(STATE.get("name","INTFLOAT_MISSING_NAME"))
+	$description/property_editor.set_property_value(STATE.get("description",""))
+	$default/property_editor.set_property_value(STATE.get("default",10.0))
+	$min/property_editor.set_property_value(STATE.get("min",0.0))
+	$max/property_editor.set_property_value(STATE.get("max",10.0))
+	$step/property_editor.set_property_value(STATE.get("step",1.0))
+	set_style_val(STATE.get("style","slider"))
+	$requires_bools/property_editor.set_property_value(STATE.get("requires_bools",PoolStringArray()))
+	$invert_bool_requirement/property_editor.set_property_value(STATE.get("invert_bool_requirement",false))
+	$require_restart/property_editor.set_property_value(STATE.get("require_restart",false))
+	$disabled/property_editor.set_property_value(STATE.get("disabled",false))
 
 var styles = PoolStringArray(["slider","spinbox"])
 func _ready():

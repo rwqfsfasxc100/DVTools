@@ -34,11 +34,11 @@ func get_data() -> Dictionary:
 	return out
 
 func set_data(STATE:Dictionary):
-	if "name" in STATE:$name/property_editor.set_property_value(STATE["name"])
-	if "description" in STATE:$description/property_editor.set_property_value(STATE["description"])
-	if "script_path" in STATE:$script_path/property_editor.set_property_value(STATE["script_path"])
-	if "button_label" in STATE:$button_label/property_editor.set_property_value(STATE["button_label"])
-	if "method" in STATE:$method/property_editor.set_property_value(STATE["method"])
-	if "requires_bools" in STATE:$requires_bools/property_editor.set_property_value(STATE["requires_bools"])
-	if "invert_bool_requirement" in STATE:$invert_bool_requirement/property_editor.set_property_value(STATE["invert_bool_requirement"])
-	if "disabled" in STATE:$disabled/property_editor.set_property_value(STATE["disabled"])
+	$name/property_editor.set_property_value(STATE.get("name","ACTION_MISSING_NAME"))
+	$description/property_editor.set_property_value(STATE.get("description",""))
+	$script_path/property_editor.set_property_value(STATE.get("script_path",""))
+	$button_label/property_editor.set_property_value(STATE.get("button_label",""))
+	$method/property_editor.set_property_value(STATE.get("method","_pressed"))
+	$requires_bools/property_editor.set_property_value(STATE.get("requires_bools",PoolStringArray()))
+	$invert_bool_requirement/property_editor.set_property_value(STATE.get("invert_bool_requirement",false))
+	$disabled/property_editor.set_property_value(STATE.get("disabled",false))

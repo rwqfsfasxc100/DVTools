@@ -49,6 +49,10 @@ func get_property_tooltip(property:String) -> String:
 			return "Whether the color can make use of the alpha channel"
 		"scene_path":
 			return "The file path to the scene which this display represents.\nAs this is stored within a margin container, make sure you properly size this scene with code, rect_size/rect_min)_size, or through size flags.\n\nProperties for scene script:\n - display_container - If added to your scene's topmost node, sets this as the node added to the config list.\n\nMethods for scene script:\n - get_label(direction = 0) - If added, handles which node would be the adjacent nameplate node for other configs.\n   direction - whether the config below (-1) or above (1) is asking for the label node.\n    Direction is used for special handling where the name label is not focused.\n    All configs have this method, and this should never be zero if called correctly.\n - get_focusable(direction = 0) - If added, handles which node would be the adjacent content button for other configs.\n   direction - whether the config below (-1) or above (1) is asking for the content button node.\n    Direction is used for special handling where the content button is not focused.\n    All configs have this method, and this should never be zero if called correctly.\n - get_reset(direction = 0) - If added, handles which node would be the adjacent reset button node for other configs.\n   direction - whether the config below (-1) or above (1) is asking for the reset node.\n    Direction is used for special handling where the reset button is not focused.\n    All configs have this method, and this should never be zero if called correctly."
+		"left_margin":
+			return ""
+		"right_margin":
+			return ""
 	return ""
 
 

@@ -31,10 +31,10 @@ func get_data() -> Dictionary:
 	return out
 
 func set_data(STATE:Dictionary):
-	if "name" in STATE:$name/property_editor.set_property_value(STATE["name"])
-	if "description" in STATE:$description/property_editor.set_property_value(STATE["description"])
-	if "default" in STATE:$default/property_editor.set_property_value(STATE["default"])
-	if "always_binds" in STATE:$always_binds/property_editor.set_property_value(STATE["always_binds"])
-	if "requires_bools" in STATE:$requires_bools/property_editor.set_property_value(STATE["requires_bools"])
-	if "invert_bool_requirement" in STATE:$invert_bool_requirement/property_editor.set_property_value(STATE["invert_bool_requirement"])
-	if "disabled" in STATE:$disabled/property_editor.set_property_value(STATE["disabled"])
+	$name/property_editor.set_property_value(STATE.get("name","INPUT_MISSING_NAME"))
+	$description/property_editor.set_property_value(STATE.get("description",""))
+	$default/property_editor.set_property_value(STATE.get("default",PoolStringArray()))
+	$always_binds/property_editor.set_property_value(STATE.get("always_binds",PoolStringArray()))
+	$requires_bools/property_editor.set_property_value(STATE.get("requires_bools",PoolStringArray()))
+	$invert_bool_requirement/property_editor.set_property_value(STATE.get("invert_bool_requirement",false))
+	$disabled/property_editor.set_property_value(STATE.get("disabled",false))
