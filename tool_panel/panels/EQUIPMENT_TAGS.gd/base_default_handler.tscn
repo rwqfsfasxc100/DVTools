@@ -125,6 +125,7 @@ size_flags_horizontal = 3
 margin_right = 58.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
+placeholder_text = "Slot tag here..."
 
 [node name="OptionButton" type="OptionButton" parent="Collapsable/NEW/VBoxContainer/OPT"]
 margin_right = 302.0

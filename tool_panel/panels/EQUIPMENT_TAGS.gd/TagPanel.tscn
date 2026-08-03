@@ -122,7 +122,9 @@ Alignments are a limitation for hardpoint equipment to only add directional equi
 text = "alignments"
 property_tooltip = "Define new alignments that the mod adds here.
 
-Alignments are a limitation for hardpoint equipment to only add directional equipment to slots that would not cause issues. E.g. ALIGNMENT_LEFT only permits the left facing cargo containers to the hardpoint. Equipment without an alignment are added regardless of the slot alignment."
+Alignments are a limitation for hardpoint equipment to only add directional equipment to slots that would not cause issues. E.g. ALIGNMENT_LEFT only permits the left facing cargo containers to the hardpoint.
+
+Equipment without an alignment are added regardless of the slot alignment."
 
 [node name="property_editor" parent="ScrollContainer/VBoxContainer/alignments" instance=ExtResource( 3 )]
 margin_left = 204.0

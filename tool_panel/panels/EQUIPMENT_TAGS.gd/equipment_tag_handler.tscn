@@ -20,6 +20,9 @@ margin_right = 241.0
 margin_bottom = 22.0
 text = "X"
 
+[node name="LineEdit" parent="Collapsable/NEW/VBoxContainer/OPT" index="0"]
+placeholder_text = "Equipment tag here..."
+
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="." index="2"]
 margin_left = 157.0
 margin_right = 357.0
