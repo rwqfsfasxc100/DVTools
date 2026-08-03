@@ -28,6 +28,9 @@ var this_menu_data = [
 			{
 				"name":"ADD_EQUIPMENT_SLOTS.gd"
 			},
+			{
+				"name":"EQUIPMENT_TAGS.gd"
+			},
 		]
 	},
 ]

@@ -17,14 +17,6 @@ onready var line_edit = get_node_or_null(lineedit_path)
 export (NodePath) var panel_path = NodePath("../../../../../../../../..")
 onready var panel = get_node_or_null(panel_path)
 
-var panel_settings
-
-var slot_types:Array = []
-var equipment_types:Array = []
-var alignments:Array = []
-var hardpoint_types:Array = []
-var slot_defaults:Dictionary = {}
-
 func _ready():
 	connect("item_selected",self,"_do_refresh")
 	match tag_type:
@@ -56,16 +48,71 @@ func get_selected_string() -> String:
 
 var last_used = ""
 
+var slot_types:Array = []
+var equipment_types:Array = []
+var alignments:Array = []
+var hardpoint_types:Array = []
+var slot_defaults:Dictionary = {}
+
+func fetchTags():
+	var panel_settings = panel.container_panel.tool_panel.plugin_settings
+	var vanilla_tags = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd")
+	var equipment_tag_files = []
+	slot_types = vanilla_tags.get("slot_types",[])
+	equipment_types = vanilla_tags.get("equipment_types",[])
+	alignments = vanilla_tags.get("alignments",[])
+	hardpoint_types = vanilla_tags.get("hardpoint_types",[])
+	slot_defaults = vanilla_tags.get("slot_defaults",{})
+	if panel_settings:
+			match panel_settings.get_value("driver_tag_discovery_preference"):
+				0:
+					equipment_tag_files = panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[])
+				1:
+					equipment_tag_files = panel_settings.get_value("use_specific_tags")
+	for tag in equipment_tag_files:
+		var nodes = __get_script_constant_map_without_load(tag).get("EQUIPMENT_TAGS",{})
+		var slotTypes : Array = nodes.get("slot_types",[])
+		var equipmentItems : Array = nodes.get("equipment_types",[])
+		var AL : Array = nodes.get("alignments",[])
+		var hardpointTypes : Array = nodes.get("hardpoint_types",[])
+		var slotDefaults : Dictionary = nodes.get("slot_defaults",{})
+		if slotTypes:
+			for st in slotTypes:
+				if not st in slot_types:
+					slot_types.append(st)
+				if tag_type == "slot_type":
+					slot_tooltips[st] = tag
+		if equipmentItems.size() > 0:
+			for st in equipmentItems:
+				if not st in equipment_types:
+					equipment_types.append(st)
+				if tag_type == "equipment_type":
+					equipment_tooltips[st] = tag
+		if AL:
+			for st in AL:
+				if not st in alignments:
+					alignments.append(st)
+				if tag_type == "alignment":
+					alignment_tooltips[st] = tag
+		if hardpointTypes:
+			for st in hardpointTypes:
+				if not st in hardpoint_types:
+					hardpoint_types.append(st)
+				if tag_type == "hardpoint_type":
+					hardpoint_tooltips[st] = tag
+		if slotDefaults:
+			for st in slotDefaults:
+				if st in slot_defaults:
+					for item in slotDefaults.get(st):
+						if not item in slot_defaults.get(st):
+							slot_defaults[st].append(item)
+				else:
+					slot_defaults.merge({st:slotDefaults.get(st)})
+	
+
 func initialize_current_tags(use_specific:String = last_used):
 	if "container_panel" in panel and panel.container_panel:
-		panel_settings = panel.container_panel.tool_panel.plugin_settings
-		var vanilla_tags = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd")
-		var equipment_tag_files = []
-		slot_types = vanilla_tags.get("slot_types",[])
-		equipment_types = vanilla_tags.get("equipment_types",[])
-		alignments = vanilla_tags.get("alignments",[])
-		hardpoint_types = vanilla_tags.get("hardpoint_types",[])
-		slot_defaults = vanilla_tags.get("slot_defaults",{})
+		fetchTags()
 		match tag_type:
 			"slot_type":
 				for i in slot_types:
@@ -80,51 +127,7 @@ func initialize_current_tags(use_specific:String = last_used):
 				for i in hardpoint_types:
 					hardpoint_tooltips[i] = "Vanilla/Built-in"
 		
-		if panel_settings:
-			match panel_settings.get_value("driver_tag_discovery_preference"):
-				0:
-					equipment_tag_files = panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[])
-				1:
-					equipment_tag_files = panel_settings.get_value("use_specific_tags")
-		for tag in equipment_tag_files:
-			var nodes = __get_script_constant_map_without_load(tag).get("EQUIPMENT_TAGS",{})
-			var slotTypes : Array = nodes.get("slot_types",[])
-			var equipmentItems : Array = nodes.get("equipment_types",[])
-			var AL : Array = nodes.get("alignments",[])
-			var hardpointTypes : Array = nodes.get("hardpoint_types",[])
-			var slotDefaults : Dictionary = nodes.get("slot_defaults",{})
-			if slotTypes:
-				for st in slotTypes:
-					if not st in slot_types:
-						slot_types.append(st)
-					if tag_type == "slot_type":
-						slot_tooltips[st] = tag
-			if equipmentItems.size() > 0:
-				for st in equipmentItems:
-					if not st in equipment_types:
-						equipment_types.append(st)
-					if tag_type == "equipment_type":
-						equipment_tooltips[st] = tag
-			if AL:
-				for st in AL:
-					if not st in alignments:
-						alignments.append(st)
-					if tag_type == "alignment":
-						alignment_tooltips[st] = tag
-			if hardpointTypes:
-				for st in hardpointTypes:
-					if not st in hardpoint_types:
-						hardpoint_types.append(st)
-					if tag_type == "hardpoint_type":
-						hardpoint_tooltips[st] = tag
-			if slotDefaults:
-				for st in slotDefaults:
-					if st in slot_defaults:
-						for item in slotDefaults.get(st):
-							if not item in slot_defaults.get(st):
-								slot_defaults[st].append(item)
-					else:
-						slot_defaults.merge({st:slotDefaults.get(st)})
+		
 		clear()
 		var source_tooltips:Dictionary = {"":""}
 		match tag_type:

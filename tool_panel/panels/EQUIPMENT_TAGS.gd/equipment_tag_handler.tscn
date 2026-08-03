@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/base_default_handler.tscn" type="PackedScene" id=1]
+
+[node name="tag_handler" instance=ExtResource( 1 )]
+toggle_text = "Default for slot type '%s' (size %d)"
+tag_type = "equipment_tags"
+
+[node name="Toggle" parent="." index="0"]
+margin_right = 241.0
+
+[node name="Button" parent="Toggle" index="0"]
+margin_right = 217.0
+text = "Default for slot type '' (size 0)"
+
+[node name="DELETE" type="Button" parent="Toggle" index="1"]
+self_modulate = Color( 1, 0, 0, 1 )
+margin_left = 221.0
+margin_right = 241.0
+margin_bottom = 22.0
+text = "X"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="." index="2"]
+margin_left = 157.0
+margin_right = 357.0
+margin_bottom = 98.0
+window_title = ""
+dialog_text = "Delete entry?"

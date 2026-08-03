@@ -125,6 +125,7 @@ func get_plugin_icon():
 var supported_driver_files = PoolStringArray([
 	"ADD_EQUIPMENT_ITEMS.gd",
 	"ADD_EQUIPMENT_SLOTS.gd",
+	"EQUIPMENT_TAGS.gd",
 	
 ])
 

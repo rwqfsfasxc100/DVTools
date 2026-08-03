@@ -1,0 +1,158 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/TagPanel.gd" type="Script" id=1]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/DescriptionLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/default_handler.tscn" type="PackedScene" id=4]
+
+[node name="TagPanel" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 450, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 450.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 438.0
+margin_bottom = 126.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot_types" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 438.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/slot_types" instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: slot_types
+
+Define new slot types that the mod adds here.
+
+Slot types are used for handling what equipment a slot can harbor by default, without the need to override for everything added."
+text = "slot_types"
+property_tooltip = "Define new slot types that the mod adds here.
+
+Slot types are used for handling what equipment a slot can harbor by default, without the need to override for everything added."
+
+[node name="property_editor" parent="ScrollContainer/VBoxContainer/slot_types" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+emit_update_signal = true
+
+[node name="equipment_types" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 26.0
+margin_right = 438.0
+margin_bottom = 48.0
+size_flags_horizontal = 5
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/equipment_types" instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: equipment_types
+
+Define new equipment types that the mod adds here.
+
+Equipment types are used to add similar equipment to a slot, without the need to add multiple equipment items to the same slot."
+text = "equipment_types"
+property_tooltip = "Define new equipment types that the mod adds here.
+
+Equipment types are used to add similar equipment to a slot, without the need to add multiple equipment items to the same slot."
+
+[node name="property_editor" parent="ScrollContainer/VBoxContainer/equipment_types" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+emit_update_signal = true
+
+[node name="hardpoint_types" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 52.0
+margin_right = 438.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/hardpoint_types" instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: hardpoint_types
+
+Define new hardpoint types that the mod adds here.
+
+Hardpoint types are similar to slot types, however handle equipment for specific hardpoints instead of the slot in general."
+text = "hardpoint_types"
+property_tooltip = "Define new hardpoint types that the mod adds here.
+
+Hardpoint types are similar to slot types, however handle equipment for specific hardpoints instead of the slot in general."
+
+[node name="property_editor" parent="ScrollContainer/VBoxContainer/hardpoint_types" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+emit_update_signal = true
+
+[node name="alignments" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 438.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/alignments" instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: alignments
+
+Define new alignments that the mod adds here.
+
+Alignments are a limitation for hardpoint equipment to only add directional equipment to slots that would not cause issues. E.g. ALIGNMENT_LEFT only permits the left facing cargo containers to the hardpoint. Equipment without an alignment are added regardless of the slot alignment."
+text = "alignments"
+property_tooltip = "Define new alignments that the mod adds here.
+
+Alignments are a limitation for hardpoint equipment to only add directional equipment to slots that would not cause issues. E.g. ALIGNMENT_LEFT only permits the left facing cargo containers to the hardpoint. Equipment without an alignment are added regardless of the slot alignment."
+
+[node name="property_editor" parent="ScrollContainer/VBoxContainer/alignments" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 22.0
+can_edit_type = false
+property_type = "PoolStringArray"
+emit_update_signal = true
+
+[node name="slot_defaults" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 104.0
+margin_right = 438.0
+margin_bottom = 126.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/slot_defaults" instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: slot_defaults
+
+Define new slot defaults that the mod adds here.
+
+Equipment defined here will be the base equipment tags that the slot will have access to before handling overrides.
+
+If you add a slot that already defines defaults (either built-in or from another mod), then all equipment tags not already in the slot default will be added."
+text = "slot_defaults"
+property_tooltip = "Define new slot defaults that the mod adds here.
+
+Equipment defined here will be the base equipment tags that the slot will have access to before handling overrides.
+
+If you add a slot that already defines defaults (either built-in or from another mod), then all equipment tags not already in the slot default will be added."
+
+[node name="default_handler" parent="ScrollContainer/VBoxContainer/slot_defaults" instance=ExtResource( 4 )]
