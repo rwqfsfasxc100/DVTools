@@ -129,15 +129,96 @@ var supported_driver_files = PoolStringArray([
 	
 ])
 
+var _unlocked_drivers := {}
+
 var can_open_driver = true
 func handle_driver(script:Script):
 	yield(get_tree(),"idle_frame")
 	if can_open_driver:
 		can_open_driver = false
 		yield(get_tree(),"idle_frame")
-		var path = script.resource_path
-		make_visible(path.get_file() in supported_driver_files,path)
+		if script:
+			var path = script.resource_path
+			var is_driver = path.get_file() in supported_driver_files
+			_update_driver_editor_lock(script, is_driver)
+			make_visible(is_driver, path)
 		can_open_driver = true
+
+func _get_active_text_edit(node: Node) -> TextEdit:
+	if node is TextEdit and node.is_visible_in_tree():
+		return node as TextEdit
+	for child in node.get_children():
+		var found = _get_active_text_edit(child)
+		if found:
+			return found
+	return null
+
+func _update_driver_editor_lock(script: Script, is_driver: bool):
+	var script_editor = get_editor_interface().get_script_editor()
+	var text_edit = _get_active_text_edit(script_editor)
+	if not text_edit:
+		return
+		
+	var path = script.resource_path
+	var is_unlocked = _unlocked_drivers.get(path, false)
+	
+	if is_driver and not is_unlocked:
+		text_edit.readonly = true
+	else:
+		text_edit.readonly = false
+		
+	var parent = text_edit.get_parent()
+	if not parent:
+		return
+		
+	var banner = parent.get_node_or_null("DVToolsDriverBanner")
+	if not is_driver:
+		if banner:
+			banner.hide()
+		return
+		
+	if not banner:
+		banner = PanelContainer.new()
+		banner.name = "DVToolsDriverBanner"
+		
+		var margin = MarginContainer.new()
+		banner.add_child(margin)
+		
+		var hbox = HBoxContainer.new()
+		margin.add_child(hbox)
+		
+		var label = Label.new()
+		label.name = "BannerLabel"
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		hbox.add_child(label)
+		
+		var button = Button.new()
+		button.name = "BannerButton"
+		hbox.add_child(button)
+		
+		parent.add_child(banner)
+		parent.move_child(banner, 0)
+		
+	banner.show()
+	var label: Label = banner.find_node("BannerLabel", true, false)
+	var button: Button = banner.find_node("BannerButton", true, false)
+	
+	if is_unlocked:
+		label.text = "Driver script (manual edit unlocked)."
+		button.text = "Relock"
+	else:
+		label.text = "Driver script managed by ΔV Tools panel."
+		button.text = "Unlock Editing"
+		
+	if button.is_connected("pressed", self, "_on_banner_button_pressed"):
+		button.disconnect("pressed", self, "_on_banner_button_pressed")
+	button.connect("pressed", self, "_on_banner_button_pressed", [script, not is_unlocked])
+
+func _on_banner_button_pressed(script: Script, set_unlock: bool):
+	if script:
+		_unlocked_drivers[script.resource_path] = set_unlock
+		_update_driver_editor_lock(script, true)
+
 func close_script(script:Object):
 	can_open_driver = false
 	make_visible(false)
