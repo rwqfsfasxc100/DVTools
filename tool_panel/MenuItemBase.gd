@@ -23,6 +23,7 @@ func add_menu_buttons(menu_data: Array,popupmenu:PopupMenu,path:String = menu_ro
 		var children = i.get("children",[])
 		var separator = i.get("separator",false)
 		var checkbox = i.get("checkbox",false)
+		var tooltip = i.get("tooltip","")
 		if separator:
 			popupmenu.add_separator(iname)
 		elif checkbox:
@@ -40,6 +41,8 @@ func add_menu_buttons(menu_data: Array,popupmenu:PopupMenu,path:String = menu_ro
 			menu_store[path][idx] = iname
 			if not popupmenu.is_connected("index_pressed",self,"_menu_pressed"):
 				popupmenu.connect("index_pressed",self,"_menu_pressed",[path])
+		if tooltip:
+			popupmenu.set_item_tooltip(idx,tooltip)
 		if children:
 			add_menu_buttons(children,popupmenu.get_node_or_null(iname + "_submenu"),path + "/" + iname)
 
