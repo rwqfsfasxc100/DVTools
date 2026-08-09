@@ -27,4 +27,5 @@ func _on_delete():
 func _do_delete():
 	queue_free()
 	if parent_container:
+		parent_container._on_changed()
 		parent_container.recalculate()

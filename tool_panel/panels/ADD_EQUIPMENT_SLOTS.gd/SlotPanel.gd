@@ -27,6 +27,31 @@ func _ready():
 	lc.get_node("alignment/dropdown/TagPopup").initialize_current_tags()
 	lc.get_node("hardpoint_type/dropdown/TagPopup").initialize_current_tags()
 	_open_this_button(button_list.get_child(0))
+	
+	yield(get_tree().create_timer(0.1),"timeout")
+	lc.get_node("system_slot/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("slot_node_name/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("slot_display_name/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("has_none/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("always_display/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("restrict_type/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("open_by_default/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("limit_ships/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("prevent_ships/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("add_vanilla_equipment/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("restriction/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("override_additive/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("override_subtractive/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("restrict_hold_type/RestrictHoldType").connect("item_selected",self,"mark_as_changed")
+	lc.get_node("alignment/dropdown/TagPopup").connect("item_selected",self,"mark_as_changed")
+	lc.get_node("hardpoint_type/dropdown/TagPopup").connect("item_selected",self,"mark_as_changed")
+	lc.get_node("slot_type/dropdown/TagPopup").connect("item_selected",self,"mark_as_changed")
+	lc.get_node("alignment/dropdown/LineEdit").connect("text_changed",self,"mark_as_changed")
+	lc.get_node("hardpoint_type/dropdown/LineEdit").connect("text_changed",self,"mark_as_changed")
+	lc.get_node("slot_type/dropdown/LineEdit").connect("text_changed",self,"mark_as_changed")
+
+func mark_as_changed(propA = null):
+	needs_save = true
 
 func save_driver_data() -> String:
 	var out:String = ""
@@ -178,116 +203,3 @@ func get_this_dict_for_saving() -> Dictionary:
 	
 	return out
 
-func convert_to_constant(data:Dictionary, constant_name:String) -> String:
-	var out = ""
-	if data:
-		var x = "{"
-		for property in data:
-			var st = stringify_property(data[property],1,false)
-			var p = "\"%s\":%s," % [property,st]
-			x += "\n\t" + p
-		x += "\n}"
-		out = "const %s = %s" % [constant_name, x]
-	return out
-
-func stringify_property(property,depth:int = 0,stringify:bool = true):
-	var out = ""
-	var type = typeof(property)
-	match type:
-		TYPE_NIL:
-			out = "null"
-		TYPE_ARRAY,TYPE_COLOR_ARRAY,TYPE_INT_ARRAY,TYPE_RAW_ARRAY,TYPE_REAL_ARRAY,TYPE_STRING_ARRAY,TYPE_VECTOR2_ARRAY,TYPE_VECTOR3_ARRAY:
-			var l = ""
-			match type:
-				TYPE_ARRAY:
-					l = "%s"
-				TYPE_COLOR_ARRAY:
-					l = "PoolColorArray(%s)"
-				TYPE_INT_ARRAY:
-					l = "PoolIntArray(%s)"
-				TYPE_RAW_ARRAY:
-					l = "PoolByteArray(%s)"
-				TYPE_REAL_ARRAY:
-					l = "PoolRealArray(%s)"
-				TYPE_STRING_ARRAY:
-					l = "PoolStringArray(%s)"
-				TYPE_VECTOR2_ARRAY:
-					l = "PoolVector2Array(%s)"
-				TYPE_VECTOR3_ARRAY:
-					l = "PoolVector3Array(%s)"
-				
-			if property.empty():
-				if type == TYPE_ARRAY:
-					out = "[]"
-				else:
-					out = l % ""
-			else:
-				l = l % "[%s\n%s]"
-				var combine = ""
-				var nd = depth + 1
-				var tabs = ""
-				var etabs = ""
-				for i in range(depth):
-					etabs += "\t"
-				for i in range(nd):
-					tabs += "\t"
-				for i in property:
-					var r = stringify_property(i,nd,false)
-					var p = tabs + r
-					if combine:
-						combine += ","
-					combine += "\n%s" % p
-				out = l % [combine,etabs]
-		TYPE_BOOL:
-			out = ("true") if property else ("false")
-		TYPE_COLOR:
-			out = "Color( %s, %s, %s, %s )" % [property.r,property.g,property.b,property.a]
-		TYPE_DICTIONARY:
-			if property.empty():
-				out = "{}"
-			else:
-				var l = "{%s\n%s}"
-				var st = ""
-				var nd = depth + 1
-				var tabs = ""
-				var etabs = ""
-				for i in range(depth):
-					etabs += "\t"
-				for i in range(nd):
-					tabs += "\t"
-				for key in property:
-					var item = "%s:%s" % [stringify_property(key,depth,false),stringify_property(property[key],nd,false)]
-					var p = tabs + item
-					if st:
-						st += ","
-					st += "\n%s" % p
-				out = l % [st,etabs]
-		TYPE_INT,TYPE_REAL:
-			out = str(property)
-		TYPE_NODE_PATH:
-			out = "NodePath( %s )" % str(property)
-		TYPE_RECT2:
-			out = "Rect2( %s, %s, %s, %s )" % [property.position.x,property.position.y,property.size.x,property.size.y]
-		TYPE_STRING:
-			out = "\"%s\"" % property
-		TYPE_TRANSFORM2D:
-			out = "Transform2D( %s, %s, %s )" % [stringify_property(property.x,depth,false),stringify_property(property.y,depth,false),stringify_property(property.origin,depth,false)]
-		TYPE_VECTOR2:
-			out = "Vector2( %s, %s )" % [property.x,property.y]
-		TYPE_VECTOR3:
-			out = "Vector3( %s, %s, %s )" % [property.x,property.y,property.z]
-		TYPE_AABB:
-			out = "AABB( %s, %s )" % [stringify_property(property.position,depth,false),stringify_property(property.size,depth,false)]
-		TYPE_BASIS:
-			out = "Basis( %s, %s, %s )" % [stringify_property(property.x,depth,false),stringify_property(property.y,depth,false),stringify_property(property.z,depth,false)]
-		TYPE_PLANE:
-			out = "Plane( %s, %s )" % [stringify_property(property.normal,depth,false),property.d]
-		TYPE_QUAT:
-			out = "Quat( %s, %s, %s, %s )" % [property.x,property.y,property.z,property.w]
-		TYPE_TRANSFORM:
-			out = "Transform( %s, %s )" % [stringify_property(property.basis,depth,false),stringify_property(property.origin,depth,false)]
-		_:
-			printerr("Property ",property," uses type not currently supported")
-	if stringify:
-		out = "\"%s\"" % out
-	return out

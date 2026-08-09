@@ -31,6 +31,9 @@ var this_menu_data = [
 			{
 				"name":"EQUIPMENT_TAGS.gd"
 			},
+			{
+				"name":"SLOT_TAGS.gd"
+			},
 		]
 	},
 ]

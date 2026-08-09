@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_ITEMS.gd/EquipmentPanel.gd" type="Script" id=1]
-[ext_resource path="res://addons/DVTools/tool_panel/panels/DescriptionLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/DescriptionLabel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/DVTools/tool_panel/panels/TagPopup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/TagPopup.tscn" type="PackedScene" id=4]
 
 [node name="EquipmentPanel" type="HBoxContainer"]
 size_flags_horizontal = 3
@@ -952,6 +952,7 @@ size_flags_vertical = 3
 margin_left = 115.0
 margin_right = 226.0
 margin_bottom = 24.0
+clip_text = true
 slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
 
 [node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/HSplitContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
@@ -989,6 +990,7 @@ size_flags_vertical = 3
 margin_left = 115.0
 margin_right = 226.0
 margin_bottom = 24.0
+clip_text = true
 tag_type = "slot_type"
 equipment_type_path = NodePath("../../../equipment_type/dropdown/TagPopup")
 alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
@@ -1032,6 +1034,7 @@ size_flags_vertical = 3
 margin_left = 115.0
 margin_right = 226.0
 margin_bottom = 24.0
+clip_text = true
 tag_type = "alignment"
 slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
 

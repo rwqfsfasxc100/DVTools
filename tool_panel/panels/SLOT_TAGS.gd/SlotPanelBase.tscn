@@ -1,0 +1,123 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/DescriptionLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/DVTools/property_editor/property_containers/poolstringarray.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/equipment_tag_handler.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/SLOT_TAGS.gd/SlotPanelBase.gd" type="Script" id=4]
+
+[node name="SlotPanelBase" type="VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 4 )
+
+[node name="TOGGLE" type="Button" parent="."]
+margin_right = 400.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="CONTENT" type="HBoxContainer" parent="."]
+visible = false
+margin_top = 24.0
+margin_right = 457.0
+margin_bottom = 124.0
+size_flags_horizontal = 3
+
+[node name="LBAR" type="HBoxContainer" parent="CONTENT"]
+margin_right = 3.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 3, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CONTENT"]
+margin_left = 7.0
+margin_right = 450.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+
+[node name="override_additive" type="HBoxContainer" parent="CONTENT/VBoxContainer"]
+margin_right = 443.0
+margin_bottom = 22.0
+
+[node name="DescriptionLabel" parent="CONTENT/VBoxContainer/override_additive" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: override_additive
+
+Adds equipment to this specific slot if not included within the slot default."
+text = "override_additive"
+property_tooltip = "Adds equipment to this specific slot if not included within the slot default."
+
+[node name="tag_handler" parent="CONTENT/VBoxContainer/override_additive" instance=ExtResource( 3 )]
+margin_right = 443.0
+toggle_text = "Adding to slot '%s' (size %d)"
+
+[node name="override_subtractive" type="HBoxContainer" parent="CONTENT/VBoxContainer"]
+margin_top = 26.0
+margin_right = 443.0
+margin_bottom = 48.0
+
+[node name="DescriptionLabel" parent="CONTENT/VBoxContainer/override_subtractive" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: override_subtractive
+
+Removes equipment from this specific slot if included within the slot default."
+text = "override_subtractive"
+property_tooltip = "Removes equipment from this specific slot if included within the slot default."
+
+[node name="tag_handler" parent="CONTENT/VBoxContainer/override_subtractive" instance=ExtResource( 3 )]
+margin_right = 443.0
+toggle_text = "Removing from slot '%s' (size %d)"
+
+[node name="limit_ships" type="HBoxContainer" parent="CONTENT/VBoxContainer"]
+margin_top = 52.0
+margin_right = 443.0
+margin_bottom = 74.0
+
+[node name="DescriptionLabel" parent="CONTENT/VBoxContainer/limit_ships" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: limit_ships
+
+If set, only the ship namess included within this list will be able to use this slot. Other filters will apply afterwards.
+
+Ship names are the translation strings used for the ship's name. e.g. SHIP_TRTL"
+text = "limit_ships"
+property_tooltip = "If set, only the ship namess included within this list will be able to use this slot. Other filters will apply afterwards.
+
+Ship names are the translation strings used for the ship's name. e.g. SHIP_TRTL"
+
+[node name="poolstringarray" parent="CONTENT/VBoxContainer/limit_ships" instance=ExtResource( 2 )]
+margin_left = 204.0
+margin_right = 443.0
+margin_bottom = 22.0
+
+[node name="prevent_ships" type="HBoxContainer" parent="CONTENT/VBoxContainer"]
+margin_top = 78.0
+margin_right = 443.0
+margin_bottom = 100.0
+
+[node name="DescriptionLabel" parent="CONTENT/VBoxContainer/prevent_ships" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 22.0
+hint_tooltip = "Property: prevent_ships
+
+If set, any ship namess included within this list will be unable able to use this slot.
+
+Ship names are the translation strings used for the ship's name. e.g. SHIP_TRTL"
+text = "prevent_ships"
+property_tooltip = "If set, any ship namess included within this list will be unable able to use this slot.
+
+Ship names are the translation strings used for the ship's name. e.g. SHIP_TRTL"
+
+[node name="poolstringarray" parent="CONTENT/VBoxContainer/prevent_ships" instance=ExtResource( 2 )]
+margin_left = 204.0
+margin_right = 443.0
+margin_bottom = 22.0
+
+[node name="RBAR" type="HBoxContainer" parent="CONTENT"]
+margin_left = 454.0
+margin_right = 457.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 3, 0 )
