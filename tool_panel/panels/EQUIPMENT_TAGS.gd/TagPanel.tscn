@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/TagPanel.gd" type="Script" id=1]
-[ext_resource path="res://addons/DVTools/tool_panel/panels/DescriptionLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/DescriptionLabel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/default_handler.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/default_handler.tscn" type="PackedScene" id=4]
 
 [node name="TagPanel" type="HBoxContainer"]
 margin_right = 40.0
@@ -118,7 +118,9 @@ hint_tooltip = "Property: alignments
 
 Define new alignments that the mod adds here.
 
-Alignments are a limitation for hardpoint equipment to only add directional equipment to slots that would not cause issues. E.g. ALIGNMENT_LEFT only permits the left facing cargo containers to the hardpoint. Equipment without an alignment are added regardless of the slot alignment."
+Alignments are a limitation for hardpoint equipment to only add directional equipment to slots that would not cause issues. E.g. ALIGNMENT_LEFT only permits the left facing cargo containers to the hardpoint.
+
+Equipment without an alignment are added regardless of the slot alignment."
 text = "alignments"
 property_tooltip = "Define new alignments that the mod adds here.
 
@@ -158,3 +160,4 @@ Equipment defined here will be the base equipment tags that the slot will have a
 If you add a slot that already defines defaults (either built-in or from another mod), then all equipment tags not already in the slot default will be added."
 
 [node name="default_handler" parent="ScrollContainer/VBoxContainer/slot_defaults" instance=ExtResource( 4 )]
+emit_update_signal = true

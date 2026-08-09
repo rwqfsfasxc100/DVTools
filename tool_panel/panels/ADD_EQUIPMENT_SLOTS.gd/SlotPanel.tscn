@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/DVTools/tool_panel/panels/DescriptionLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/DescriptionLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_SLOTS.gd/SlotPanel.gd" type="Script" id=2]
 [ext_resource path="res://addons/DVTools/property_editor/property_editor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_SLOTS.gd/RestrictHoldType.gd" type="Script" id=4]
-[ext_resource path="res://addons/DVTools/tool_panel/panels/TagPopup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/TagPopup.tscn" type="PackedScene" id=5]
 
 [node name="SlotPanel" type="HBoxContainer"]
 margin_right = 40.0
@@ -470,6 +470,7 @@ size_flags_vertical = 3
 margin_left = 119.0
 margin_right = 234.0
 margin_bottom = 24.0
+clip_text = true
 tag_type = "slot_type"
 alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
 hardpoint_type_path = NodePath("../../../hardpoint_type/dropdown/TagPopup")
@@ -510,6 +511,7 @@ size_flags_vertical = 3
 margin_left = 119.0
 margin_right = 234.0
 margin_bottom = 24.0
+clip_text = true
 tag_type = "hardpoint_type"
 slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
 alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
@@ -550,6 +552,7 @@ size_flags_vertical = 3
 margin_left = 119.0
 margin_right = 234.0
 margin_bottom = 24.0
+clip_text = true
 tag_type = "alignment"
 slot_type_path = NodePath("../../../slot_type/dropdown/TagPopup")
 hardpoint_type_path = NodePath("../../../hardpoint_type/dropdown/TagPopup")

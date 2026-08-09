@@ -54,6 +54,13 @@ var alignments:Array = []
 var hardpoint_types:Array = []
 var slot_defaults:Dictionary = {}
 
+func curate_tags(tags:Array) -> Array:
+	var out:Array = Array()
+	for i in tags:
+		if i.get_file() == "EQUIPMENT_TAGS.gd":
+			out.append(i)
+	return out
+
 func fetchTags():
 	var panel_settings = panel.container_panel.tool_panel.plugin_settings
 	var vanilla_tags = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd")
@@ -68,7 +75,13 @@ func fetchTags():
 				0:
 					equipment_tag_files = panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[])
 				1:
-					equipment_tag_files = panel_settings.get_value("use_specific_tags")
+					equipment_tag_files = curate_tags(panel_settings.get_value("use_specific_tags"))
+				2:
+					if not panel.this_script_path.begins_with("new://"):
+						var thisDir = panel.this_script_path.split("/",false)[1]
+						for i in panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[]):
+							if i.split("/",false)[1] == thisDir:
+								equipment_tag_files.append(i)
 	for tag in equipment_tag_files:
 		var nodes = __get_script_constant_map_without_load(tag).get("EQUIPMENT_TAGS",{})
 		var slotTypes : Array = nodes.get("slot_types",[])
@@ -82,7 +95,7 @@ func fetchTags():
 					slot_types.append(st)
 				if tag_type == "slot_type":
 					slot_tooltips[st] = tag
-		if equipmentItems.size() > 0:
+		if equipmentItems:
 			for st in equipmentItems:
 				if not st in equipment_types:
 					equipment_types.append(st)

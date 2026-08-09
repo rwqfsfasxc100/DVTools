@@ -31,6 +31,7 @@ onready var driver_filepaths_by_driver = get_node_or_null("PanelContainer/Scroll
 var tag_preferences = PoolStringArray([
 	"Use tags from all drivers available to the file system",
 	"Use built-in/Vanilla tags & tags from specific drivers",
+	"Use built-in/Vanilla tags & tags from only drivers in the same mod folder",
 	"Use only built-in/Vanilla tags",
 ])
 

@@ -35,7 +35,7 @@ func set_property_value(property):
 		"equipment_tags":
 			if property is String:
 				thisTagName = property
-			elif property is Array:
+			elif property is Array or property is PoolStringArray:
 				for i in property:
 					self.currently_selected = i
 					_add_entry()
@@ -98,16 +98,19 @@ func _add_entry():
 		match tag_type:
 			"slot_and_hardpoint_tags":
 				cv = slot_tag_container.instance()
+				cv.connect("changed",self,"_on_changed")
 				cv.set_property_value(currently_selected)
 				cv.parent_container = self
 				cv.emit_update_signal = emit_update_signal
 				$Collapsable/Buffer/List.add_child(cv)
+				_on_changed()
 			"equipment_tags":
 				cv = equipment_tag_container.instance()
 				cv.set_property_value(currently_selected)
 				cv.parent_container = self
 				cv.emit_update_signal = emit_update_signal
 				$Collapsable/Buffer/List.add_child(cv)
+				_on_changed()
 #		$Collapsable/NEW/VBoxContainer/Key/property_editor.set_property_value(null)
 #		$Collapsable/NEW/VBoxContainer/Value/property_editor.set_property_value(null)
 		recalculate()
@@ -221,7 +224,7 @@ func recalculate():
 		opt.select(0)
 		self.currently_selected = ""
 		$Collapsable/NEW/VBoxContainer/OPT/LineEdit.text = currently_selected
-	_on_changed()
+	
 
 func _page_value_changed(how:float):
 	how = int(how)
@@ -244,7 +247,6 @@ func _on_delete():
 
 func _do_delete():
 	queue_free()
-	if panel and panel.can_mark_unsaved:
-		panel.needs_save = true
+	_on_changed()
 	if parent_container:
 		parent_container.recalculate()

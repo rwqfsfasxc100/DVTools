@@ -21,6 +21,14 @@ const property_handler_plugins = [
 	
 ]
 
+var supported_driver_files = PoolStringArray([
+	"ADD_EQUIPMENT_ITEMS.gd",
+	"ADD_EQUIPMENT_SLOTS.gd",
+	"EQUIPMENT_TAGS.gd",
+	"SLOT_TAGS.gd",
+	
+])
+
 
 var tool_panel_instance
 
@@ -121,15 +129,6 @@ func get_plugin_name():
 func get_plugin_icon():
 	return get_editor_interface().get_base_control().get_icon("Node", "EditorIcons")
 
-
-var supported_driver_files = PoolStringArray([
-	"ADD_EQUIPMENT_ITEMS.gd",
-	"ADD_EQUIPMENT_SLOTS.gd",
-	"EQUIPMENT_TAGS.gd",
-	
-])
-
-var _unlocked_drivers := {}
 
 var can_open_driver = true
 func handle_driver(script:Script):
