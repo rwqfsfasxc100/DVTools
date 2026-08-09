@@ -152,6 +152,8 @@ func _get_active_text_edit(node: Node) -> TextEdit:
 			return found
 	return null
 
+var _unlocked_drivers := {}
+
 func _update_driver_editor_lock(script: Script, is_driver: bool):
 	var script_editor = get_editor_interface().get_script_editor()
 	var text_edit = _get_active_text_edit(script_editor)
