@@ -31,6 +31,7 @@ var MD_complementary_mod_ids:PoolStringArray = PoolStringArray()
 var MD_manifest_url:String = ""
 var MD_changelog_path:String = ""
 var MD_modlet_priority:int = 0
+var MD_expected_manifest_path:String = ""
 
 # tags
 var TG_tags:Dictionary = {}
@@ -206,6 +207,11 @@ func _get_property_list():
 		name = "MD_modlet_priority",
 		type = TYPE_INT,
 		hint_tooltip = "The priority for a modlet to load. Only works for modlet-based mods (no ModMain.gd)",
+	})
+	properties.append({
+		name = "MD_expected_manifest_path",
+		type = TYPE_STRING,
+		hint_tooltip = "If set, the expected res:// file path for the manifest. If located at the wrong location when the game loads, lets the user know and prevents the game from loading until it's fixed.\nFilepath is case insensitive.",
 	})
 	
 	
