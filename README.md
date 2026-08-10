@@ -104,7 +104,7 @@ Modlets also include both the mod name and their manifest's filepath.
 - ~~`ADD_EQUIPMENT_SLOTS.gd`~~
 - ~~`EQUIPMENT_TAGS.gd`~~
 - `SLOT_ORDER.gd`
-- `SLOT_TAGS.gd`
+- ~~`SLOT_TAGS.gd`~~
 - `AUX_POWER_AND_THRUSTERS.gd`
 - `MODIFY_INTERNALS.gd`
 - `NODE_DEFINITIONS.gd`
