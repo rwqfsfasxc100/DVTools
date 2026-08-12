@@ -498,10 +498,9 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 			var sec_data = configs[section]
 			for cfname in sec_data:
 				var cfdata = sec_data[cfname]
-				if not cfdata.get("disabled",false):
-					if not section in ovConfigs:
-						ovConfigs[section] = {}
-					ovConfigs[section][cfname] = cfdata
+				if not section in ovConfigs:
+					ovConfigs[section] = {}
+				ovConfigs[section][cfname] = cfdata
 		if ovConfigs:
 			dict_template["configs"] = ovConfigs
 	var out = {}
