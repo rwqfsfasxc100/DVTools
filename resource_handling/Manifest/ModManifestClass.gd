@@ -319,6 +319,7 @@ const manifest_template = {
 		"manifest_url":"", # EXAMPLE: https://raw.githubusercontent.com/rwqfsfasxc100/HevLib/main/Mod.manifest
 		"changelog_path":"", # This is relative to the ModMain.gd file. EXAMPLE: for a file at 'res://Example Mod/data/folder/changelogs.txt', you would put 'data/folder/changelogs.txt'
 		"modlet_priority":0, # SPECIFIC TO MODLETS! The order at which the modlet would be loaded. Most modlets load before other mods, but this will affect load order within the list of installed modlets
+		"expected_manifest_path":"", # If set and used for a mod's manifest, the res:// filepath the manifest is expected to be at. If it isn't, prevents the mod from loading and closes the game.
 	}
 }
 
@@ -376,6 +377,8 @@ func set_manifest(value:Dictionary) -> void:
 					MD_changelog_path = manifest["manifest_definitions"][prop]
 				"modlet_priority":
 					MD_modlet_priority = manifest["manifest_definitions"][prop]
+				"expected_manifest_path":
+					MD_expected_manifest_path = manifest["manifest_definitions"][prop]
 	if "tags" in manifest:
 		TG_tags = manifest["tags"]
 	if "links" in manifest:
@@ -422,6 +425,7 @@ func get_manifest() -> Dictionary:
 			"manifest_url":MD_manifest_url,
 			"changelog_path":MD_changelog_path,
 			"modlet_priority":MD_modlet_priority,
+			"expected_manifest_path":MD_expected_manifest_path,
 		},
 	}
 	var out = format(initDict)
@@ -452,6 +456,7 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 		dict_template["manifest_definitions"]["manifest_url"] = String(manifest_data["manifest_definitions"].get("manifest_url",""))
 		dict_template["manifest_definitions"]["changelog_path"] = String(manifest_data["manifest_definitions"].get("changelog_path",""))
 		dict_template["manifest_definitions"]["modlet_priority"] = int(manifest_data["manifest_definitions"].get("modlet_priority",0))
+		dict_template["manifest_definitions"]["expected_manifest_path"] = String(manifest_data["manifest_definitions"].get("expected_manifest_path",""))
 	
 	if "links" in manifest_data:
 		var links = manifest_data["links"]
