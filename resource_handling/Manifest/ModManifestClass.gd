@@ -366,9 +366,9 @@ func set_manifest(value:Dictionary) -> void:
 		for prop in manifest["manifest_definitions"]:
 			match prop:
 				"dependancy_mod_ids":
-					MD_dependancy_mod_ids = manifest["manifest_definitions"][prop]
+					MD_dependancy_mod_ids = Array(manifest["manifest_definitions"][prop])
 				"conflicting_mod_ids":
-					MD_conflicting_mod_ids = manifest["manifest_definitions"][prop]
+					MD_conflicting_mod_ids = Array(manifest["manifest_definitions"][prop])
 				"complementary_mod_ids":
 					MD_complementary_mod_ids = manifest["manifest_definitions"][prop]
 				"manifest_url":
@@ -437,26 +437,38 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 	if "mod_information" in manifest_data:
 		dict_template["mod_information"]["id"] = String(manifest_data["mod_information"].get("id",""))
 		dict_template["mod_information"]["name"] = String(manifest_data["mod_information"].get("name",""))
-		dict_template["mod_information"]["description"] = String(manifest_data["mod_information"].get("description","HEVLIB_DESCRIPTION_PLACEHOLDER"))
-		dict_template["mod_information"]["brief"] = String(manifest_data["mod_information"].get("brief",""))
-		dict_template["mod_information"]["author"] = String(manifest_data["mod_information"].get("author","Unknown"))
-		dict_template["mod_information"]["credits"] = PoolStringArray(manifest_data["mod_information"].get("credits",[]))
+		var desc = String(manifest_data["mod_information"].get("description","HEVLIB_DESCRIPTION_PLACEHOLDER"))
+		if desc: dict_template["mod_information"]["description"] = desc
+		var brief = String(manifest_data["mod_information"].get("brief",""))
+		if brief: dict_template["mod_information"]["brief"] = brief
+		var author = String(manifest_data["mod_information"].get("author","Unknown"))
+		if author: dict_template["mod_information"]["author"] = author
+		var credits = PoolStringArray(manifest_data["mod_information"].get("credits",[]))
+		if credits.size(): dict_template["mod_information"]["credits"] = credits
 	
 	if "version" in manifest_data:
 		dict_template["version"]["version_major"] = int(manifest_data["version"].get("version_major",1))
 		dict_template["version"]["version_minor"] = int(manifest_data["version"].get("version_minor",0))
 		dict_template["version"]["version_bugfix"] = int(manifest_data["version"].get("version_bugfix",0))
-		dict_template["version"]["version_metadata"] = String(manifest_data["version"].get("version_metadata",""))
+		var meta = String(manifest_data["version"].get("version_metadata",""))
+		if meta: dict_template["version"]["version_metadata"] = meta
 	
 	if "manifest_definitions" in manifest_data:
 		dict_template["manifest_definitions"]["manifest_version"] = float(manifest_data["manifest_definitions"].get("manifest_version",manifest_version))
-		dict_template["manifest_definitions"]["dependancy_mod_ids"] = PoolStringArray(manifest_data["manifest_definitions"].get("dependancy_mod_ids",[]))
-		dict_template["manifest_definitions"]["conflicting_mod_ids"] = PoolStringArray(manifest_data["manifest_definitions"].get("conflicting_mod_ids",[]))
-		dict_template["manifest_definitions"]["complementary_mod_ids"] = PoolStringArray(manifest_data["manifest_definitions"].get("complementary_mod_ids",[]))
-		dict_template["manifest_definitions"]["manifest_url"] = String(manifest_data["manifest_definitions"].get("manifest_url",""))
-		dict_template["manifest_definitions"]["changelog_path"] = String(manifest_data["manifest_definitions"].get("changelog_path",""))
-		dict_template["manifest_definitions"]["modlet_priority"] = int(manifest_data["manifest_definitions"].get("modlet_priority",0))
-		dict_template["manifest_definitions"]["expected_manifest_path"] = String(manifest_data["manifest_definitions"].get("expected_manifest_path",""))
+		var deps = Array(manifest_data["manifest_definitions"].get("dependancy_mod_ids",[]))
+		if deps.size(): dict_template["manifest_definitions"]["dependancy_mod_ids"] = deps
+		var conf = Array(manifest_data["manifest_definitions"].get("conflicting_mod_ids",[]))
+		dict_template["manifest_definitions"]["conflicting_mod_ids"] = conf
+		var comp = PoolStringArray(manifest_data["manifest_definitions"].get("complementary_mod_ids",[]))
+		if comp.size(): dict_template["manifest_definitions"]["complementary_mod_ids"] = comp
+		var murl = String(manifest_data["manifest_definitions"].get("manifest_url",""))
+		if murl: dict_template["manifest_definitions"]["manifest_url"] = murl
+		var change = String(manifest_data["manifest_definitions"].get("changelog_path",""))
+		if change: dict_template["manifest_definitions"]["changelog_path"] = change
+		var prio = int(manifest_data["manifest_definitions"].get("modlet_priority",0))
+		if prio != 0: dict_template["manifest_definitions"]["modlet_priority"] = prio
+		var mpath = String(manifest_data["manifest_definitions"].get("expected_manifest_path",""))
+		if mpath: dict_template["manifest_definitions"]["expected_manifest_path"] = mpath
 	
 	if "links" in manifest_data:
 		var links = manifest_data["links"]

@@ -1,0 +1,280 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestConflictAndRequirementsType/SingleConflictEntry.gd" type="Script" id=1]
+
+[node name="SingleConflictEntry" type="HBoxContainer"]
+margin_right = 400.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 400, 0 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+
+[node name="LBUFFER" type="HBoxContainer" parent="."]
+visible = false
+margin_right = 5.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="CONTENT" type="VBoxContainer" parent="."]
+margin_right = 400.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="TBOX" type="HBoxContainer" parent="CONTENT"]
+margin_right = 400.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="TOGGLE" type="Button" parent="CONTENT/TBOX"]
+margin_right = 376.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Mod ID check for ''"
+align = 0
+
+[node name="DELETE" type="Button" parent="CONTENT/TBOX"]
+self_modulate = Color( 1, 0, 0, 1 )
+margin_left = 380.0
+margin_right = 400.0
+margin_bottom = 20.0
+text = "X"
+
+[node name="HB" type="HBoxContainer" parent="CONTENT"]
+margin_top = 24.0
+margin_right = 400.0
+margin_bottom = 24.0
+
+[node name="LBUFFER" type="HBoxContainer" parent="CONTENT/HB"]
+margin_right = 5.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="OPTS" type="VBoxContainer" parent="CONTENT/HB"]
+visible = false
+margin_top = 20.0
+margin_right = 382.0
+margin_bottom = 300.0
+size_flags_horizontal = 3
+
+[node name="IDorModMain" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_right = 382.0
+margin_bottom = 40.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/IDorModMain"]
+margin_right = 256.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Whether this entry should check against a Mod ID (recommended) or a ModMain filepath (only use for legacy mods)"
+text = "Use ModMain path instead of Mod ID?"
+align = 0
+
+[node name="CheckButton" type="CheckButton" parent="CONTENT/HB/OPTS/IDorModMain"]
+margin_left = 260.0
+margin_right = 382.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="ModID" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 44.0
+margin_right = 382.0
+margin_bottom = 68.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/ModID"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "The mod ID for the mod to check."
+text = "Mod ID"
+align = 0
+
+[node name="LineEdit" type="LineEdit" parent="CONTENT/HB/OPTS/ModID"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "example.mod"
+
+[node name="ModMainPath" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+visible = false
+margin_top = 72.0
+margin_right = 382.0
+margin_bottom = 96.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/ModMainPath"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "The res:// filepath to the modmain.
+
+This is less versatile than using Mod ID due to it targeting mods without manifests, which aren't as easy to standardize or add extra information to."
+text = "ModMain Path"
+align = 0
+
+[node name="LineEdit" type="LineEdit" parent="CONTENT/HB/OPTS/ModMainPath"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "res://ExampleMod/ModMain.gd"
+
+[node name="MinMajor" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 72.0
+margin_right = 382.0
+margin_bottom = 96.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/MinMajor"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Minimum major version number (first index) for the check to be valid."
+text = "Min Major Version"
+align = 0
+
+[node name="SpinBox" type="SpinBox" parent="CONTENT/HB/OPTS/MinMajor"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+allow_greater = true
+
+[node name="MinMinor" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 100.0
+margin_right = 382.0
+margin_bottom = 124.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/MinMinor"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Minimum minor version number (second index) for the check to be valid."
+text = "Min Minor Version"
+align = 0
+
+[node name="SpinBox" type="SpinBox" parent="CONTENT/HB/OPTS/MinMinor"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+allow_greater = true
+
+[node name="MinBugfix" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 128.0
+margin_right = 382.0
+margin_bottom = 152.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/MinBugfix"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Minimum bugfix version number (third index) for the check to be valid."
+text = "Min Bugfix Version"
+align = 0
+
+[node name="SpinBox" type="SpinBox" parent="CONTENT/HB/OPTS/MinBugfix"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+allow_greater = true
+
+[node name="MaxMajor" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 156.0
+margin_right = 382.0
+margin_bottom = 180.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/MaxMajor"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Maximum major version number (first index) for the check to be valid."
+text = "Max Major Version"
+align = 0
+
+[node name="SpinBox" type="SpinBox" parent="CONTENT/HB/OPTS/MaxMajor"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+allow_greater = true
+
+[node name="MaxMinor" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 184.0
+margin_right = 382.0
+margin_bottom = 208.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/MaxMinor"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Maximum minor version number (second index) for the check to be valid."
+text = "Max Minor Version"
+align = 0
+
+[node name="SpinBox" type="SpinBox" parent="CONTENT/HB/OPTS/MaxMinor"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+allow_greater = true
+
+[node name="MaxBugfix" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 212.0
+margin_right = 382.0
+margin_bottom = 236.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/MaxBugfix"]
+margin_right = 135.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Maximum bugfix version number (third index) for the check to be valid."
+text = "Max Bugfix Version"
+align = 0
+
+[node name="SpinBox" type="SpinBox" parent="CONTENT/HB/OPTS/MaxBugfix"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+allow_greater = true
+
+[node name="Blocking" type="HBoxContainer" parent="CONTENT/HB/OPTS"]
+margin_top = 240.0
+margin_right = 382.0
+margin_bottom = 280.0
+
+[node name="Button" type="Button" parent="CONTENT/HB/OPTS/Blocking"]
+margin_right = 135.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 135, 0 )
+hint_tooltip = "Whether the game should be prevented from loading if this check fails."
+text = "Blocking"
+align = 0
+
+[node name="CheckButton" type="CheckButton" parent="CONTENT/HB/OPTS/Blocking"]
+margin_left = 139.0
+margin_right = 382.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="RBUFFER" type="HBoxContainer" parent="CONTENT/HB"]
+margin_left = 9.0
+margin_right = 14.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="RBUFFER" type="HBoxContainer" parent="."]
+visible = false
+margin_left = 395.0
+margin_right = 400.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 5, 0 )
+
+[connection signal="pressed" from="CONTENT/TBOX/TOGGLE" to="." method="_on_TOGGLE_pressed"]
+[connection signal="pressed" from="CONTENT/TBOX/DELETE" to="." method="_on_DELETE_pressed"]
+[connection signal="toggled" from="CONTENT/HB/OPTS/IDorModMain/CheckButton" to="." method="_on_CheckTypeSwap_toggled"]
