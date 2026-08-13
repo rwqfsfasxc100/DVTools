@@ -25,8 +25,8 @@ var library_always_display:bool = false
 
 # manifest_definitions
 var MD_manifest_version:float = 2.2
-var MD_dependancy_mod_ids:PoolStringArray = PoolStringArray()
-var MD_conflicting_mod_ids:PoolStringArray = PoolStringArray()
+var MD_dependancy_mod_ids:Array = Array()
+var MD_conflicting_mod_ids:Array = Array()
 var MD_complementary_mod_ids:PoolStringArray = PoolStringArray()
 var MD_manifest_url:String = ""
 var MD_changelog_path:String = ""
@@ -178,12 +178,12 @@ func _get_property_list():
 	})
 	properties.append({
 		name = "MD_dependancy_mod_ids",
-		type = TYPE_STRING_ARRAY,
+		type = TYPE_ARRAY,
 		hint_tooltip = "List of mod IDs that this mod requires to be installed to work.",
 	})
 	properties.append({
 		name = "MD_conflicting_mod_ids",
-		type = TYPE_STRING_ARRAY,
+		type = TYPE_ARRAY,
 		hint_tooltip = "List of mod IDs that this mod will have issues with.",
 	})
 	properties.append({
