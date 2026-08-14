@@ -458,7 +458,7 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 		var deps = Array(manifest_data["manifest_definitions"].get("dependancy_mod_ids",[]))
 		if deps.size(): dict_template["manifest_definitions"]["dependancy_mod_ids"] = deps
 		var conf = Array(manifest_data["manifest_definitions"].get("conflicting_mod_ids",[]))
-		dict_template["manifest_definitions"]["conflicting_mod_ids"] = conf
+		if conf.size(): dict_template["manifest_definitions"]["conflicting_mod_ids"] = conf
 		var comp = PoolStringArray(manifest_data["manifest_definitions"].get("complementary_mod_ids",[]))
 		if comp.size(): dict_template["manifest_definitions"]["complementary_mod_ids"] = comp
 		var murl = String(manifest_data["manifest_definitions"].get("manifest_url",""))
