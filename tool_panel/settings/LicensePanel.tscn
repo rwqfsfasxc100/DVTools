@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/DVTools/tool_panel/settings/LicensePanel.gd" type="Script" id=1]
+
+[node name="LicensePanel" type="ConfirmationDialog"]
+margin_right = 640.0
+margin_bottom = 480.0
+rect_min_size = Vector2( 1053, 437 )
+window_title = "Embedded Driver License"
+script = ExtResource( 1 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1045.0
+margin_bottom = 444.0
+
+[node name="TextEdit" type="TextEdit" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1030.0
+margin_bottom = 429.0

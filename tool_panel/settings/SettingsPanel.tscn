@@ -6,6 +6,7 @@
 margin_right = 640.0
 margin_bottom = 480.0
 rect_min_size = Vector2( 1053, 437 )
+window_title = "Hev's DV Tools Settings"
 script = ExtResource( 1 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

@@ -124,9 +124,9 @@ func _physics_process(delta):
 	if ctr > 4:
 		ctr = 0
 		if can_change_sys_display and is_valid(current_button):
-			var dict = get_this_dict_for_saving()
-			current_button.stored_state = dict
 			if current_button.has_method("_change_system_display"):
+				var dict = get_this_dict_for_saving()
+				current_button.stored_state = dict
 				current_button._change_system_display()
 		
 

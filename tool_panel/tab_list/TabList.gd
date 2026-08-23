@@ -96,6 +96,9 @@ func _save_this_as_file(file_path:String):
 	if panel:
 		if panel.has_method("save_driver_data"):
 			var data:String = panel.save_driver_data()
+			var current_license:String = panel.fetch_license_from_other_drivers()
+			if current_license:
+				data = panel.print_license_text(current_license) + data
 			save_data(data,file_path)
 			emit_signal("save_confirmed")
 
@@ -218,7 +221,9 @@ func change_tab_to(btn:String):
 
 func set_tab_title(script:String,title:String):
 	tab_buttons[script].set_text(title)
-	
+
+signal refreshed_titles()
+
 func refresh_titles():
 	var unique = true
 	var current_driver_names = {}

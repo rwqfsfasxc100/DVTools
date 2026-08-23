@@ -5,6 +5,8 @@ var container_panel
 
 var this_script_path = ""
 
+var current_license = ""
+
 var needs_save = false
 
 func SAVE():
@@ -13,7 +15,10 @@ func SAVE():
 			container_panel.open_save_as()
 		else:
 			if self.has_method("save_driver_data"):
-				container_panel.save_data(self.call("save_driver_data"),this_script_path)
+				var driver_data = self.call("save_driver_data")
+				if fetch_license_from_other_drivers():
+					driver_data = print_license_text(current_license) + driver_data
+				container_panel.save_data(driver_data,this_script_path)
 
 func convert_to_constant(data:Dictionary, constant_name:String) -> String:
 	var out = ""
@@ -26,6 +31,65 @@ func convert_to_constant(data:Dictionary, constant_name:String) -> String:
 		x += "\n}"
 		out = "const %s = %s" % [constant_name, x]
 	return out
+
+func fetch_license_from_other_drivers() -> String:
+	if current_license:
+		return current_license
+	if this_script_path.begins_with("new://"):
+		return ""
+	var file = File.new()
+	var out = get_license_text(this_script_path)
+	if not out:
+		var files = __fetch_folder_files(this_script_path.get_base_dir())
+		if "REPLACE_TRANSLATIONS.gd" in files:
+			out = get_license_text(this_script_path.get_base_dir() + "/REPLACE_TRANSLATIONS.gd")
+		for file_name in files:
+			if not out:
+				out = get_license_text(this_script_path.get_base_dir() + "/" + file_name)
+	current_license = out
+	return out
+
+func get_license_text(last_driver_file:String):
+	if last_driver_file:
+		file.open(last_driver_file,File.READ)
+		var data = file.get_as_text(true).split("\n")
+		file.close()
+		var license:String = ""
+		
+		var READ:bool = false
+		for line in data:
+			if line.begins_with("# [license]"):
+				READ = true
+				continue
+			elif line.begins_with("# [/license]"):
+				READ = false
+				continue
+			else:
+				for prefix in all_prefixes:
+					if line.begins_with(prefix):
+						READ = false
+						continue
+			if READ and line.begins_with("# "):
+				if license: license += "\n" + line.substr(2)
+				else: license = line.substr(2)
+			else:
+				READ = false
+		if license:
+			license = license.strip_edges()
+		return license
+	else:
+		return ""
+
+func print_license_text(license:String):
+	if license:
+		var NL = ""
+		for line in license.split("\n"):
+			if NL:
+				NL += "\n# " + line
+			else:
+				NL = "# " + line
+		license = "# [license]\n%s\n# [/license]\n\n" % NL
+	return license
 
 func stringify_property(property,depth:int = 0,stringify:bool = true):
 	var out = ""
@@ -359,4 +423,37 @@ func __trim_script_object(script_source : Script, get_detailed_operands : bool =
 			reconcat += ls
 		concat = reconcat
 	return [concat if concat !="" else "extends Node",var_names,const_names,signal_names,method_names,signal_values,method_values,method_output_type]
+
+func __fetch_folder_files(folder: String, showFolders: bool = false, returnFullPath: bool = false,globalizePath: bool = false) -> Array:
+	var fileList : PoolStringArray = PoolStringArray()
+	var directory = Directory.new()
+	if not folder.ends_with("/"):
+		folder += "/"
+	if not directory.dir_exists(folder):
+		return []
+	directory.open(folder)
+	directory.list_dir_begin(true)
+	while true:
+		var fileName : String = directory.get_next()
+		var capture:bool = true
+		if fileName.ends_with("/"):
+			capture = false
+		if fileName == "." or fileName == "..":
+			capture = false
+		if capture:
+			if not fileName:
+				break
+			if directory.current_is_dir():
+				if not showFolders:
+					continue
+				if not fileName.ends_with("/"):
+					fileName = fileName + "/"
+			if returnFullPath:
+				fileName = folder + fileName
+			if globalizePath:
+				fileList.append(ProjectSettings.globalize_path(fileName))
+			else:
+				fileList.append(fileName)
+	return Array(fileList)
+
 

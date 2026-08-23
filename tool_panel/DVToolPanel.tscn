@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/DVTools/tool_panel/DVToolPanel.gd" type="Script" id=1]
 [ext_resource path="res://addons/DVTools/tool_panel/tab_list/TabList.gd" type="Script" id=2]
 [ext_resource path="res://addons/DVTools/tool_panel/FilePopup.gd" type="Script" id=3]
 [ext_resource path="res://addons/DVTools/tool_panel/settings/SettingsPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/DVTools/tool_panel/toggle_modlets/ToggleModlets.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/DVTools/tool_panel/settings/LicensePanel.tscn" type="PackedScene" id=6]
 
 [node name="DVToolPanel" type="MarginContainer"]
 margin_right = 40.0
@@ -40,6 +41,7 @@ menu_root_name = "File"
 margin_left = 46.0
 margin_right = 155.0
 margin_bottom = 20.0
+hint_tooltip = "Toggle modlets that have been previously loaded from both in-editor and on release builds."
 text = "Toggle Modlets"
 flat = true
 
@@ -47,7 +49,23 @@ flat = true
 margin_left = 159.0
 margin_right = 222.0
 margin_bottom = 20.0
+hint_tooltip = "Settings for Hev's ∆V Tools"
 text = "Settings"
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Menu"]
+margin_left = 226.0
+margin_right = 230.0
+margin_bottom = 20.0
+
+[node name="License" type="Button" parent="VBoxContainer/Menu"]
+margin_left = 234.0
+margin_right = 295.0
+margin_bottom = 20.0
+hint_tooltip = "Set or modify the license of a driver.
+
+A driver file must be open in this menu to be used."
+text = "License"
 flat = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
@@ -77,3 +95,6 @@ window_title = ""
 [node name="ToggleModlets" parent="." instance=ExtResource( 5 )]
 margin_right = 640.0
 margin_bottom = 480.0
+
+[node name="LicensePanel" parent="." instance=ExtResource( 6 )]
+margin_right = 1053.0

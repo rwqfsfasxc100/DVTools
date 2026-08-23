@@ -27,4 +27,3 @@ func _on_file_operation(operation:String):
 
 func reload_all_scripts():
 	emit_signal("reload_scripts")
-
