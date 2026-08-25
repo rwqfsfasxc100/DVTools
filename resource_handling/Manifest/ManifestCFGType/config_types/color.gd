@@ -36,6 +36,8 @@ func get_data() -> Dictionary:
 	if ibr:out["invert_bool_requirement"] = ibr
 	if rr:out["require_restart"] = rr
 	if db:out["disabled"] = db
+	if ea:out["edit_alpha"] = ea
+	
 	return out
 
 func set_data(STATE:Dictionary):

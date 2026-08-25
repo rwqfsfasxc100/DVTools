@@ -162,8 +162,8 @@ func set_properties_from_dict(dict:Dictionary):
 	lc.get_node("config_entry/property_editor").set_property_value(dict.get("config",{}).get("entry",""))
 	lc.get_node("config_invert_config/property_editor").set_property_value(dict.get("config",{}).get("invert_config",""))
 	lc.get_node("restriction/property_editor").set_property_value(dict.get("restriction",""))
-	lc.get_node("equipment_type/dropdown/TagPopup").initialize_current_tags(dict.get("equipment_type",""))
 	lc.get_node("slot_type/dropdown/TagPopup").initialize_current_tags(dict.get("slot_type","HARDPOINT"))
+	lc.get_node("equipment_type/dropdown/TagPopup").initialize_current_tags(dict.get("equipment_type",""))
 	lc.get_node("alignment/dropdown/TagPopup").initialize_current_tags(dict.get("alignment",""))
 
 func get_this_dict_for_saving() -> Dictionary:
