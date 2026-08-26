@@ -1,5 +1,5 @@
 {
 	"res://ships/ship-ctrl.gd":{
-		"crewMoraleBonus":"The morale stability point of the ship, which all crew will slowly move towards while onboard.\nDefaults to 0"
+		"crewMoraleBonus":"The morale stability point of the ship, which all crew will slowly increase/decrease their morale to be closer to this value while onboard.\nDefaults to 0"
 	},
 }
