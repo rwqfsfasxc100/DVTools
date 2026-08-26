@@ -257,9 +257,14 @@ func _on_node_added(node: Node):
 								var tt = p.hint_tooltip
 								np.hint_tooltip = pname + "\n" + tt
 								np.update()
-				if obj is Resource and obj.resource_path:
-					var res = obj.resource_path
-					print(res)
+				var res = ""
+#				if "resource_path" in obj and obj.resource_path:
+#					var res = obj.resource_path
+#					print(res)
+				if obj.has_method("get_script") and obj.get_script():
+					res = obj.get_script().resource_path
+				if plugin_settings:# and res in plugin_settings.current_tooltips:
+					print(plugin_settings.current_tooltips)
 
 # Code to handle icon changes
 
