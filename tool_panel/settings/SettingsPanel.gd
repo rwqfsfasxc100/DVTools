@@ -115,3 +115,7 @@ func saveSettings():
 func dpref_selected(how):
 	if plugin_settings and specific_tag_filepaths:
 		specific_tag_filepaths.readonly = how != 1
+
+
+func _on_RefreshTooltips_pressed():
+	plugin_settings.fetch_tooltips_file()
