@@ -46,6 +46,7 @@ func init_settings():
 	for i in cfg.get_section_keys("settings"):
 		config[i] = cfg.get_value("settings",i,config.get(i,null))
 	recheck_fs()
+	fetch_tooltips_file()
 
 func get_value(setting:String):
 	return config.get(setting,null)
@@ -80,7 +81,12 @@ func recheck_fs():
 		discovered_drivers = drivers
 
 func fetch_tooltips_file():
-	pass
+	file.open("res://addons/DVTools/resource_handling/TooltipDocumentation/tooltips.json",File.READ)
+	var jout = JSON.parse(file.get_as_text(true))
+	file.close()
+	if jout.error == OK:
+		current_tooltips = jout.result
+	$TooltipsFetch.request("https://raw.githubusercontent.com/rwqfsfasxc100/DVTools/refs/heads/main/resource_handling/TooltipDocumentation/tooltips.json")
 
 
 func __fetch_folder_files(folder: String, showFolders: bool = true, returnFullPath: bool = true) -> Array:
@@ -111,7 +117,6 @@ func __fetch_folder_files(folder: String, showFolders: bool = true, returnFullPa
 			fileList.append(fileName)
 	return Array(fileList)
 
-
 func _on_TooltipsFetch_request_completed(result, response_code, headers, body):
 	if result == 200 and file.file_exists("user://cache/.DVTools_Cache/tooltips.json"):
 		file.open("user://cache/.DVTools_Cache/tooltips.json",File.READ)
@@ -119,6 +124,7 @@ func _on_TooltipsFetch_request_completed(result, response_code, headers, body):
 		file.close()
 		if jout.error == OK:
 			current_tooltips = jout.result
+			print(current_tooltips)
 			return
 	file.open("res://addons/DVTools/resource_handling/TooltipDocumentation/tooltips.json",File.READ)
 	var jout = JSON.parse(file.get_as_text(true))

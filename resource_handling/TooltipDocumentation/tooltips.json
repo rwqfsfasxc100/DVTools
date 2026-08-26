@@ -1,5 +1,5 @@
 {
-	"res://Boot.gd":{
-		
+	"res://BulletTimer.gd":{
+		"zoomBlurOffset":"TEST"
 	},
 }

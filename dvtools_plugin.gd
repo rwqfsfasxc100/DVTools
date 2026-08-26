@@ -251,8 +251,7 @@ func _on_node_added(node: Node):
 				if obj.has_method("_get_property_list"):
 					var properties = obj._get_property_list()
 					for p in properties:
-						var prname = p.name
-						if prname == pname:
+						if p.name == pname:
 							if "hint_tooltip" in p:
 								var tt = p.hint_tooltip
 								np.hint_tooltip = pname + "\n" + tt
@@ -263,7 +262,7 @@ func _on_node_added(node: Node):
 #					print(res)
 				if obj.has_method("get_script") and obj.get_script():
 					res = obj.get_script().resource_path
-				if plugin_settings:# and res in plugin_settings.current_tooltips:
+				if plugin_settings and (res in plugin_settings.current_tooltips) and pname in plugin_settings.current_tooltips[res]:
 					print(plugin_settings.current_tooltips)
 
 # Code to handle icon changes
