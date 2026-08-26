@@ -18,7 +18,7 @@ const property_handler_plugins = [
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestTagType/TagHandler.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestLangType/LangHandler.gd"),
 	preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgHandler.gd"),
-	preload("res://addons/DVTools/resource_handling/Manifest/ManifestConflictAndRequirementsType/MVConflictsHelper.gd")
+	preload("res://addons/DVTools/resource_handling/Manifest/ManifestConflictAndRequirementsType/MVConflictsHelper.gd"),
 	
 ]
 
@@ -239,18 +239,17 @@ func handles(object):
 
 # Tooltip handling
 # Tooltips for properties can be added by setting a 'hint_tooltip' entry in the property's _get_property_list entry
+# Tooltips can also be added by setting them in the 'tooltips.json' file found in 'DVTools/resource_handling/TooltipDocumentation/' directory
 
 func _on_node_added(node: Node):
 	if node:
 		if node.get_class().begins_with("EditorProperty"):
 			if node.has_method("get_edited_object"):
 				var obj = node.get_edited_object()
-				
-				var hp = obj.has_method("_get_property_list")
-				if hp:
+				var np = node.get_parent() if not "hint_tooltip" in node else node
+				var pname = np.hint_tooltip
+				if obj.has_method("_get_property_list"):
 					var properties = obj._get_property_list()
-					var np = node.get_parent() if not "hint_tooltip" in node else node
-					var pname = np.hint_tooltip
 					for p in properties:
 						var prname = p.name
 						if prname == pname:
@@ -258,6 +257,9 @@ func _on_node_added(node: Node):
 								var tt = p.hint_tooltip
 								np.hint_tooltip = pname + "\n" + tt
 								np.update()
+				if obj is Resource and obj.resource_path:
+					var res = obj.resource_path
+					print(res)
 
 # Code to handle icon changes
 

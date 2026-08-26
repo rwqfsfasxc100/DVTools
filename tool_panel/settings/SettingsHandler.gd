@@ -10,6 +10,8 @@ var config:Dictionary = {
 var discovered_drivers:Array = [] setget setDisDrivers , getDisDrivers
 var drivers_by_type:Dictionary = {} setget , getDT
 
+var current_tooltips:Dictionary = {}
+
 func setDisDrivers(how:Array):
 	if how:
 		drivers_by_type.clear()
@@ -77,6 +79,9 @@ func recheck_fs():
 	if drivers:
 		discovered_drivers = drivers
 
+func fetch_tooltips_file():
+	pass
+
 
 func __fetch_folder_files(folder: String, showFolders: bool = true, returnFullPath: bool = true) -> Array:
 	var fileList : PoolStringArray = PoolStringArray()
@@ -105,3 +110,18 @@ func __fetch_folder_files(folder: String, showFolders: bool = true, returnFullPa
 				fileName = folder + fileName
 			fileList.append(fileName)
 	return Array(fileList)
+
+
+func _on_TooltipsFetch_request_completed(result, response_code, headers, body):
+	if result == 200 and file.file_exists("user://cache/.DVTools_Cache/tooltips.json"):
+		file.open("user://cache/.DVTools_Cache/tooltips.json",File.READ)
+		var jout = JSON.parse(file.get_as_text(true))
+		file.close()
+		if jout.error == OK:
+			current_tooltips = jout.result
+			return
+	file.open("res://addons/DVTools/resource_handling/TooltipDocumentation/tooltips.json",File.READ)
+	var jout = JSON.parse(file.get_as_text(true))
+	file.close()
+	if jout.error == OK:
+		current_tooltips = jout.result

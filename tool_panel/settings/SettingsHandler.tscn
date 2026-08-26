@@ -4,3 +4,8 @@
 
 [node name="SettingsHandler" type="Node"]
 script = ExtResource( 1 )
+
+[node name="TooltipsFetch" type="HTTPRequest" parent="."]
+download_file = "user://cache/.DVTools_Cache/tooltips.json"
+
+[connection signal="request_completed" from="TooltipsFetch" to="." method="_on_TooltipsFetch_request_completed"]
