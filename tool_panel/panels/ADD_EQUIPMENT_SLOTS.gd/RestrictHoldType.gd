@@ -17,7 +17,7 @@ const tooltips = {
 
 func _ready():
 	clear()
-	for r in range(hold_types.size()):
+	for r in hold_types.size():
 		var i = hold_types[r]
 		add_item(i)
 		set_item_tooltip(r,tooltips.get(i,""))

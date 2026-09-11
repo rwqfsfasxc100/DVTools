@@ -99,7 +99,7 @@ func recalculate():
 		for iv in objList:
 			iv.visible = false
 		if size > page_size:
-			for iv in range(clamp(size - offset,0,page_size)):
+			for iv in clamp(size - offset,0,page_size):
 				objList[iv + offset].visible = true
 			$PAGE/COUNT.get_parent().visible = true
 		else:

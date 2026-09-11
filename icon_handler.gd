@@ -155,12 +155,12 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					for i in base_data[2]:
 						if not i in const_names:
 							const_names.append(i)
-					for f in range(base_data[3].size()):
+					for f in base_data[3].size():
 						var i = base_data[3][f]
 						if not i in signal_names:
 							signal_names.append(i)
 							signal_values.append(base_data[5][f])
-					for f in range(base_data[4].size()):
+					for f in base_data[4].size():
 						var i = base_data[4][f]
 						if not i in method_names:
 							method_names.append(i)
@@ -337,7 +337,7 @@ static func __compile_script_object(source_code : String, params = []) -> Script
 			var param_part = "_%d"
 			var pb = ""
 			var pd = ""
-			for i in range(params.size()):
+			for i in params.size():
 				var p = params[i]
 				var pv = param_part % i
 				if pb:

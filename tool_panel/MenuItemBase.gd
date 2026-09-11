@@ -17,7 +17,7 @@ func handle_menubuttons():
 	
 
 func add_menu_buttons(menu_data: Array,popupmenu:PopupMenu,path:String = menu_root_name):
-	for idx in range(menu_data.size()):
+	for idx in menu_data.size():
 		var i = menu_data[idx]
 		var iname = i.get("name","")
 		var children = i.get("children",[])

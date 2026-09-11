@@ -67,7 +67,7 @@ func make_save_needed(aval = null):
 func save_driver_data() -> String:
 	var out:String = ""
 	can_change_sys_display = false
-	for i in range(button_list.get_child_count()):
+	for i in button_list.get_child_count():
 		var btn = button_list.get_child(i)
 		var st = btn.stored_state
 		btn.saved_hash = hash(st)

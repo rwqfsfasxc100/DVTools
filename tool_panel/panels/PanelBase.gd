@@ -128,9 +128,9 @@ func stringify_property(property,depth:int = 0,stringify:bool = true):
 				var nd = depth + 1
 				var tabs = ""
 				var etabs = ""
-				for i in range(depth):
+				for i in depth:
 					etabs += "\t"
-				for i in range(nd):
+				for i in nd:
 					tabs += "\t"
 				for i in property:
 					var r = stringify_property(i,nd,false)
@@ -152,9 +152,9 @@ func stringify_property(property,depth:int = 0,stringify:bool = true):
 				var nd = depth + 1
 				var tabs = ""
 				var etabs = ""
-				for i in range(depth):
+				for i in depth:
 					etabs += "\t"
-				for i in range(nd):
+				for i in nd:
 					tabs += "\t"
 				for key in property:
 					var item = "%s:%s" % [stringify_property(key,depth,false),stringify_property(property[key],nd,false)]
@@ -266,12 +266,12 @@ func __trim_script_object(script_source : Script, get_detailed_operands : bool =
 				for i in base_data[2]:
 					if not i in const_names:
 						const_names.append(i)
-				for f in range(base_data[3].size()):
+				for f in base_data[3].size():
 					var i = base_data[3][f]
 					if not i in signal_names:
 						signal_names.append(i)
 						signal_values.append(base_data[5][f])
-				for f in range(base_data[4].size()):
+				for f in base_data[4].size():
 					var i = base_data[4][f]
 					if not i in method_names:
 						method_names.append(i)

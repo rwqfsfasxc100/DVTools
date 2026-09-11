@@ -29,7 +29,7 @@ var save_as_file_diag = EditorFileDialog.new()
 func set_current_tab(val:int):
 	var count = tab_container.get_child_count()
 	if count:
-		for i in range(count):
+		for i in count:
 			tab_container.get_child(i).visible = i == val
 		current_tab = val
 		tab_container.current_tab = val
