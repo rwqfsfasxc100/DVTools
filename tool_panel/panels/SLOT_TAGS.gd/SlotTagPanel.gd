@@ -19,23 +19,9 @@ func _ready():
 var equipment_types:Array = []
 
 func get_equipment_tags():
-	var panel_settings = container_panel.tool_panel.plugin_settings
 	var vanilla_tags = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd")
-	var equipment_tag_files = []
 	equipment_types = vanilla_tags.get("equipment_types",[])
-	if panel_settings:
-			match panel_settings.get_value("driver_tag_discovery_preference"):
-				0:
-					equipment_tag_files = panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[])
-				1:
-					equipment_tag_files = curate_tags(panel_settings.get_value("use_specific_tags"))
-				2:
-					if not this_script_path.begins_with("new://"):
-						var thisDir = this_script_path.split("/",false)[1]
-						for i in panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[]):
-							if i.split("/",false)[1] == thisDir:
-								equipment_tag_files.append(i)
-	for tag in equipment_tag_files:
+	for tag in fetch_data_from_all_drivers("EQUIPMENT_TAGS.gd"):
 		for st in __get_script_constant_map_without_load(tag).get("EQUIPMENT_TAGS",{}).get("equipment_types",[]):
 			if not st in equipment_types:
 				equipment_types.append(st)
@@ -61,23 +47,8 @@ func curate_tags(tags:Array) -> Array:
 var node_names:Array = Array()
 func fetch_tags():
 	node_names.clear()
-	var panel_settings = container_panel.tool_panel.plugin_settings
 	node_names = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd").vanilla_equipment_defaults_for_reference.keys()
-	var slot_tag_files = []
-	if panel_settings:
-			match panel_settings.get_value("driver_tag_discovery_preference"):
-				0:
-					slot_tag_files = panel_settings.drivers_by_type.get("ADD_EQUIPMENT_SLOTS.gd",[])
-				1:
-					slot_tag_files = curate_tags(panel_settings.get_value("use_specific_tags"))
-				2:
-					if not this_script_path.begins_with("new://"):
-						var thisDir = this_script_path.split("/",false)[1]
-						for i in panel_settings.drivers_by_type.get("ADD_EQUIPMENT_SLOTS.gd",[]):
-							if i.split("/",false)[1] == thisDir:
-								slot_tag_files.append(i)
-					
-	for tag in slot_tag_files:
+	for tag in fetch_data_from_all_drivers("ADD_EQUIPMENT_SLOTS.gd"):
 		var items:Dictionary = __get_script_constant_map_without_load(tag)
 		for i in items:
 			var id = items[i]

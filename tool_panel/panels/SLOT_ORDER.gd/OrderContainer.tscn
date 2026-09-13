@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/DVTools/tool_panel/panels/SLOT_ORDER.gd/OrderContainer.gd" type="Script" id=1]
+[ext_resource path="res://addons/DVTools/tool_panel/panels/components/DescriptionLabel.tscn" type="PackedScene" id=2]
+
+[node name="OrderContainer" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 450, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 450.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 438.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Slot Order" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 438.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/Slot Order" instance=ExtResource( 2 )]
+margin_right = 200.0
+hint_tooltip = "Property: TypeOrder"
+text = "Slot Order"
+property_tooltip = "Defines a specific order of slots within a group by their node name. Slot groups are defined by their system slot's first portion (e.g. cargo.equipment would group under \"cargo\").
+
+Slots ordered with this method will order themselves at the bottom of the group to ensure that vanilla slot orders are kept intact."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Slot Order"]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="Relative Slot Order" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 438.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+
+[node name="DescriptionLabel" parent="ScrollContainer/VBoxContainer/Relative Slot Order" instance=ExtResource( 2 )]
+margin_right = 200.0
+hint_tooltip = "Property: Relative Slot Order"
+text = "Relative Slot Order"
+property_tooltip = "Defines the order of slot nodes relative to another slot. This provides more control over the regular Slot Order method, but does require an exact slot to be relative to."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Relative Slot Order"]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 20.0
+size_flags_horizontal = 3

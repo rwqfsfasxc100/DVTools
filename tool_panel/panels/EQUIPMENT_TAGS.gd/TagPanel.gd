@@ -42,27 +42,13 @@ func curate_tags(tags:Array) -> Array:
 	return out
 
 func fetch_tags():
-	var panel_settings = container_panel.tool_panel.plugin_settings
 	var vanilla_tags = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd")
-	var equipment_tag_files = []
 	slot_types = vanilla_tags.get("slot_types",[])
 	equipment_types = vanilla_tags.get("equipment_types",[])
 	alignments = vanilla_tags.get("alignments",[])
 	hardpoint_types = vanilla_tags.get("hardpoint_types",[])
 	slot_defaults = vanilla_tags.get("slot_defaults",{})
-	if panel_settings:
-			match panel_settings.get_value("driver_tag_discovery_preference"):
-				0:
-					equipment_tag_files = panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[])
-				1:
-					equipment_tag_files = curate_tags(panel_settings.get_value("use_specific_tags"))
-				2:
-					if not this_script_path.begins_with("new://"):
-						var thisDir = this_script_path.split("/",false)[1]
-						for i in panel_settings.drivers_by_type.get("EQUIPMENT_TAGS.gd",[]):
-							if i.split("/",false)[1] == thisDir:
-								equipment_tag_files.append(i)
-	for tag in equipment_tag_files:
+	for tag in fetch_data_from_all_drivers("EQUIPMENT_TAGS.gd"):
 		if tag == this_script_path:
 			continue
 		var nodes = __get_script_constant_map_without_load(tag).get("EQUIPMENT_TAGS",{})

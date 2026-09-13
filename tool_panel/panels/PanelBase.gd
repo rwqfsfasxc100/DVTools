@@ -32,6 +32,25 @@ func convert_to_constant(data:Dictionary, constant_name:String) -> String:
 		out = "const %s = %s" % [constant_name, x]
 	return out
 
+func fetch_data_from_all_drivers(driver_type:String) -> Array:
+	var out = []
+	var panel_settings = container_panel.tool_panel.plugin_settings
+	if panel_settings:
+		match panel_settings.get_value("driver_tag_discovery_preference"):
+			0:
+				out = panel_settings.drivers_by_type.get(driver_type,[])
+			1:
+				for i in panel_settings.get_value("use_specific_tags"):
+					if i.get_file() == driver_type:
+						out.append(i)
+			2:
+				if not this_script_path.begins_with("new://"):
+					var thisDir = this_script_path.split("/",false)[1]
+					for i in panel_settings.drivers_by_type.get(driver_type,[]):
+						if i.split("/",false)[1] == thisDir:
+							out.append(i)
+	return out
+
 func fetch_license_from_other_drivers() -> String:
 	if current_license:
 		return current_license
