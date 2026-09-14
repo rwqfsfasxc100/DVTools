@@ -34,11 +34,15 @@ func changed(how = null):
 		CONTAINER.has_changed()
 
 func _on_up_pressed():
-	if CONTAINER:
-		CONTAINER.move_id_up(boxname,get_position_in_parent())
+	var parent = get_parent()
+	parent.move_child(self,clamp(get_position_in_parent() - 1,0,parent.get_child_count() - 1))
+#	if CONTAINER:
+#		CONTAINER.move_id_up(boxname,get_position_in_parent())
 func _on_down_pressed():
-	if CONTAINER:
-		CONTAINER.move_id_down(boxname,get_position_in_parent())
+	var parent = get_parent()
+	parent.move_child(self,clamp(get_position_in_parent() + 1,0,parent.get_child_count() - 1))
+#	if CONTAINER:
+#		CONTAINER.move_id_down(boxname,get_position_in_parent())
 
 const config_types = PoolStringArray([
 	"bool",
@@ -168,7 +172,10 @@ func RENAME_CONFIRMED():
 		var newtype = fix_type_name(config_types[$RenameTo/VBoxContainer/OptionButton.selected])
 		if newname or newtype != current_box_type:
 			if newname != boxname:
-				CONTAINER.rename(boxname,newname)
+				boxname = newname
+				if loaded_box:
+					loaded_box.boxname = newname
+				toggled = false
 			if newtype != current_box_type:
 				var state = get_data().duplicate(true)
 				state["type"] = newtype
@@ -176,6 +183,7 @@ func RENAME_CONFIRMED():
 				if newtype == "optionbutton" and state.get("options",PoolStringArray()).empty():
 					state["options"] = PoolStringArray(["EXAMPLE_OPTION"])
 				set_data(state)
+			_draw()
 			$RenameTo.hide()
 
 func _draw():

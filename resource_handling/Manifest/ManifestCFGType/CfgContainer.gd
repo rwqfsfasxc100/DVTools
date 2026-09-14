@@ -50,18 +50,20 @@ func add(item_name,state = {}):
 	box.initial_state = state
 	dataStore[item_name] = box
 	box.CONTAINER = self
+	$LIST.add_child(box)
 	$ConfirmationDialog.hide()
 	has_changed()
-	resort()
+#	resort()
 
 func delete(which):
 	if which in dataStore:
 		var box = dataStore[which]
 		dataStore.erase(which)
 		order.erase(which)
+		$LIST.remove_child(box)
 		box.queue_free()
 		has_changed()
-		resort()
+#		resort()
 
 func rename(old,new):
 	if old in dataStore:
@@ -69,8 +71,9 @@ func rename(old,new):
 		ov.boxname = new
 		dataStore.erase(old)
 		dataStore[new] = ov
+		order[order.find(old)] = new
 		has_changed()
-		resort()
+#		resort()
 
 func resort():
 	for i in $LIST.get_children():

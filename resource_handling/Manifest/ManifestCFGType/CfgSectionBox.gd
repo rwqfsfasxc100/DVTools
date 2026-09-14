@@ -80,11 +80,15 @@ func _ready():
 	_on_down_pressed()
 
 func _on_up_pressed():
-	if CONTAINER:
-		CONTAINER.move_id_up(boxname,get_position_in_parent())
+	var parent = get_parent()
+	parent.move_child(self,clamp(get_position_in_parent() - 1,0,parent.get_child_count() - 1))
+#	if CONTAINER:
+#		CONTAINER.move_id_up(boxname,get_position_in_parent())
 func _on_down_pressed():
-	if CONTAINER:
-		CONTAINER.move_id_down(boxname,get_position_in_parent())
+	var parent = get_parent()
+	parent.move_child(self,clamp(get_position_in_parent() + 1,0,parent.get_child_count() - 1))
+#	if CONTAINER:
+#		CONTAINER.move_id_down(boxname,get_position_in_parent())
 
 var dataStore = {}
 
@@ -250,6 +254,7 @@ func get_data():
 	for i in $BUFFER/BODY/LIST.get_children():
 		var data = i.get_data()
 		out[i.boxname] = data
+	print("Section saved as ",out)
 	boxname = $HEADER/TOGGLE.text
 	return out
 
@@ -276,8 +281,9 @@ func RENAME_CONFIRMED():
 		var newname = RENAMEEDIT.text
 		if newname:
 			if newname != boxname:
-				CONTAINER.rename(boxname,newname)
+				boxname = newname
 				toggled = false
+				_draw()
 			RENAMEBOX.hide()
 
 func _draw():
