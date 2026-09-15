@@ -254,7 +254,6 @@ func get_data():
 	for i in $BUFFER/BODY/LIST.get_children():
 		var data = i.get_data()
 		out[i.boxname] = data
-	print("Section saved as ",out)
 	boxname = $HEADER/TOGGLE.text
 	return out
 

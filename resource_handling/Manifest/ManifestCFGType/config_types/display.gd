@@ -26,3 +26,10 @@ func set_data(STATE:Dictionary):
 	$left_margin/property_editor.set_property_value(STATE.get("left_margin",15))
 	$right_margin/property_editor.set_property_value(STATE.get("right_margin",15))
 	$disabled/property_editor.set_property_value(STATE.get("disabled",false))
+
+func connect_all(to):
+	for i in get_children():
+		var r = i.get_node("property_editor")
+		r.connect("changed",to,"changed")
+		if "emit_update_signal" in r:
+			r.emit_update_signal = true

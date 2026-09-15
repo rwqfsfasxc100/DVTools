@@ -48,3 +48,10 @@ func set_data(STATE:Dictionary):
 	$invert_bool_requirement/property_editor.set_property_value(STATE.get("invert_bool_requirement",false))
 	$require_restart/property_editor.set_property_value(STATE.get("require_restart",false))
 	$disabled/property_editor.set_property_value(STATE.get("disabled",false))
+
+func connect_all(to):
+	for i in get_children():
+		var r = i.get_node("property_editor")
+		r.connect("changed",to,"changed")
+		if "emit_update_signal" in r:
+			r.emit_update_signal = true

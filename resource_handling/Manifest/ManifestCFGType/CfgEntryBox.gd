@@ -69,6 +69,7 @@ func specify_box_type(type:String):
 				i.queue_free()
 		if type in boxes:
 			var box = boxes[type].instance()
+			box.connect_all(self)
 			box.name = "loaded_box"
 			box.boxname = boxname
 			loaded_box = box
@@ -80,6 +81,7 @@ func specify_box_type(type:String):
 				i.queue_free()
 		if type in boxes:
 			var box = boxes[type].instance()
+			box.connect_all(self)
 			box.name = "loaded_box"
 			box.boxname = boxname
 			loaded_box = box

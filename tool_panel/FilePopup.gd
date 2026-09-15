@@ -42,10 +42,10 @@ var this_menu_data = [
 				"name":"SLOT_TAGS.gd",
 				"tooltip":"Modifies equipment and slot availability of specific slots",
 			},
-#			{
-#				"name":"SLOT_ORDER.gd",
-#				"tooltip":"Defines the order which specific slots would appear in",
-#			},
+			{
+				"name":"SLOT_ORDER.gd",
+				"tooltip":"Defines the order which specific slots would appear in",
+			},
 		]
 	},
 ]

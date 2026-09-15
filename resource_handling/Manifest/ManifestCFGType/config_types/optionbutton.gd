@@ -103,3 +103,10 @@ func set_store_method(how:String):
 		STORE_METHOD.select(store_methods.find(how))
 	else:
 		STORE_METHOD.select(0)
+
+func connect_all(to):
+	for i in get_children():
+		var r = i.get_node("property_editor")
+		r.connect("changed",to,"changed")
+		if "emit_update_signal" in r:
+			r.emit_update_signal = true

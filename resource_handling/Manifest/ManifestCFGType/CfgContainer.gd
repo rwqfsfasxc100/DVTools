@@ -29,7 +29,6 @@ func set_data(STATE):
 
 func has_changed():
 	emit_signal("changed")
-	
 
 func _on_add_open():
 	$ConfirmationDialog/VBoxContainer/LineEdit.text = ""
