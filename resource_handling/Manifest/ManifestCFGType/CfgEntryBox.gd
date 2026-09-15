@@ -26,6 +26,7 @@ func _ready():
 	$BOX/BUTTONS/UP.connect("pressed",self,"_on_up_pressed")
 	$BOX/BUTTONS/DOWN.connect("pressed",self,"_on_down_pressed")
 	set_data(initial_state,boxname)
+	
 	yield(get_tree(),"idle_frame")
 	_on_down_pressed()
 

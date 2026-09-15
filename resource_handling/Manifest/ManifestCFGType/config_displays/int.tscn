@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_types/int.gd" type="Script" id=1]
+[ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/config_displays/changed_emitter.gd" type="Script" id=2]
 [ext_resource path="res://addons/DVTools/property_editor/property_containers/string.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/DVTools/property_editor/property_containers/bool.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/DescriptionLabel.tscn" type="PackedScene" id=9]
@@ -163,7 +164,7 @@ The style of the value display.
 Accepts \"slider\" and \"spinbox\"."
 text = "style"
 
-[node name="OptionButton" type="OptionButton" parent="style"]
+[node name="property_editor" type="OptionButton" parent="style"]
 margin_left = 189.0
 margin_right = 366.0
 margin_bottom = 20.0
@@ -171,6 +172,7 @@ size_flags_horizontal = 3
 text = "slider"
 items = [ "slider", null, false, 0, null, "spinbox", null, false, 1, null ]
 selected = 0
+script = ExtResource( 2 )
 
 [node name="requires_bools" type="HBoxContainer" parent="."]
 margin_top = 204.0
@@ -256,6 +258,8 @@ text = "disabled"
 margin_left = 189.0
 margin_right = 366.0
 margin_bottom = 40.0
+
+[connection signal="item_selected" from="style/property_editor" to="style/property_editor" method="emit_changed"]
 
 [editable path="max/property_editor"]
 [editable path="step/property_editor"]

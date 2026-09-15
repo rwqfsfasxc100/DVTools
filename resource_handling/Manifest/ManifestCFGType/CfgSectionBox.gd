@@ -49,7 +49,7 @@ func _ready():
 	
 	UPBTN.connect("pressed",self,"_on_up_pressed")
 	DWNBTN.connect("pressed",self,"_on_down_pressed")
-	
+	connect("visibility_changed",self,"recalculate")
 	var addOrder = {}
 	
 	var noOrder = []

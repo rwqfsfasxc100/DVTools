@@ -6,9 +6,9 @@ var boxname = ""
 
 onready var NAME = $name/property_editor
 onready var DESCRIPTION = $description/property_editor
-onready var DEFAULT = $default/OptionButton
+onready var DEFAULT = $default/property_editor
 onready var OPTIONS = $options/property_editor
-onready var STORE_METHOD = $store_method/OptionButton
+onready var STORE_METHOD = $store_method/property_editor
 onready var REQUIRES_BOOLS = $requires_bools/property_editor
 onready var INVERT_BOOL_REQUIREMENT = $invert_bool_requirement/property_editor
 onready var REQUIRE_RESTART = $require_restart/property_editor

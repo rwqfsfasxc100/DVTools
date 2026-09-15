@@ -9,7 +9,7 @@ onready var DESCRIPTION = $description/property_editor
 onready var MIN = $min/property_editor
 onready var MAX = $max/property_editor
 onready var STEP = $step/property_editor
-onready var STYLE = $style/OptionButton
+onready var STYLE = $style/property_editor
 onready var DEFAULT = $default/property_editor
 onready var REQUIRES_BOOLS = $requires_bools/property_editor
 onready var INVERT_BOOL_REQUIREMENT = $invert_bool_requirement/property_editor
@@ -67,7 +67,7 @@ func get_style_val():
 
 func set_style_val(how:String):
 	if not STYLE:
-		STYLE = $style/OptionButton
+		STYLE = $style/property_editor
 		STYLE.clear()
 		for i in styles:
 			STYLE.add_item(i)

@@ -10,6 +10,7 @@ func _ready():
 	$ConfirmationDialog.connect("confirmed",self,"_add_confirmed")
 	$ENTRY/COUNT.connect("value_changed",self,"_size_value_changed")
 	$PAGE/COUNT.connect("value_changed",self,"_page_value_changed")
+	connect("visibility_changed",self,"recalculate")
 
 var dataStore = {}
 
