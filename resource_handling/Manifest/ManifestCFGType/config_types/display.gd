@@ -4,17 +4,12 @@ extends VBoxContainer
 const type = "display"
 var boxname = ""
 
-onready var SCENE_PATH = $scene_path/property_editor
-onready var LEFT_MARGIN = $left_margin/property_editor
-onready var RIGHT_MARGIN = $right_margin/property_editor
-onready var DISABLED = $disabled/property_editor
-
 func get_data() -> Dictionary:
 	var out = {}
-	var sc = SCENE_PATH.get_property_value()[0]
-	var lm = LEFT_MARGIN.get_property_value()[0]
-	var rm = RIGHT_MARGIN.get_property_value()[0]
-	var db = DISABLED.get_property_value()[0]
+	var sc = $scene_path/property_editor.get_property_value()[0]
+	var lm = $left_margin/property_editor.get_property_value()[0]
+	var rm = $right_margin/property_editor.get_property_value()[0]
+	var db = $disabled/property_editor.get_property_value()[0]
 	if sc:out["scene_path"] = sc
 	if lm != 15:out["left_margin"] = lm
 	if rm != 15:out["right_margin"] = rm

@@ -4,23 +4,15 @@ extends VBoxContainer
 const type = "input"
 var boxname = ""
 
-onready var NAME = $name/property_editor
-onready var DESCRIPTION = $description/property_editor
-onready var DEFAULT = $default/property_editor
-onready var ALWAYS_BINDS = $always_binds/property_editor
-onready var REQUIRES_BOOLS = $requires_bools/property_editor
-onready var INVERT_BOOL_REQUIREMENT = $invert_bool_requirement/property_editor
-onready var DISABLED = $disabled/property_editor
-
 func get_data() -> Dictionary:
 	var out = {}
-	var nm = NAME.get_property_value()[0]
-	var dc = DESCRIPTION.get_property_value()[0]
-	var df = DEFAULT.get_property_value()[0]
-	var rr = ALWAYS_BINDS.get_property_value()[0]
-	var rb = REQUIRES_BOOLS.get_property_value()[0]
-	var ibr = INVERT_BOOL_REQUIREMENT.get_property_value()[0]
-	var db = DISABLED.get_property_value()[0]
+	var nm = $name/property_editor.get_property_value()[0]
+	var dc = $description/property_editor.get_property_value()[0]
+	var df = $default/property_editor.get_property_value()[0]
+	var rr = $always_binds/property_editor.get_property_value()[0]
+	var rb = $requires_bools/property_editor.get_property_value()[0]
+	var ibr = $invert_bool_requirement/property_editor.get_property_value()[0]
+	var db = $disabled/property_editor.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
 	out["default"] = df

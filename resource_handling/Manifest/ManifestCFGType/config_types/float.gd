@@ -4,31 +4,19 @@ extends VBoxContainer
 const type = "float"
 var boxname = ""
 
-onready var NAME = $name/property_editor
-onready var DESCRIPTION = $description/property_editor
-onready var MIN = $min/property_editor
-onready var MAX = $max/property_editor
-onready var STEP = $step/property_editor
-onready var STYLE = $style/property_editor
-onready var DEFAULT = $default/property_editor
-onready var REQUIRES_BOOLS = $requires_bools/property_editor
-onready var INVERT_BOOL_REQUIREMENT = $invert_bool_requirement/property_editor
-onready var REQUIRE_RESTART = $require_restart/property_editor
-onready var DISABLED = $disabled/property_editor
-
 func get_data() -> Dictionary:
 	var out = {}
-	var nm = NAME.get_property_value()[0]
-	var dc = DESCRIPTION.get_property_value()[0]
-	var df = DEFAULT.get_property_value()[0]
-	var mn = MIN.get_property_value()[0]
-	var mx = MAX.get_property_value()[0]
-	var sp = STEP.get_property_value()[0]
+	var nm = $name/property_editor.get_property_value()[0]
+	var dc = $description/property_editor.get_property_value()[0]
+	var df = $default/property_editor.get_property_value()[0]
+	var mn = $min/property_editor.get_property_value()[0]
+	var mx = $max/property_editor.get_property_value()[0]
+	var sp = $step/property_editor.get_property_value()[0]
 	var st = get_style_val()
-	var rb = REQUIRES_BOOLS.get_property_value()[0]
-	var ibr = INVERT_BOOL_REQUIREMENT.get_property_value()[0]
-	var rr = REQUIRE_RESTART.get_property_value()[0]
-	var db = DISABLED.get_property_value()[0]
+	var rb = $requires_bools/property_editor.get_property_value()[0]
+	var ibr = $invert_bool_requirement/property_editor.get_property_value()[0]
+	var rr = $require_restart/property_editor.get_property_value()[0]
+	var db = $disabled/property_editor.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
 	out["default"] = df
@@ -57,24 +45,22 @@ func set_data(STATE:Dictionary):
 
 var styles = PoolStringArray(["slider","spinbox"])
 func _ready():
-	STYLE.clear()
+	$style/property_editor.clear()
 	for i in styles:
-		STYLE.add_item(i)
-	STYLE.select(0)
+		$style/property_editor.add_item(i)
+	$style/property_editor.select(0)
 
 func get_style_val():
-	return styles[STYLE.selected]
+	return styles[$style/property_editor.selected]
 
 func set_style_val(how:String):
-	if not STYLE:
-		STYLE = $style/property_editor
-		STYLE.clear()
-		for i in styles:
-			STYLE.add_item(i)
+	$style/property_editor.clear()
+	for i in styles:
+		$style/property_editor.add_item(i)
 	if how in styles:
-		STYLE.select(styles.find(how))
+		$style/property_editor.select(styles.find(how))
 	else:
-		STYLE.select(0)
+		$style/property_editor.select(0)
 
 func connect_all(to):
 	for i in get_children():

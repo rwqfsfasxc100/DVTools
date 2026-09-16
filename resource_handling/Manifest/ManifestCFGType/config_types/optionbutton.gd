@@ -4,27 +4,17 @@ extends VBoxContainer
 const type = "optionbutton"
 var boxname = ""
 
-onready var NAME = $name/property_editor
-onready var DESCRIPTION = $description/property_editor
-onready var DEFAULT = $default/property_editor
-onready var OPTIONS = $options/property_editor
-onready var STORE_METHOD = $store_method/property_editor
-onready var REQUIRES_BOOLS = $requires_bools/property_editor
-onready var INVERT_BOOL_REQUIREMENT = $invert_bool_requirement/property_editor
-onready var REQUIRE_RESTART = $require_restart/property_editor
-onready var DISABLED = $disabled/property_editor
-
 func get_data() -> Dictionary:
 	var out = {}
-	var nm = NAME.get_property_value()[0]
-	var dc = DESCRIPTION.get_property_value()[0]
-	var op = OPTIONS.get_property_value()[0]
+	var nm = $name/property_editor.get_property_value()[0]
+	var dc = $description/property_editor.get_property_value()[0]
+	var op = $options/property_editor.get_property_value()[0]
 	var sm = get_store_method()
 	var df = get_default()
-	var rb = REQUIRES_BOOLS.get_property_value()[0]
-	var ibr = INVERT_BOOL_REQUIREMENT.get_property_value()[0]
-	var rr = REQUIRE_RESTART.get_property_value()[0]
-	var db = DISABLED.get_property_value()[0]
+	var rb = $requires_bools/property_editor.get_property_value()[0]
+	var ibr = $invert_bool_requirement/property_editor.get_property_value()[0]
+	var rr = $require_restart/property_editor.get_property_value()[0]
+	var db = $disabled/property_editor.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
 	out["options"] = op
@@ -50,35 +40,35 @@ func set_data(STATE:Dictionary):
 var store_methods = PoolStringArray(["int","string"])
 
 func _ready():
-	OPTIONS.connect("draw",self,"_update_default")
-	OPTIONS.connect("changed",self,"_update_default")
-	DEFAULT.connect("pressed",self,"_update_default")
+	$options/property_editor.connect("draw",self,"_update_default")
+	$options/property_editor.connect("changed",self,"_update_default")
+	$default/property_editor.connect("pressed",self,"_update_default")
 	defaults = []
-	STORE_METHOD.clear()
+	$store_method/property_editor.clear()
 	for i in store_methods:
-		STORE_METHOD.add_item(i)
-	STORE_METHOD.select(0)
+		$store_method/property_editor.add_item(i)
+	$store_method/property_editor.select(0)
 
 var defaults = []
 
 func _update_default():
-	var oldSelection = DEFAULT.selected
-	DEFAULT.clear()
+	var oldSelection = $default/property_editor.selected
+	$default/property_editor.clear()
 	defaults = []
-	var opts = OPTIONS.get_property_value()[0]
+	var opts = $options/property_editor.get_property_value()[0]
 	if not opts.size():
 		opts = PoolStringArray(["EXAMPLE_OPTION"])
-		OPTIONS.set_property_value(opts)
+		$options/property_editor.set_property_value(opts)
 	for i in opts:
 		defaults.append(i)
 	for i in defaults:
-		DEFAULT.add_item(i)
+		$default/property_editor.add_item(i)
 	if (oldSelection + 1 > defaults.size()) or (oldSelection < 0):
 		oldSelection = 0
-	DEFAULT.select(oldSelection)
+	$default/property_editor.select(oldSelection)
 
 func get_default():
-	var val = DEFAULT.selected
+	var val = $default/property_editor.selected
 	if val >= 0:
 		match get_store_method():
 			"string":
@@ -88,7 +78,7 @@ func get_default():
 	return val
 
 func get_store_method():
-	return store_methods[STORE_METHOD.selected]
+	return store_methods[$store_method/property_editor.selected]
 
 func set_default(how):
 	if typeof(how) == TYPE_STRING:
@@ -96,13 +86,13 @@ func set_default(how):
 			how = defaults.find(how)
 		else:
 			how = 0
-	DEFAULT.select(how)
+	$default/property_editor.select(how)
 
 func set_store_method(how:String):
 	if how in store_methods:
-		STORE_METHOD.select(store_methods.find(how))
+		$store_method/property_editor.select(store_methods.find(how))
 	else:
-		STORE_METHOD.select(0)
+		$store_method/property_editor.select(0)
 
 func connect_all(to):
 	for i in get_children():

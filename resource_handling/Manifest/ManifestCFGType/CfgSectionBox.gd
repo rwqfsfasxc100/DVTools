@@ -200,7 +200,7 @@ func recalculate():
 		var max_pages = int(ceil(float(size)/float(page_size))) - 1
 		for iv in objList:
 			iv.visible = false
-		if size > page_size:
+		if false:# size > page_size: # - Removed bc buggy as shit
 			for iv in clamp(size - offset,0,page_size):
 				objList[iv + offset].visible = true
 			PAGEBOX.get_parent().visible = true

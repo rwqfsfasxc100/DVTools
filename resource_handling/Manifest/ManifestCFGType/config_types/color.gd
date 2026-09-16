@@ -4,29 +4,20 @@ extends VBoxContainer
 const type = "color"
 var boxname = ""
 
-onready var NAME = $name/property_editor
-onready var DESCRIPTION = $description/property_editor
-onready var DEFAULT = $default/property_editor
-onready var EDIT_ALPHA = $edit_alpha/property_editor
-onready var REQUIRES_BOOLS = $requires_bools/property_editor
-onready var INVERT_BOOL_REQUIREMENT = $invert_bool_requirement/property_editor
-onready var REQUIRE_RESTART = $require_restart/property_editor
-onready var DISABLED = $disabled/property_editor
-
 func _ready():
 	$default/property_editor.set_property_value(Color(1,1,1,1))
 	$edit_alpha/property_editor.set_property_value(true)
 
 func get_data() -> Dictionary:
 	var out = {}
-	var nm = NAME.get_property_value()[0]
-	var dc = DESCRIPTION.get_property_value()[0]
-	var df = DEFAULT.get_property_value()[0]
-	var ea = EDIT_ALPHA.get_property_value()[0]
-	var rb = REQUIRES_BOOLS.get_property_value()[0]
-	var ibr = INVERT_BOOL_REQUIREMENT.get_property_value()[0]
-	var rr = REQUIRE_RESTART.get_property_value()[0]
-	var db = DISABLED.get_property_value()[0]
+	var nm = $name/property_editor.get_property_value()[0]
+	var dc = $description/property_editor.get_property_value()[0]
+	var df = $default/property_editor.get_property_value()[0]
+	var ea = $edit_alpha/property_editor.get_property_value()[0]
+	var rb = $requires_bools/property_editor.get_property_value()[0]
+	var ibr = $invert_bool_requirement/property_editor.get_property_value()[0]
+	var rr = $require_restart/property_editor.get_property_value()[0]
+	var db = $disabled/property_editor.get_property_value()[0]
 	if nm:out["name"] = nm
 	if dc:out["description"] = dc
 	if not ea:
