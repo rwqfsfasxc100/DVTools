@@ -119,7 +119,16 @@ static func __get_script_variables_without_load(script_path : String) -> Diction
 		for i in pathway[1]:
 			dict[i] = l.get(i)
 		return dict
-		
+
+static func __get_script_constant_map_without_load(script_path : String) -> Dictionary:
+		var pathway : Array = __trim_scripts(script_path)
+		if not pathway[2]: return {}
+		var dict : Dictionary = {}
+		var l : Dictionary = __compile_script_object(pathway[0]).get_script().get_script_constant_map()
+		for i in pathway[2]:
+			dict[i] = l[i]
+		return dict
+
 const function_prefixes = ["func ","static func ","remote func ","master func ","puppet func ","remotesync func ","mastersync func ","puppetsync func ","sync func "]
 const all_prefixes = ["func ","static func ","remote func ","master func ","puppet func ","remotesync func ","mastersync func ","puppetsync func ","sync func ","onready ","var ","signal ","const ","export ","extends "]
 static func __trim_scripts(file_path : String, get_detailed_operands : bool = false, trim_unnecessary_newlines : bool = false, recurse_through_base_scripts : bool = true):
@@ -141,7 +150,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 		if script_source:
 			var extend_this:bool = true
 			if recurse_through_base_scripts:
-				var base_script = script_source.get_base_script()
+				var base_script:Script = script_source.get_base_script()
 				if base_script:
 					var base_data : Array = __trim_script_object(base_script,get_detailed_operands,trim_unnecessary_newlines,recurse_through_base_scripts)
 					concat += base_data[0]
@@ -159,14 +168,15 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 						var i = base_data[3][f]
 						if not i in signal_names:
 							signal_names.append(i)
-							signal_values.append(base_data[5][f])
+							if get_detailed_operands:
+								signal_values.append(base_data[5][f])
 					for f in base_data[4].size():
 						var i = base_data[4][f]
 						if not i in method_names:
 							method_names.append(i)
-							method_values.append(base_data[6][f])
-							method_output_type.append(base_data[7][f])
-#					breakpoint
+							if get_detailed_operands:
+								method_values.append(base_data[6][f])
+								method_output_type.append(base_data[7][f])
 			var data : String  = script_source.get_source_code()
 			var streaming:bool = false
 			var this_stream : String = ""
@@ -197,7 +207,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					has_sig = true
 				if has_prefix:
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					var av:PoolStringArray = line.split("func ")[1].split("(")
@@ -215,7 +225,6 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 							operands = operands.substr(0, operands.length() - 1)
 						if operands.ends_with(")"):
 							operands = operands.substr(0,operands.length() - 1)
-						var opnames : String  = ""
 						var opvalues : Array = []
 						var thisOpValue : String  = ""
 						var colonDelim:bool = false
@@ -229,8 +238,6 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 								bracketDelim = true
 							if bracketDelim and i == ")":
 								bracketDelim = false
-							if not colonDelim and not bracketDelim:
-								opnames += i
 							if not bracketDelim and i == ",":
 								opvalues.append(thisOpValue.strip_edges())
 								thisOpValue = ""
@@ -244,7 +251,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					method_names.append(mname)
 				elif has_sig:
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					var av:PoolStringArray = line.split("signal ")[1].split("(")
@@ -260,7 +267,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					signal_names.append(sname)
 				elif line.begins_with("const "):
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					var cname : String  = line.split("=",false)[0].strip_edges().split("const ",true)[1].strip_edges().split(":",false)[0].strip_edges()
@@ -268,7 +275,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					streaming = true
 				elif line.begins_with("var "):
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					var vname : String  = line.split("=",false)[0].strip_edges().split("var ",true)[1].strip_edges().split(":",false)[0].strip_edges()
@@ -276,7 +283,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					streaming = true
 				elif line.begins_with("export ") and " var " in line:
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					var vname : String  = line.split("=",false)[0].strip_edges().split("var ",true)[1].strip_edges().split(":",false)[0].strip_edges()
@@ -284,7 +291,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					streaming = true
 				elif line.begins_with("onready ") and " var " in line:
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					var vname : String  = line.split("=",false)[0].strip_edges().split("var ",true)[1].strip_edges().split(":",false)[0].strip_edges()
@@ -292,7 +299,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 					streaming = true
 				elif line.begins_with("extends "):
 					if streaming:
-						concat = concat + this_stream.strip_edges() + "\n"
+						concat += this_stream.strip_edges() + "\n"
 						this_stream = ""
 						streaming = false
 					if extend_this:
@@ -300,7 +307,7 @@ static func __trim_script_object(script_source : Script, get_detailed_operands :
 				if streaming:
 					this_stream = this_stream + "\n" + line
 			if streaming:
-				concat = concat + this_stream.strip_edges() + "\n"
+				concat += this_stream.strip_edges() + "\n"
 				this_stream = ""
 				streaming = false
 		if trim_unnecessary_newlines:
