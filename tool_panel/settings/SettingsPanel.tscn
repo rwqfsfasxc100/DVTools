@@ -1,9 +1,23 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/DVTools/tool_panel/settings/SettingsPanel.gd" type="Script" id=1]
 
+[sub_resource type="Image" id=570]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 70, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=569]
+flags = 0
+flags = 0
+image = SubResource( 570 )
+size = Vector2( 16, 16 )
+
 [node name="SettingsPanel" type="ConfirmationDialog"]
-visible = true
 margin_right = 640.0
 margin_bottom = 480.0
 rect_min_size = Vector2( 1053, 437 )
@@ -25,8 +39,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/ScrollContainer"]
-margin_right = 1011.0
-margin_bottom = 598.0
+margin_right = 1023.0
+margin_bottom = 668.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -61,6 +75,9 @@ size_flags_horizontal = 3
 margin_right = 250.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 250, 0 )
+hint_tooltip = "Refreshes the list of files that drivers get information from to avoid needing to restart the editor.
+
+This should be done after moving, adding, or deleting a mod."
 button_mask = 0
 text = "Refresh property tooltips"
 flat = true
@@ -70,6 +87,9 @@ align = 0
 margin_left = 254.0
 margin_right = 1011.0
 margin_bottom = 20.0
+hint_tooltip = "Refreshes the list of files that drivers get information from to avoid needing to restart the editor.
+
+This should be done after moving, adding, or deleting a mod."
 size_flags_horizontal = 3
 text = "Refresh"
 
@@ -78,10 +98,81 @@ margin_top = 58.0
 margin_right = 1011.0
 margin_bottom = 62.0
 
-[node name="EquipmentTags" type="VBoxContainer" parent="PanelContainer/ScrollContainer/VBoxContainer"]
+[node name="HevLibSettings" type="VBoxContainer" parent="PanelContainer/ScrollContainer/VBoxContainer"]
 margin_top = 66.0
 margin_right = 1011.0
-margin_bottom = 598.0
+margin_bottom = 132.0
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings"]
+margin_right = 1011.0
+margin_bottom = 4.0
+
+[node name="Label" type="Label" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings"]
+margin_top = 8.0
+margin_right = 1011.0
+margin_bottom = 22.0
+text = "HevLib Settings"
+align = 1
+valign = 1
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings"]
+margin_top = 26.0
+margin_right = 1011.0
+margin_bottom = 30.0
+
+[node name="PCKPath" type="HBoxContainer" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings"]
+margin_top = 34.0
+margin_right = 1011.0
+margin_bottom = 58.0
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings/PCKPath"]
+margin_right = 250.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 250, 0 )
+hint_tooltip = "The filepath to a release .pck file. This is used to help better mimic the filesystem release versions when ran in-editor, however it is not perfect.
+
+If not provided or the PCK doesn't exist, uses the res://.autoconvert/ directory instead"
+button_mask = 0
+text = "PCK Path"
+flat = true
+align = 0
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings/PCKPath"]
+margin_left = 254.0
+margin_right = 983.0
+margin_bottom = 24.0
+hint_tooltip = "The filepath to a release .pck file. This is used to help better mimic the filesystem release versions when ran in-editor, however it is not perfect.
+
+If not provided or the PCK doesn't exist, uses the res://.autoconvert/ directory instead"
+size_flags_horizontal = 3
+text = "C:/Program Files (x86)/Steam/steamapps/common/dV Rings of Saturn/Delta-V.pck"
+
+[node name="Button2" type="Button" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings/PCKPath"]
+margin_left = 987.0
+margin_right = 1011.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "Open filesystem"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings/PCKPath/Button2"]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+mouse_filter = 2
+texture = SubResource( 569 )
+expand = true
+
+[node name="HSeparator3" type="HSeparator" parent="PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings"]
+margin_top = 62.0
+margin_right = 1011.0
+margin_bottom = 66.0
+
+[node name="EquipmentTags" type="VBoxContainer" parent="PanelContainer/ScrollContainer/VBoxContainer"]
+margin_top = 136.0
+margin_right = 1011.0
+margin_bottom = 668.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

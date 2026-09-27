@@ -23,8 +23,8 @@ var tab_buttons:Dictionary = {}
 
 var active_tab = null
 
-var open_file_diag = EditorFileDialog.new()
-var save_as_file_diag = EditorFileDialog.new()
+var open_file_diag:EditorFileDialog = EditorFileDialog.new()
+var save_as_file_diag:EditorFileDialog = EditorFileDialog.new()
 
 # Setter method for the current_tab value
 func set_current_tab(val:int):

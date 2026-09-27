@@ -8,12 +8,52 @@ onready var tool_panel = get_node_or_null(tool_panel_path)
 
 var plugin_settings
 
+var file_dialog:EditorFileDialog = EditorFileDialog.new()
+
+onready var pck_line_edit:LineEdit = get_node_or_null(NodePath("PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings/PCKPath/LineEdit"))
+onready var pck_file_button:Button = get_node_or_null(NodePath("PanelContainer/ScrollContainer/VBoxContainer/HevLibSettings/PCKPath/Button2"))
+var file:File = File.new()
+var cfg:ConfigFile = ConfigFile.new()
+
+var config_path:String = "user://cfg/Mod_Configurations.cfg"
+
 func _ready():
+	file_dialog.rect_min_size = get_viewport().size - Vector2(200,200)
+	file_dialog.show_hidden_files = true
+	file_dialog.mode = EditorFileDialog.MODE_OPEN_FILE
+	file_dialog.access = EditorFileDialog.ACCESS_FILESYSTEM
+	file_dialog.add_filter("Delta-V.pck ; PCK Files")
+	file_dialog.connect("file_selected",self,"_open_this_file")
+	call_deferred("add_child",file_dialog)
+	pck_file_button.connect("pressed",file_dialog,"popup_centered")
+	cfg.load(config_path)
+	var value:String = cfg.get_value("HevLib/HEVLIB_CONFIG_SECTION_DEBUG","pck_path_for_editor_testing","")
+	cfg.clear()
+	if file.file_exists(value):
+		pck_line_edit.text = value
+	else:
+		value = ""
+	saveModSettings(value)
 	if tool_panel and settings_button:
 		settings_button.connect("pressed",self,"show")
 		connect("confirmed",self,"saveSettings")
 		plugin_settings = tool_panel.plugin_settings
 		initializeDisplays()
+
+func _open_this_file(f:String):
+	if file.file_exists(f):
+		pck_line_edit.text = f
+		_on_LineEdit_text_changed(f)
+
+func _on_LineEdit_text_changed(f:String):
+	if file.file_exists(f):
+		saveModSettings(f)
+
+func saveModSettings(how:String):
+	cfg.load(config_path)
+	cfg.set_value("HevLib/HEVLIB_CONFIG_SECTION_DEBUG","pck_path_for_editor_testing",how)
+	cfg.save(config_path)
+	cfg.clear()
 
 func show():
 	rect_min_size = Vector2(200,get_viewport().size.y - 200)

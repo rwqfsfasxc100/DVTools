@@ -124,7 +124,6 @@ func _on_TooltipsFetch_request_completed(result, response_code, headers, body):
 		file.close()
 		if jout.error == OK:
 			current_tooltips = jout.result
-			print(current_tooltips)
 			return
 	file.open("res://addons/DVTools/resource_handling/TooltipDocumentation/tooltips.json",File.READ)
 	var jout = JSON.parse(file.get_as_text(true))

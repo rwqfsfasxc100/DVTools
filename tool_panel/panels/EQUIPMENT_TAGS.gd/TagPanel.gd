@@ -34,13 +34,6 @@ var alignments:Array = []
 var hardpoint_types:Array = []
 var slot_defaults:Dictionary = {}
 
-func curate_tags(tags:Array) -> Array:
-	var out:Array = Array()
-	for i in tags:
-		if i.get_file() == "EQUIPMENT_TAGS.gd":
-			out.append(i)
-	return out
-
 func fetch_tags():
 	var vanilla_tags = __get_script_constant_map_without_load("res://HevLib/scenes/equipment/vanilla_defaults/slot_tagging.gd")
 	slot_types = vanilla_tags.get("slot_types",[])
