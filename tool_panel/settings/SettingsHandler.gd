@@ -8,9 +8,16 @@ var config:Dictionary = {
 }
 
 var discovered_drivers:Array = [] setget setDisDrivers , getDisDrivers
+var discovered_manifests:Array = [] setget , getDisManifests
 var drivers_by_type:Dictionary = {} setget , getDT
 
 var current_tooltips:Dictionary = {}
+
+var plugin_script
+
+func rescan_fs():
+	if plugin_script:
+		plugin_script.rescan_fs()
 
 func setDisDrivers(how:Array):
 	if how:
@@ -26,6 +33,11 @@ func getDisDrivers():
 	if not discovered_drivers:
 		recheck_fs()
 	return discovered_drivers
+
+func getDisManifests():
+	if not discovered_manifests:
+		recheck_fs()
+	return discovered_manifests
 
 func getDT():
 	if not drivers_by_type:
@@ -70,15 +82,21 @@ var driver_directories = PoolStringArray([
 
 func recheck_fs():
 	var drivers = []
+	var manifests = []
 	var baseDir = __fetch_folder_files("res://")
 	for first in baseDir:
 		if first.ends_with("/"):
 			var second = __fetch_folder_files(first)
 			for i in second:
+				var ftl:String = i.get_file().to_lower()
 				if i.ends_with("/") and i.split("/",false)[2] in driver_directories:
 					drivers.append_array(__fetch_folder_files(i,false))
+				elif ftl.begins_with("mod") and ftl.ends_with("manifest"):
+					manifests.append(i)
 	if drivers:
 		discovered_drivers = drivers
+	if manifests:
+		discovered_manifests = manifests
 
 func fetch_tooltips_file():
 	file.open("res://addons/DVTools/resource_handling/TooltipDocumentation/tooltips.json",File.READ)

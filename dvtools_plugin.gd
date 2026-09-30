@@ -46,6 +46,7 @@ var plugin_settings
 
 func _enter_tree():
 	plugin_settings = load("res://addons/DVTools/tool_panel/settings/SettingsHandler.tscn").instance()
+	plugin_settings.plugin_script = self
 	add_child(plugin_settings)
 	plugin_settings.init_settings()
 	# Initializes the main panel
@@ -329,7 +330,8 @@ func remove_icon_handler():
 	file_tree = null
 	search_box = null
 
-
+func rescan_fs():
+	get_editor_interface().get_resource_filesystem().scan()
 
 
 
