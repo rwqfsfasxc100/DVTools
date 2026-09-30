@@ -283,7 +283,7 @@ func rescan_fs():
 		plugin_settings.rescan_fs()
 
 func recursive_delete(path: String, excluded_files:PoolStringArray = PoolStringArray()) -> bool:
-		excluded_files.append_array(PoolStringArray([".git/",".github/",".gitignore"]))
+		excluded_files.append_array(PoolStringArray([".git/",".github/",".gitignore",".gitattributes"]))
 		var directory:Directory = Directory.new()
 		if not directory.open(path) == OK:
 			return false
