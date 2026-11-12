@@ -6,7 +6,10 @@ var CfgContainer
 var current_value = {}
 var updating = false
 
-func _init():
+var manifest_name:String = ""
+
+func _init(mn:String):
+	manifest_name = mn
 	CfgContainer = preload("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/CfgContainer.tscn").instance()
 	add_child(CfgContainer)
 	add_focusable(CfgContainer)

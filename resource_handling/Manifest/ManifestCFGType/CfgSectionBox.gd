@@ -116,7 +116,7 @@ func _on_add_open():
 
 func _add_confirmed():
 	var newname = ADDEDIT.text
-	if not newname in dataStore:
+	if newname and not newname in dataStore:
 		var type = config_types[ADDOPTS.selected]
 		add(newname,{"type":type})
 	else:

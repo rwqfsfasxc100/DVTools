@@ -46,3 +46,4 @@ func connect_all(to):
 		r.connect("changed",to,"changed")
 		if "emit_update_signal" in r:
 			r.emit_update_signal = true
+	add_child(load("res://addons/DVTools/resource_handling/Manifest/ManifestCFGType/clipboard.tscn").instance())

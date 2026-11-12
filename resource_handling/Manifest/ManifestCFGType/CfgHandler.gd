@@ -9,9 +9,13 @@ func can_handle(object):
 		return true
 	return false
 
+var mod_name:String = ""
+
 func parse_property(object, type, path, hint, hint_text, usage):
-	if path == "CFG_configs":
-		add_property_editor(path,langprop.new())
+	if path == "MI_name":
+		mod_name = object.MI_name.replace("/","").replace(" ","")
+	elif path == "CFG_configs":
+		add_property_editor(path,langprop.new(mod_name))
 		return true
 	return false
 

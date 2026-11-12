@@ -64,7 +64,6 @@ func show():
 
 const update_store:String = "user://cache/.DVTools_Cache/needs_updates.json"
 const base_download_dir = "user://cache/.DVTools_Cache/zip_dir/"
-const api_url:String = "https://publicactiontrigger.azurewebsites.net/api/dispatches/rwqfsfasxc100/dv_update_database"
 const updateDB_url:String = "https://raw.githubusercontent.com/rwqfsfasxc100/dv_update_database/refs/heads/main/manifest_path_store.json"
 
 const github_fetcher_url:String = "https://raw.githubusercontent.com/rwqfsfasxc100/dv_update_database/refs/heads/main/github_fetcher_store/compiled_topic_store.json"

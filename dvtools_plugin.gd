@@ -27,6 +27,7 @@ var supported_driver_files = PoolStringArray([
 	"ADD_EQUIPMENT_SLOTS.gd",
 	"EQUIPMENT_TAGS.gd",
 	"SLOT_TAGS.gd",
+#	"SLOT_ORDER.gd",
 	
 ])
 
@@ -106,8 +107,9 @@ func _exit_tree():
 # Main screen panel handling
 
 func reload_open_scripts():
-	var scriptEditor : ScriptEditor = get_editor_interface().get_script_editor()
-	scriptEditor.reload_scripts()
+	var editorInterface:EditorInterface = get_editor_interface()
+	editorInterface.get_script_editor().reload_scripts()
+	editorInterface.get_resource_filesystem().scan()
 
 
 func has_main_screen():
@@ -236,6 +238,7 @@ func handles(object):
 	
 	return false
 
+var file:File = File.new()
 
 
 # Tooltip handling
@@ -281,7 +284,10 @@ func add_icon_handler():
 					if child is LineEdit:
 						search_box = child
 						break
-	
+	mv23drivers.clear()
+	for manifest in icon_handler.__get_value("HevLib","modlets","seen_modlets"):
+		if __config_parse(manifest).get("manifest_definitions",{}).get("manifest_version",1.0) >= 2.3:
+			pass
 	if file_tree:
 		icon_handler.change_tree_appearance(file_tree)
 		file_tree.connect("item_collapsed", self, "_on_tree_item_collapsed")
@@ -291,6 +297,7 @@ func add_icon_handler():
 		
 		var file_system := interface.get_resource_filesystem()
 		file_system.connect("filesystem_changed", self, "recheck_icon_handler")
+		file_system.connect("filesystem_changed", self, "recheck_val_drfls")
 		file_system.connect("filesystem_changed", plugin_settings, "recheck_fs")
 	
 	
@@ -299,6 +306,9 @@ func _on_tree_item_collapsed(_item: TreeItem):
 
 func _on_search_changed(_new_text: String):
 	recheck_icon_handler()
+var mv23drivers:PoolStringArray=PoolStringArray()
+func recheck_val_drfls():
+	pass
 
 func recheck_icon_handler():
 	if _is_update_queued:
@@ -333,7 +343,19 @@ func remove_icon_handler():
 func rescan_fs():
 	get_editor_interface().get_resource_filesystem().scan()
 
-
+func __config_parse(file_path: String) -> Dictionary:
+	if not file.file_exists(file_path) and not ResourceLoader.exists(file_path):
+		return {}
+	var cfg:ConfigFile = ConfigFile.new()
+	cfg.load(file_path)
+	var cfg_sections : Array = cfg.get_sections()
+	var cfg_dictionary : Dictionary = {}
+	for section in cfg_sections:
+		var data : Dictionary = {}
+		for key in cfg.get_section_keys(section):
+			data[key] = cfg.get_value(section,key)
+		cfg_dictionary[section] = data
+	return cfg_dictionary
 
 
 

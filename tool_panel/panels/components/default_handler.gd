@@ -164,11 +164,13 @@ func get_available_equipment_tags() -> Array:
 					var nr = panel.slot_types
 					if "HARDPOINT" in nr and "hardpoint_types" in panel:
 						nr.erase("HARDPOINT")
-						out.append_array(panel.hardpoint_types)
+						var hp = panel.hardpoint_types
+						out.append_array(hp)
 					out.append_array(nr)
 			"equipment_tags":
 				if "equipment_types" in panel:
-					out.append_array(panel.equipment_types)
+					var et = panel.equipment_types
+					out.append_array(et)
 	for i in get_list():
 		if i.has_method("get_property_value"):
 			var this = i.get_property_value()[0]

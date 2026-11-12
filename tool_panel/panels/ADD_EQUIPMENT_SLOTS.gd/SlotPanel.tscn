@@ -92,7 +92,7 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer"]
 margin_right = 438.0
-margin_bottom = 554.0
+margin_bottom = 644.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -392,10 +392,125 @@ margin_bottom = 22.0
 can_edit_type = false
 property_type = "PoolStringArray"
 
-[node name="add_vanilla_equipment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+[node name="story_flag" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
 margin_top = 320.0
 margin_right = 438.0
-margin_bottom = 360.0
+margin_bottom = 350.0
+
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 30.0
+hint_tooltip = "Property: story_flag
+
+If set, the story flag that this equipment must abide by to be available."
+text = "story_flag"
+property_tooltip = "If set, the story flag that this equipment must abide by to be available."
+
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 30.0
+can_edit_type = false
+property_type = "string"
+
+[node name="story_flag_min" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 354.0
+margin_right = 438.0
+margin_bottom = 378.0
+
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag_min" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 24.0
+hint_tooltip = "Property: story_flag_min
+
+The minimum value the story flag has to be to make this equipment visible.
+
+\"-1\" disables this."
+text = "story_flag_min"
+property_tooltip = "The minimum value the story flag has to be to make this equipment visible.
+
+\"-1\" disables this."
+
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag_min" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 24.0
+can_edit_type = false
+property_type = "int"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": -1,
+"null": null,
+"string": ""
+}
+
+[node name="story_flag_max" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 382.0
+margin_right = 438.0
+margin_bottom = 406.0
+
+[node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag_max" instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 24.0
+hint_tooltip = "Property: story_flag_max
+
+The maximum value the story flag has to be to make this equipment visible.
+
+\"-1\" disables this."
+text = "story_flag_max"
+property_tooltip = "The maximum value the story flag has to be to make this equipment visible.
+
+\"-1\" disables this."
+
+[node name="property_editor" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/story_flag_max" instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 438.0
+margin_bottom = 24.0
+can_edit_type = false
+property_type = "int"
+defaults_for_type = {
+"Array": [  ],
+"Color": Color( 0, 0, 0, 1 ),
+"Dictionary": {
+},
+"PoolByteArray": PoolByteArray(  ),
+"PoolColorArray": PoolColorArray(  ),
+"PoolIntArray": PoolIntArray(  ),
+"PoolRealArray": PoolRealArray(  ),
+"PoolStringArray": PoolStringArray(  ),
+"PoolVector2Array": PoolVector2Array(  ),
+"PoolVector3Array": PoolVector3Array(  ),
+"Rect2": Rect2( 0, 0, 0, 0 ),
+"Transform2D": Transform2D( 1, 0, 0, 1, 0, 0 ),
+"Vector2": Vector2( 0, 0 ),
+"Vector3": Vector3( 0, 0, 0 ),
+"bool": false,
+"float": 0.0,
+"int": -1,
+"null": null,
+"string": ""
+}
+
+[node name="add_vanilla_equipment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
+margin_top = 410.0
+margin_right = 438.0
+margin_bottom = 450.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/add_vanilla_equipment" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -436,9 +551,9 @@ defaults_for_type = {
 }
 
 [node name="slot_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 364.0
+margin_top = 454.0
 margin_right = 438.0
-margin_bottom = 388.0
+margin_bottom = 478.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/slot_type" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -477,9 +592,9 @@ hardpoint_type_path = NodePath("../../../hardpoint_type/dropdown/TagPopup")
 panel_path = NodePath("../../../../../../..")
 
 [node name="hardpoint_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 392.0
+margin_top = 482.0
 margin_right = 438.0
-margin_bottom = 416.0
+margin_bottom = 506.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/hardpoint_type" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -518,9 +633,9 @@ alignment_type_path = NodePath("../../../alignment/dropdown/TagPopup")
 panel_path = NodePath("../../../../../../..")
 
 [node name="alignment" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 420.0
+margin_top = 510.0
 margin_right = 438.0
-margin_bottom = 444.0
+margin_bottom = 534.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/alignment" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -559,9 +674,9 @@ hardpoint_type_path = NodePath("../../../hardpoint_type/dropdown/TagPopup")
 panel_path = NodePath("../../../../../../..")
 
 [node name="restriction" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 448.0
+margin_top = 538.0
 margin_right = 438.0
-margin_bottom = 478.0
+margin_bottom = 568.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restriction" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -580,9 +695,9 @@ can_edit_type = false
 property_type = "string"
 
 [node name="override_additive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 482.0
+margin_top = 572.0
 margin_right = 438.0
-margin_bottom = 504.0
+margin_bottom = 594.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_additive" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -601,9 +716,9 @@ can_edit_type = false
 property_type = "PoolStringArray"
 
 [node name="override_subtractive" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 508.0
+margin_top = 598.0
 margin_right = 438.0
-margin_bottom = 530.0
+margin_bottom = 620.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/override_subtractive" instance=ExtResource( 1 )]
 margin_right = 200.0
@@ -622,9 +737,9 @@ can_edit_type = false
 property_type = "PoolStringArray"
 
 [node name="restrict_hold_type" type="HBoxContainer" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer"]
-margin_top = 534.0
+margin_top = 624.0
 margin_right = 438.0
-margin_bottom = 554.0
+margin_bottom = 644.0
 
 [node name="DescriptionLabel" parent="HSplitContainer/HBoxContainer2/ScrollContainer/VBoxContainer/restrict_hold_type" instance=ExtResource( 1 )]
 margin_right = 200.0

@@ -39,7 +39,7 @@ func _on_add_open():
 
 func _add_confirmed():
 	var newname = $ConfirmationDialog/VBoxContainer/LineEdit.text
-	if not newname in dataStore:
+	if newname and not newname in dataStore:
 		add(newname)
 	else:
 		$ConfirmationDialog/VBoxContainer/Label.visible = true

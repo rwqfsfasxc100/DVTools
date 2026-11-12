@@ -49,6 +49,9 @@ func _ready():
 	lc.get_node("alignment/dropdown/LineEdit").connect("text_changed",self,"mark_as_changed")
 	lc.get_node("hardpoint_type/dropdown/LineEdit").connect("text_changed",self,"mark_as_changed")
 	lc.get_node("slot_type/dropdown/LineEdit").connect("text_changed",self,"mark_as_changed")
+	lc.get_node("story_flag/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("story_flag_min/property_editor").connect("changed",self,"mark_as_changed")
+	lc.get_node("story_flag_max/property_editor").connect("changed",self,"mark_as_changed")
 
 func mark_as_changed(propA = null):
 	needs_save = true
@@ -142,6 +145,9 @@ func set_properties_from_dict(dict:Dictionary):
 	lc.get_node("override_additive/property_editor").set_property_value(PoolStringArray(dict.get("override_additive",[])))
 	lc.get_node("override_subtractive/property_editor").set_property_value(PoolStringArray(dict.get("override_subtractive",[])))
 	lc.get_node("restrict_hold_type/RestrictHoldType").set_hold_type(dict.get("restrict_hold_type",""))
+	lc.get_node("story_flag/property_editor").set_property_value(dict.get("story_flag",""))
+	lc.get_node("story_flag_min/property_editor").set_property_value(dict.get("story_flag_min",-1))
+	lc.get_node("story_flag_max/property_editor").set_property_value(dict.get("story_flag_max",-1))
 	
 
 func get_this_dict_for_saving() -> Dictionary:
@@ -165,6 +171,9 @@ func get_this_dict_for_saving() -> Dictionary:
 	var override_additive = lc.get_node("override_additive/property_editor").get_property_value()[0]
 	var override_subtractive = lc.get_node("override_subtractive/property_editor").get_property_value()[0]
 	var restrict_hold_type = lc.get_node("restrict_hold_type/RestrictHoldType").get_hold_type()
+	var story_flag = lc.get_node("story_flag/property_editor").get_property_value()[0]
+	var story_flag_min = lc.get_node("story_flag_min/property_editor").get_property_value()[0]
+	var story_flag_max = lc.get_node("story_flag_max/property_editor").get_property_value()[0]
 	if slot_node_name:
 		if system_slot:
 			out["system_slot"] = system_slot

@@ -62,7 +62,7 @@ func extract_zip_to_dir():
 	download.text = "Unzipping"
 	var unzip_store:String = base_download_dir + file_to_store.get_basename() + "/"
 	dir.make_dir(unzip_store)
-	var gdunzip = load("res://addons/DVTools/ziptools/ziptools.gdns").new()
+	var gdunzip = load("res://addons/DVTools/miniz/miniz.gdns").new()
 	
 	gdunzip.open_read(http.download_file)
 	gdunzip.extract_all(unzip_store)

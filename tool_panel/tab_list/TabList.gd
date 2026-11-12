@@ -6,7 +6,7 @@ var supported_driver_files = {
 	"ADD_EQUIPMENT_SLOTS.gd":"res://addons/DVTools/tool_panel/panels/ADD_EQUIPMENT_SLOTS.gd/SlotPanel.tscn",
 	"EQUIPMENT_TAGS.gd":"res://addons/DVTools/tool_panel/panels/EQUIPMENT_TAGS.gd/TagPanel.tscn",
 	"SLOT_TAGS.gd":"res://addons/DVTools/tool_panel/panels/SLOT_TAGS.gd/SlotTagPanel.tscn",
-	"SLOT_ORDER.gd":"res://addons/DVTools/tool_panel/panels/SLOT_ORDER.gd/OrderContainer.tscn",
+#	"SLOT_ORDER.gd":"res://addons/DVTools/tool_panel/panels/SLOT_ORDER.gd/OrderContainer.tscn",
 	
 }
 
@@ -45,6 +45,8 @@ func _physics_process(delta):
 	if ctr > 4:
 		ctr = 0
 		refresh_titles()
+
+onready var zip = load("res://addons/DVTools/miniz/miniz.gdns").new()
 
 func _ready():
 	tool_panel.connect("operation",self,"_on_menu_operation")
@@ -102,16 +104,26 @@ func _save_this_as_file(file_path:String):
 				data = panel.print_license_text(current_license) + data
 			save_data(data,file_path)
 			emit_signal("save_confirmed")
-
+var directory:Directory = Directory.new()
 func save_data(data:String,file_path:String):
 	if data:
 		file.open(file_path,File.WRITE)
 		file.store_string(data)
 		file.close()
+		
+#		var uid:String = __get_uid_of_file(file_path,data.to_utf8())
+#		var base_dir:String = file_path.get_base_dir().plus_file(".uid")
+#		directory.make_dir_recursive(base_dir)
+#		file.open(base_dir.plus_file(file_path.get_file().get_basename() + ".uid"),File.WRITE)
+#		file.store_string(uid)
+#		file.close()
+		yield(get_tree(),"idle_frame")
 		tool_panel.reload_all_scripts()
 
 
-
+func __get_uid_of_file(file_path:String,file_content:PoolByteArray) -> String:
+	var num:int = zip.crc32(file_content)
+	return (PoolByteArray([(num>>16)&0xFF,(num>>24)&0xFF,(num)&0xFF,(num>>8)&0xFF]).hex_encode() + file_path).sha256_text()
 
 
 

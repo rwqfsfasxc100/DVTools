@@ -43,6 +43,30 @@ func fetch_tags():
 	slot_defaults = vanilla_tags.get("slot_defaults",{})
 	for tag in fetch_data_from_all_drivers("EQUIPMENT_TAGS.gd"):
 		if tag == this_script_path:
+			var SlotTypes = $ScrollContainer/VBoxContainer/slot_types/property_editor.get_property_value()[0]
+			var EquipmentTypes = $ScrollContainer/VBoxContainer/equipment_types/property_editor.get_property_value()[0]
+			var HardpointTypes = $ScrollContainer/VBoxContainer/hardpoint_types/property_editor.get_property_value()[0]
+			var AlignmentDefs = $ScrollContainer/VBoxContainer/alignments/property_editor.get_property_value()[0]
+			var SlotDefaults:Dictionary = $ScrollContainer/VBoxContainer/slot_defaults/default_handler.get_property_value()[0]
+			for st in SlotTypes:
+				if st and not st in slot_types:
+					slot_types.append(st)
+			for st in EquipmentTypes:
+				if st and not st in equipment_types:
+					equipment_types.append(st)
+			for st in AlignmentDefs:
+				if st and not st in alignments:
+					alignments.append(st)
+			for st in HardpointTypes:
+				if st and not st in hardpoint_types:
+					hardpoint_types.append(st)
+			for st in SlotDefaults:
+				if st in slot_defaults:
+					for item in SlotDefaults[st]:
+						if not item in slot_defaults[st]:
+							slot_defaults[st].append(item)
+				else:
+					slot_defaults[st] = SlotDefaults[st]
 			continue
 		var nodes = __get_script_constant_map_without_load(tag).get("EQUIPMENT_TAGS",{})
 		var slotTypes : Array = nodes.get("slot_types",[])
@@ -69,11 +93,11 @@ func fetch_tags():
 		if slotDefaults:
 			for st in slotDefaults:
 				if st in slot_defaults:
-					for item in slotDefaults.get(st):
-						if not item in slot_defaults.get(st):
+					for item in slotDefaults[st]:
+						if not item in slot_defaults[st]:
 							slot_defaults[st].append(item)
 				else:
-					slot_defaults.merge({st:slotDefaults.get(st)})
+					slot_defaults[st] = slotDefaults[st]
 
 func get_these_tags() -> Dictionary:
 	if not lc:

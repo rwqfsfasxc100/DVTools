@@ -106,6 +106,36 @@ func fetch_tooltips_file():
 		current_tooltips = jout.result
 	$TooltipsFetch.request("https://raw.githubusercontent.com/rwqfsfasxc100/DVTools/refs/heads/main/resource_handling/TooltipDocumentation/tooltips.json")
 
+var upgrades_slots = PoolStringArray()
+
+func get_upgrades_slots():
+	if upgrades_slots.empty():
+		file.open("res://enceladus/Upgrades.tscn",File.READ)
+		var data:String = file.get_as_text(true)
+		file.close()
+		var last_node_name = ""
+		var node_counter = 0
+		for i in data.split("\n"):
+			if i.begins_with("["):
+				if "parent=\"VB/MarginContainer/ScrollContainer/MarginContainer/Items\"" in i:
+					last_node_name = i.split("\"")[1]
+					node_counter = 0
+				elif last_node_name and node_counter < 2 and "parent=\"VB/MarginContainer/ScrollContainer/MarginContainer/Items/%s/VBoxContainer\"" % last_node_name in i:
+					node_counter += 1
+				if node_counter > 1 and not last_node_name in upgrades_slots:
+					upgrades_slots.append(last_node_name)
+#		var UpgradeMenu : Node = load("res://enceladus/Upgrades.tscn").instance()
+#		var nodes_parent:Node = UpgradeMenu.get_node("VB/MarginContainer/ScrollContainer/MarginContainer/Items")
+#		var vanilla_slot_names : Array = []
+#		var vanilla_slot_types : Dictionary = {}
+#
+#		for slot in nodes_parent.get_children():
+#			var children : Array = slot.get_node("VBoxContainer").get_children()
+#			if children.size() < 2:
+#				continue
+#			var iname:String = slot.name
+	return upgrades_slots
+
 
 func __fetch_folder_files(folder: String, showFolders: bool = true, returnFullPath: bool = true) -> Array:
 	var fileList : PoolStringArray = PoolStringArray()
