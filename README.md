@@ -105,7 +105,7 @@ Modlets also include both the mod name and their manifest's filepath.
 - ~~`EQUIPMENT_TAGS.gd`~~
 - `SLOT_ORDER.gd`
 - ~~`SLOT_TAGS.gd`~~
-- `AUX_POWER_AND_THRUSTERS.gd`
+- `AUX_POWER_AND_THRUSTERS.gd` / `THRUSTERS.gd` / `AUX_POWER_SLOT.gd`
 - `MODIFY_INTERNALS.gd`
 - `NODE_DEFINITIONS.gd`
 - `SHIP_NODE_MODIFY.gd`
@@ -122,6 +122,15 @@ Modlets also include both the mod name and their manifest's filepath.
 - `MODIFY_SHIP_NUMERICS.gd`
 - `NAMER.gd`
 - `LOAD_RESOURCES.gd`
+- `DEFINED_CLASS_NAMES.gd`
+- `DLL_MAPPER.gd`
+- `EVENT_DRIVER.gd`
+- `MODIFY_SHIP_BUILDS.gd`
+- `NAMER.gd`
+- `RESEARCH.gd`
+- `RPC_EXTRA_STATES.gd`
+- `SAVE_BUTTONS.gd`
+- `SERVICES.gd`
 - `MOD_DETAILS.txt`
 - `REPLACE_TRANSLATIONS.gd` (If time permits, TranslationTracker already serves this purpose well enough for the time being)
 - Mod downloading/updating
