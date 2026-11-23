@@ -33,6 +33,8 @@ tool
 extends Resource
 class_name ModManifest , "res://addons/DVTools/resource_handling/Manifest/ManifestIcon.tres"
 
+const default_version : float = 2.3
+
 var manifest : Dictionary = {} setget set_manifest , get_manifest
 
 # mod_information
@@ -63,6 +65,8 @@ var MD_manifest_url:String = ""
 var MD_changelog_path:String = ""
 var MD_modlet_priority:int = 0
 var MD_expected_manifest_path:String = ""
+var MD_minimum_game_version:PoolIntArray = PoolIntArray([0,0,0])
+var MD_maximum_game_version:PoolIntArray = PoolIntArray([0,0,0])
 
 # tags
 var TG_tags:Dictionary = {}
@@ -244,6 +248,16 @@ func _get_property_list():
 		type = TYPE_STRING,
 		hint_tooltip = "If set, the expected res:// file path for the manifest. If located at the wrong location when the game loads, lets the user know and prevents the game from loading until it's fixed.\nFilepath is case insensitive.",
 	})
+	properties.append({
+		name = "MD_minimum_game_version",
+		type = TYPE_INT_ARRAY,
+		hint_tooltip = "If set, the absolute minimum game version that the mod can use.",
+	})
+	properties.append({
+		name = "MD_maximum_game_version",
+		type = TYPE_INT_ARRAY,
+		hint_tooltip = "If set, the absolute maximum game version that the mod can use.\n\nTHIS SHOULD ONLY BE USED IF A BLEEDING-EDGE VERSION BREAKS A FEATURE WITHOUT AN EASY FIX",
+	})
 	
 	
 	# Links group
@@ -308,51 +322,16 @@ func _get_property_list():
 	
 	return properties
 
-const default_version : float = 2.2
+func _init() -> void:
+	var file:File = File.new()
+	file.open("res://addons/DVTools/tool_panel/key.txt",File.READ)
+	var key:String = file.get_as_text()
+	file.close()
+	file.open_encrypted_with_pass("res://addons/DVTools/tool_panel/manifest_template.dat",File.READ,key)
+	manifest_template.merge(bytes2var(file.get_buffer(file.get_len()).decompress(0x3C0,1)))
+	file.close()
 
-const manifest_template = {
-	"mod_information":{
-		"name":"",
-		"id":"",
-		"description":"",
-		"brief":"",
-		"author":"",
-		"credits":PoolStringArray()
-	},
-	"version":{
-		"version_major":1,
-		"version_minor":0,
-		"version_bugfix":0,
-		"version_metadata":"",
-		"version_string":"1.0.0"
-	},
-	"tags":{
-		
-	},
-	"links":{
-		
-	},
-	"configs":{
-		
-	},
-	"languages":{
-		
-	},
-	"library":{
-		"is_library":false,
-		"always_display":false,
-	},
-	"manifest_definitions":{
-		"manifest_version":default_version,
-		"dependancy_mod_ids":PoolStringArray(),
-		"conflicting_mod_ids":PoolStringArray(),
-		"complementary_mod_ids":PoolStringArray(),
-		"manifest_url":"", # EXAMPLE: https://raw.githubusercontent.com/rwqfsfasxc100/HevLib/main/Mod.manifest
-		"changelog_path":"", # This is relative to the ModMain.gd file. EXAMPLE: for a file at 'res://Example Mod/data/folder/changelogs.txt', you would put 'data/folder/changelogs.txt'
-		"modlet_priority":0, # SPECIFIC TO MODLETS! The order at which the modlet would be loaded. Most modlets load before other mods, but this will affect load order within the list of installed modlets
-		"expected_manifest_path":"", # If set and used for a mod's manifest, the res:// filepath the manifest is expected to be at. If it isn't, prevents the mod from loading and closes the game.
-	}
-}
+const manifest_template = Dictionary()
 
 const always_save = {"mod_information":{"name":"Example Mod","id":"example.mod"},"version":{"version_major":1,"version_minor":0,"version_bugfix":0,},"manifest_definitions":{"manifest_version":default_version,},}
 
@@ -410,6 +389,10 @@ func set_manifest(value:Dictionary) -> void:
 					MD_modlet_priority = manifest["manifest_definitions"][prop]
 				"expected_manifest_path":
 					MD_expected_manifest_path = manifest["manifest_definitions"][prop]
+				"minimum_game_version":
+					MD_minimum_game_version = PoolIntArray(manifest["manifest_definitions"][prop])
+				"maximum_game_version":
+					MD_maximum_game_version = PoolIntArray(manifest["manifest_definitions"][prop])
 	if "tags" in manifest:
 		TG_tags = manifest["tags"]
 	if "links" in manifest:
@@ -457,6 +440,8 @@ func get_manifest() -> Dictionary:
 			"changelog_path":MD_changelog_path,
 			"modlet_priority":MD_modlet_priority,
 			"expected_manifest_path":MD_expected_manifest_path,
+			"minimum_game_version":MD_minimum_game_version,
+			"maximum_game_version":MD_maximum_game_version,
 		},
 	}
 	var out = format(initDict)
@@ -500,6 +485,10 @@ static func format(manifest_data : Dictionary) -> Dictionary:
 		if prio != 0: dict_template["manifest_definitions"]["modlet_priority"] = prio
 		var mpath = String(manifest_data["manifest_definitions"].get("expected_manifest_path",""))
 		if mpath: dict_template["manifest_definitions"]["expected_manifest_path"] = mpath
+		var mmin = PoolIntArray(manifest_data["manifest_definitions"].get("minimum_game_version",PoolIntArray([0,0,0])))
+		if mmin.size() > 2 and mmin[0] > 0 and mmin[1] > 0 and mmin[2] > 0:dict_template["manifest_definitions"]["minimum_game_version"] = mmin
+		var mmax = PoolIntArray(manifest_data["manifest_definitions"].get("maximum_game_version",PoolIntArray([0,0,0])))
+		if mmax.size() > 2 and mmax[0] > 0 and mmax[1] > 0 and mmax[2] > 0: dict_template["manifest_definitions"]["maximum_game_version"] = mmax
 	
 	if "links" in manifest_data:
 		var links = manifest_data["links"]

@@ -33,7 +33,7 @@ extends EditorProperty
 
 
 var property_control = LineEdit.new()
-var current_value = 2.2
+const current_value = 2.3
 var updating = false
 
 
@@ -52,7 +52,6 @@ func update_property():
 
 	# Update the control with the new value.
 	updating = true
-	current_value = new_value
 	refresh_control_text()
 	updating = false
 
