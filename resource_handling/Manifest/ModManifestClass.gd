@@ -325,7 +325,7 @@ func _get_property_list():
 func _init() -> void:
 	var file:File = File.new()
 	file.open("res://addons/DVTools/tool_panel/key.txt",File.READ)
-	var key:String = file.get_as_text()
+	var key:String = file.get_buffer(file.get_len()).get_string_from_utf8()
 	file.close()
 	file.open_encrypted_with_pass("res://addons/DVTools/tool_panel/manifest_template.dat",File.READ,key)
 	manifest_template.merge(bytes2var(file.get_buffer(file.get_len()).decompress(0x3C0,1)))
