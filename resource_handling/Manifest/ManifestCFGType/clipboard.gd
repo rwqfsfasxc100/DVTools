@@ -73,5 +73,5 @@ func _copy_unsub():
 
 func get_set():return "__store_value(\"%s\",\"%s\",\"%s\")" % format
 func get_get():return "__get_value(\"%s\",\"%s\",\"%s\")" % format
-func get_sub():return "__subscribe_to_setting_change(\"function_name\",null,\"%s\",\"%s\",\"%s\")" % format
-func get_unsub():return "__disconnect_subscription(\"function_name\",null,\"%s\",\"%s\",\"%s\")" % format
+func get_sub():return "__subscribe_to_setting_change(\"function_name\",self,\"%s\",\"%s\",\"%s\")" % format
+func get_unsub():return "__disconnect_subscription(\"function_name\",self,\"%s\",\"%s\",\"%s\")" % format
